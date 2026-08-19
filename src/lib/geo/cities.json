@@ -1,0 +1,89 @@
+{
+  "$comment": "MOCK DATA. Replace with real figures before launch. `reviews` must stay null until city-attributable review data exists — see types.ts CityReviews.",
+  "cities": [
+    {
+      "slug": "denver",
+      "name": "Denver",
+      "state": "Colorado",
+      "stateCode": "CO",
+      "county": "Denver County",
+      "timeZone": "America/Denver",
+      "geo": { "lat": 39.7392, "lng": -104.9903 },
+      "serviceRadiusMiles": 35,
+      "neighborhoods": [
+        "LoDo",
+        "Cherry Creek",
+        "RiNo",
+        "Capitol Hill",
+        "Wash Park",
+        "Highlands",
+        "Stapleton",
+        "Baker"
+      ],
+      "nearbyCities": [
+        { "slug": null, "name": "Aurora", "driveMinutes": 20 },
+        { "slug": null, "name": "Lakewood", "driveMinutes": 18 },
+        { "slug": null, "name": "Boulder", "driveMinutes": 40 },
+        { "slug": null, "name": "Littleton", "driveMinutes": 25 }
+      ],
+      "marketNote": "Denver metro search is split across a dense downtown core and a ring of suburbs with their own map packs. A single city-wide campaign leaves the suburban rings uncovered.",
+      "reviews": null
+    },
+    {
+      "slug": "austin",
+      "name": "Austin",
+      "state": "Texas",
+      "stateCode": "TX",
+      "county": "Travis County",
+      "timeZone": "America/Chicago",
+      "geo": { "lat": 30.2672, "lng": -97.7431 },
+      "serviceRadiusMiles": 40,
+      "neighborhoods": [
+        "Downtown",
+        "South Congress",
+        "East Austin",
+        "Zilker",
+        "Mueller",
+        "The Domain",
+        "Westlake",
+        "Cedar Park"
+      ],
+      "nearbyCities": [
+        { "slug": null, "name": "Round Rock", "driveMinutes": 25 },
+        { "slug": null, "name": "Pflugerville", "driveMinutes": 22 },
+        { "slug": null, "name": "San Marcos", "driveMinutes": 35 },
+        { "slug": null, "name": "Georgetown", "driveMinutes": 35 }
+      ],
+      "marketNote": "Austin has one of the fastest-growing populations in the country, which means high search volume and a constant stream of new competitors bidding on the same terms.",
+      "reviews": null
+    },
+    {
+      "slug": "phoenix",
+      "name": "Phoenix",
+      "state": "Arizona",
+      "stateCode": "AZ",
+      "county": "Maricopa County",
+      "timeZone": "America/Phoenix",
+      "geo": { "lat": 33.4484, "lng": -112.074 },
+      "serviceRadiusMiles": 45,
+      "neighborhoods": [
+        "Downtown",
+        "Arcadia",
+        "Biltmore",
+        "Ahwatukee",
+        "Desert Ridge",
+        "Roosevelt Row",
+        "Camelback East",
+        "Maryvale"
+      ],
+      "nearbyCities": [
+        { "slug": null, "name": "Scottsdale", "driveMinutes": 25 },
+        { "slug": null, "name": "Mesa", "driveMinutes": 30 },
+        { "slug": null, "name": "Tempe", "driveMinutes": 20 },
+        { "slug": null, "name": "Glendale", "driveMinutes": 25 }
+      ],
+      "marketNote": "The Valley sprawls across more than 500 square miles, so proximity ranking factors dominate. Ranking downtown does almost nothing for demand in Scottsdale or Mesa.",
+      "reviews": null
+    }
+  ]
+}

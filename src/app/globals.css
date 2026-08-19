@@ -1,0 +1,224 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --header-height: 4.5rem;
+  }
+
+  @media (min-width: 1024px) {
+    :root {
+      --header-height: 5.5rem;
+    }
+  }
+
+  html {
+    /* `clip`, not `hidden`: it suppresses the horizontal overflow that
+       reveal transforms (translateX) briefly create, without turning the
+       element into a scroll container — which `hidden` would, breaking the
+       sticky header. */
+    overflow-x: clip;
+    scroll-behavior: smooth;
+    /* Anchor links must clear the sticky header. */
+    scroll-padding-top: calc(var(--header-height) + 1rem);
+    -webkit-text-size-adjust: 100%;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  body {
+    @apply bg-white font-sans text-base text-ink-700 antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display text-navy-700;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* One visible, high-contrast focus ring everywhere — the WordPress build
+     had focus styles suppressed by the theme reset. */
+  :focus-visible {
+    @apply outline-none ring-2 ring-blue-500 ring-offset-2 ring-offset-white;
+  }
+
+  .on-dark :focus-visible {
+    @apply ring-amber-400 ring-offset-navy-800;
+  }
+
+  ::selection {
+    @apply bg-blue-100 text-navy-800;
+  }
+}
+
+@layer components {
+  /* Hand-rolled container: fluid up to xl, then capped, with gutters that
+     actually step up by breakpoint. */
+  .container {
+    width: 100%;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+
+  @media (min-width: 640px) {
+    .container { padding-inline: 1.75rem; }
+  }
+
+  @media (min-width: 1024px) {
+    .container { padding-inline: 2.5rem; }
+  }
+
+  @media (min-width: 1280px) {
+    .container { max-width: 80rem; padding-inline: 3rem; }
+  }
+
+  /* Eyebrow labels. The original uses the Verveine script for these; Caveat
+     is the free stand-in and needs a size bump to hold the same optical weight. */
+  .eyebrow-script {
+    @apply font-script text-2xl font-bold leading-none text-blue-500;
+  }
+
+  /* blue-600 rather than the brand blue-500: at 13px on the #F4F6FB band,
+     blue-500 measures 4.19:1 and fails AA. blue-600 clears it. */
+  .eyebrow-caps {
+    @apply text-eyebrow uppercase text-blue-600;
+  }
+
+  /* Amber marker stroke under a word, as in "Ready to level up your…".
+     Sits below the baseline so it reads as an underline rather than a
+     highlighter block over the descenders. */
+  .marker-underline {
+    background-image: linear-gradient(
+      transparent 82%,
+      theme('colors.amber.400') 82%,
+      theme('colors.amber.400') 95%,
+      transparent 95%
+    );
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    padding-bottom: 0.08em;
+  }
+}
+
+@layer utilities {
+  /* The `hidden` attribute sets `display: none` from the UA stylesheet, which
+     any author-level display utility (`grid`, `flex`) beats — so an element
+     with both `hidden` and `grid` stays visible. This restores the intent, and
+     it matters for the testimonial carousel and the FAQ accordion panels. */
+  [hidden] {
+    display: none !important;
+  }
+
+  /* Every interactive element gets a >=48px hit area even when the visible
+     control is smaller, via a transparent pseudo-element. */
+  .tap-target {
+    @apply relative;
+  }
+
+  .tap-target::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    min-width: 48px;
+    min-height: 48px;
+    transform: translate(-50%, -50%);
+  }
+
+  .section-y {
+    @apply py-section lg:py-section-lg;
+  }
+
+  /* Reserve room for the sticky mobile CTA bar so it never covers the footer.
+     Applied to <body> by StickyCtaBar while it is mounted. */
+  .has-sticky-cta {
+    padding-bottom: calc(4.75rem + env(safe-area-inset-bottom));
+  }
+
+  @media (min-width: 1024px) {
+    .has-sticky-cta {
+      padding-bottom: 0;
+    }
+  }
+}
+
+/* ── Motion ───────────────────────────────────────────────────────────────
+   Scroll reveal, marquee and image treatments. The pre-reveal hidden state is
+   scoped to `html.js` (set by an inline script in layout.tsx) so that if JS
+   never runs, nothing is hidden — the page renders normally instead of blank.
+   Every effect here is switched off under prefers-reduced-motion.          */
+
+@layer utilities {
+  .js [data-reveal] {
+    opacity: 0;
+    transform: translateY(16px);
+    transition:
+      opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+  }
+
+  .js [data-reveal].is-visible {
+    opacity: 1;
+    transform: none;
+    will-change: auto;
+  }
+
+  .js [data-reveal='left'] { transform: translateX(-24px); }
+  .js [data-reveal='right'] { transform: translateX(24px); }
+  .js [data-reveal='scale'] { transform: scale(0.965); }
+  .js [data-reveal='left'].is-visible,
+  .js [data-reveal='right'].is-visible,
+  .js [data-reveal='scale'].is-visible { transform: none; }
+
+  .marquee {
+    overflow: hidden;
+    mask-image: linear-gradient(90deg, transparent, #000 6rem, #000 calc(100% - 6rem), transparent);
+  }
+
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee linear infinite;
+  }
+
+  .marquee-group { display: flex; align-items: center; flex-shrink: 0; }
+
+  .drift { animation: drift 18s ease-in-out infinite alternate; }
+  .drift-slow { animation: drift 26s ease-in-out infinite alternate-reverse; }
+
+  .media-zoom img { transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
+  .group:hover .media-zoom img { transform: scale(1.045); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .js [data-reveal] {
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+    }
+    .marquee-track, .drift, .drift-slow { animation: none !important; }
+    .marquee { mask-image: none; }
+    .group:hover .media-zoom img { transform: none; }
+  }
+}

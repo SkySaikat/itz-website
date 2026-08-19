@@ -1,0 +1,536 @@
+# ITZ Digital — Next.js rebuild
+
+A modernised rebuild of [itzdigital.co](https://itzdigital.co) (WordPress + Elementor)
+on Next.js 16 App Router, TypeScript and Tailwind CSS 3.4.
+
+```bash
+npm install
+npm run dev          # http://localhost:3000
+npm run build        # 646 routes, fully static except the contact endpoint
+npm run typecheck
+npm run lint
+```
+
+**Tailwind 3.4, not 4.** v4 moves configuration into CSS (`@theme`) and drops
+`tailwind.config.js` as the source of truth. The config file is an explicit
+deliverable here and the `@tailwindcss/typography` plugin (used for the 595
+migrated blog posts) is most stable on v3. Migrating later is mechanical —
+the tokens in `tailwind.config.js` map 1:1 onto `@theme` variables.
+
+`npm audit` reports **0 vulnerabilities**.
+
+---
+
+## 1. Brand palette
+
+Extracted from the Elementor global kit in the WordPress export
+(`_elementor_page_settings → system_colors`) and confirmed against the rendered
+CSS on the live site.
+
+| Role           | Hex       | Tailwind token                      | Where it's used                          |
+| -------------- | --------- | ----------------------------------- | ---------------------------------------- |
+| **Primary**    | `#00386C` | `navy-700` / `brand-primary`        | Headings, nav, dark sections, footer     |
+| **Secondary**  | `#0974E4` | `blue-500` / `brand-secondary`      | Primary CTA, links, eyebrow labels       |
+| **Accent**     | `#FBBB5B` | `amber-400` / `brand-accent`        | Icon strokes, marker underlines, dark CTA|
+| **Background** | `#FFFFFF` | `white` / `surface`                 | Page canvas                              |
+| **Surface**    | `#F4F6FB` | `surface-muted`                     | Alternating section bands                |
+| **Text**       | `#0B1220` | `ink-950`                           | Body copy                                |
+
+Each hue is expanded into a full 50–950 ramp in `tailwind.config.js` so contrast
+pairs are pickable rather than guessed. Two deliberate departures from the
+original:
+
+- **Body text** moved from pure `#000000` to `ink-700` (`#3D4859`, 9.25:1 on
+  white). Pure black on white vibrates at long reading lengths.
+- **Secondary button text** moved from `blue-500` to `blue-600`. The original
+  measured **4.54:1** — passing AA by 0.04. `blue-600` gives **6.43:1**.
+
+### Measured contrast
+
+| Pair                                   | Ratio      | Level |
+| -------------------------------------- | ---------- | ----- |
+| White on `blue-500` (CTA gradient start)| 4.54:1    | AA    |
+| White on `blue-600` (CTA gradient end)  | 6.43:1    | AA    |
+| `blue-600` on white (secondary button)  | 6.43:1    | AA    |
+| `navy-700` on white (headings)          | 11.78:1   | AAA   |
+| `ink-700` on white (body)               | 9.25:1    | AAA   |
+| `navy-800` on `amber-400` (dark CTA)    | 8.09:1    | AAA   |
+| White on `navy-800` (dark sections)     | 13.75:1   | AAA   |
+| `navy-100` on `navy-800` (dark body)    | 10.75:1   | AAA   |
+
+---
+
+## 2. Typography
+
+The live site licenses two commercial faces, neither on Google Fonts:
+
+| Original            | Used for                          | Google Fonts substitute |
+| ------------------- | --------------------------------- | ----------------------- |
+| **Greycliff CF**    | Headings + body (Light→Heavy)     | **Figtree** (300–900)   |
+| **Verveine**        | Handwritten eyebrows & flourishes | **Caveat** (500–700)    |
+
+**Why Figtree:** Greycliff CF is a geometric humanist with a double-storey `a`,
+tall x-height and softly rounded terminals. Figtree matches all three and ships
+as a variable font covering the full Light→Heavy range the original uses.
+(Poppins — the usual reflex — has a single-storey `a` and reads noticeably
+rounder.) **Why Caveat:** Verveine is a casual marker pen with an irregular
+baseline; Caveat is the closest free match at the sizes used here.
+
+Both are self-hosted by `next/font/google` at build time — no render-blocking
+request to `fonts.googleapis.com` and no layout shift.
+
+### Scale
+
+Display sizes are fluid (`clamp()`), so there is no jump between a 390px phone
+and a 1440px desktop:
+
+| Token          | Range           | Use                        |
+| -------------- | --------------- | -------------------------- |
+| `display-xl`   | 40 → 72px       | Homepage H1                |
+| `display-lg`   | 34 → 56px       | Inner page H1              |
+| `display-md`   | 28 → 44px       | Section H2                 |
+| `display-sm`   | 24 → 32px       | Sub-section H3             |
+| `body-lg`      | 18px / 1.7      | Intro paragraphs           |
+| `eyebrow`      | 13px / 0.12em   | Uppercase labels           |
+
+Helper classes in `globals.css`: `.eyebrow-script` (Caveat), `.eyebrow-caps`,
+`.marker-underline` (amber stroke under a word).
+
+---
+
+## 3. Visual polish changes
+
+| Area | Original | Now |
+| ---- | -------- | --- |
+| Section rhythm | ~60px | 72px mobile / 120px desktop (`section-y`) |
+| Tap targets | 32–40px common | Every control ≥48px, verified by script |
+| CTA contrast | `blue-500` text at 4.54:1 | `blue-600` at 6.43:1; gradient-filled primary |
+| Hero CTA | One button | Primary + secondary, so non-ready visitors don't bounce |
+| Focus states | Suppressed by theme reset | Visible 2px ring everywhere, amber on dark |
+| Client logos | Fixed 4-up, squeezed to ~60px on mobile | Responsive 2/3/4-up grid |
+| Mobile nav | Sub-industry pages unreachable | Full accordion drawer exposing all 22 |
+| Shadows | Neutral grey | Blue-tinted, so they read as lift on `#F4F6FB` |
+| Motion | — | Honours `prefers-reduced-motion` |
+
+---
+
+## 4. Structure
+
+```
+src/
+  app/
+    layout.tsx              root layout — fonts, metadata, JSON-LD, header/footer
+    page.tsx                homepage
+    globals.css             Tailwind layers + design-system helpers
+    [industry]/             /lawyers, /medical, /real-estate, /education, /automotive
+      [sub]/                /lawyers/personal-injury, … (22 pages)
+    services/[slug]/        9 service pages
+    who-we-serve/  about-us/  case-studies/  contact/  terms-conditions/
+    blog/  blog/[slug]/      595 migrated posts
+    api/contact/route.ts    form endpoint (needs a transport — see below)
+    sitemap.ts  robots.ts  not-found.tsx
+  components/
+    layout/   Header, MobileNav, Footer, Logo
+    ui/       Button, Section, Card, PageHero, PostCard
+    sections/ Hero, ClientLogos, ServicesGrid, Stats, IndustriesGrid,
+              Mission, Testimonials, CtaBanner, ContactForm
+  lib/        site, nav, services, industries, case-studies, posts, cn
+  content/    posts-index.json + posts/*.json (imported from WordPress)
+public/       520 KB total — logos, favicons, hero, client logos, icons
+```
+
+### URL preservation
+
+Every original WordPress path is preserved so rankings and backlinks survive:
+`/lawyers/personal-injury`, `/services/seo`, `/medical/dentists`, `/blog/<slug>`.
+The service segment is `[service]` (renamed from `[slug]` so the nested
+`[city]` route could sit under it) — public URLs are unchanged.
+The flat duplicates WordPress accumulated (`/dentists`, `/auto-repair`, …) 301
+to their nested canonical in `next.config.mjs`.
+
+---
+
+## 5. Content migration
+
+`scripts/import-wordpress.mjs` converts a WXR export into JSON:
+
+```bash
+node scripts/import-wordpress.mjs ../itzdigital.WordPress.2026-08-18.xml
+```
+
+595 published posts → `src/content/posts/*.json` (6.6 MB of text). Post images
+are **not** copied into the repo — their URLs are rewritten to
+`NEXT_PUBLIC_MEDIA_BASE` (defaults to the live WordPress uploads host), which is
+why `public/` is 520 KB rather than 1.4 GB.
+
+```bash
+# .env.local — point at a CDN once media is moved
+NEXT_PUBLIC_MEDIA_BASE=https://cdn.itzdigital.co/uploads
+```
+
+Add the host to `images.remotePatterns` in `next.config.mjs` if you want
+`next/image` to optimise post images.
+
+---
+
+## 6. Programmatic geo-landing pages
+
+`/services/[service]/[city]` — 6 pages from 2 services x 3 cities in the mock
+dataset.
+
+### Dataset
+
+```
+src/lib/geo/
+  types.ts                 interfaces only
+  cities.json              3 cities (Denver, Austin, Phoenix)
+  service-locations.json   6 service x city records
+  index.ts                 typed loader + lookups + build-time validation
+```
+
+The JSON is validated against the interfaces on import, so a malformed record
+**fails `next build`** rather than shipping a broken page or invalid structured
+data. Guards cover: kebab-case slugs, coordinate ranges, exactly 3 stats,
+>= 2 FAQs (Google's FAQPage minimum), unknown service/city slugs, duplicate
+service x city pairs, and unattributed review data.
+
+Pairs with no content record 404 — `dynamicParams = false`. Falling back to
+generic copy would produce exactly the thin doorway pages Google penalises.
+
+### Structured data
+
+One `@graph` per page, nodes cross-referenced by `@id`:
+
+| Node | `@id` | Notes |
+| ---- | ----- | ----- |
+| `WebPage` | `#webpage` | Links breadcrumb + primary entity |
+| `BreadcrumbList` | `#breadcrumb` | Home > Services > Service > City |
+| `ProfessionalService` | `#localbusiness` | `areaServed` + `GeoCircle serviceArea`, real HQ address, `parentOrganization` -> site org |
+| `Service` | `#service` | `hasOfferCatalog` built from the service's deliverables |
+| `FAQPage` | `#faq` | Mirrors the on-page accordion exactly |
+
+**No fabricated location data.** The business operates from Casper, WY, so each
+city node carries the real `address` plus `areaServed`/`serviceArea` rather
+than an invented per-city street address.
+
+**No fabricated ratings.** `aggregateRating` is emitted only when a city has
+`reviews` with a `ratingValue`, `reviewCount`, `source` and `lastVerified`.
+Every city in the mock has `reviews: null`, so no rating renders. Repeating the
+site-wide 4.9 across every generated city page is the pattern Google issues
+manual actions for. The loader rejects a rating with no `source` at build time.
+
+> Note: the root layout still emits a site-wide org node carrying the 4.9 / 500
+> rating on *every* page, including these. That is an organisation-level claim
+> on the organisation entity rather than a per-city one, but if you want geo
+> pages to carry no rating signal at all, that node needs scoping too.
+
+### Page layout
+
+Hero (`Top-Rated [Service] in [City], [State]` + stat band + dual CTA) ->
+localized trust (`Serving [City] and surrounding neighborhoods`, neighborhood
+and drive-time chips, city-specific factors) -> what's included / process ->
+FAQ accordion -> internal links to sibling cities and services -> CTA banner,
+plus a sticky mobile CTA bar.
+
+- **`FaqAccordion`** implements the ARIA disclosure pattern (`aria-expanded` +
+  `aria-controls`, panels as labelled `region`s). Collapsed answers stay in the
+  DOM via `hidden` rather than being unmounted, which is what keeps the
+  FAQPage markup valid — verified: all 5 JSON-LD Q&As match the rendered DOM.
+- **`StickyCtaBar`** appears past 560px of scroll so it never competes with the
+  hero CTA, is mobile-only, respects `env(safe-area-inset-bottom)`, and adds
+  body padding so it cannot cover the footer.
+
+### Adding a city
+
+1. Append to `cities.json`.
+2. Add one `service-locations.json` record per service you want a page for.
+3. `npm run build` — routes, sitemap entries and the "by city" links on
+   `/services/[service]` all pick it up automatically.
+
+Write genuinely local content. Six strong pages beat six hundred templated ones.
+
+## 7. Generating new content
+
+`scripts/generate-daily-content.mjs` calls Claude and writes new posts or
+geo-landing records straight into the content directories.
+
+### 1. Get an API key
+
+Pick a provider and export its key. You only need one.
+
+| Provider | Env var | Where to get it |
+| --- | --- | --- |
+| Claude (default) | `ANTHROPIC_API_KEY` | <https://console.anthropic.com/settings/keys> |
+| Gemini | `GEMINI_API_KEY` | <https://aistudio.google.com/apikey> |
+
+```bash
+export GEMINI_API_KEY=AIza...            # or ANTHROPIC_API_KEY=sk-ant-...
+```
+
+For anything beyond a one-off run, put it in `.env.local` (already gitignored)
+or your CI secrets rather than your shell history.
+
+Check what your key can actually reach — model IDs change, and a stale one is
+the most common failure:
+
+```bash
+npm run generate:content -- --provider gemini --list-models
+```
+
+### 2. Fill in the spreadsheet
+
+Start from **`scripts/content-queue.template.xlsx`** — open it in Excel, Numbers
+or Google Sheets. It has two tabs: `Content Queue` to fill in, and a `README` tab
+documenting every column. Save it anywhere; you pass the path in.
+
+| Column | Required | Meaning |
+| --- | --- | --- |
+| `Type` | no (defaults to `post`) | `post` = blog article, `geo` = service+city landing page |
+| `Topic Name` | **yes** | `post`: the target keyword. `geo`: the service slug (`seo`, `google-ads`, …) |
+| `Location` | geo rows only | City slug that exists in `src/lib/geo/cities.json` (`denver`, `austin`, `phoenix`) |
+| `Category` | no | Blog category label |
+| `Notes` | no | Editor's brief passed straight into the prompt — steer the angle, emphasis, what to avoid |
+
+**Column names are matched loosely.** Case, spaces, hyphens and underscores are
+ignored, and each field accepts aliases (`Topic Name` / `Keyword` / `Title` /
+`Subject` all work; `Location` / `City` / `Market` / `Metro` all work). Any extra
+columns — Owner, Status, Due Date — are ignored, so keep your own workflow
+columns in the same sheet. Full alias list is in `COLUMN_ALIASES` at the top of
+the script.
+
+`.csv` works too; the format is identical.
+
+### 3. Run it
+
+```bash
+# Always dry-run first: generates and validates, writes nothing, prints the JSON
+npm run generate:content -- --input content-queue.xlsx --dry-run
+
+# Then for real, a few rows at a time
+npm run generate:content -- --input content-queue.xlsx --limit 3
+
+# With Gemini instead
+npm run generate:content -- --input content-queue.xlsx --provider gemini --limit 3
+
+npm run build                            # validates + generates the routes
+```
+
+| Flag | Default | |
+| --- | --- | --- |
+| `--input <file>` | — | `.xlsx` or `.csv` (required) |
+| `--sheet <name>` | first usable tab | Which worksheet to read |
+| `--provider` | `claude` | `claude` or `gemini` |
+| `--model <id>` | per provider | Override the default model |
+| `--effort` | `medium` | Claude only: `low`–`max` |
+| `--limit N` | 5 | Rows this run |
+| `--concurrency N` | 2 | Parallel generations |
+| `--dry-run` | off | Generate + validate, write nothing |
+| `--force` | off | Overwrite an existing slug / service+city pair |
+| `--list-models` | — | Print reachable models and exit |
+
+Where the output lands:
+
+| type | Output |
+| ---- | ------ |
+| `post` | `src/content/posts/<slug>.json` **+** an entry in `posts-index.json` |
+| `geo` | a record merged into `src/lib/geo/service-locations.json` |
+
+### Provider notes
+
+Both are asked for **schema-constrained JSON** — Claude via
+`output_config.format`, Gemini via `responseJsonSchema` + `responseMimeType` — so
+neither path needs regex extraction or a `JSON.parse` retry loop. The SDKs are
+imported dynamically, so a Gemini run never loads the Anthropic client.
+
+Claude adds a prompt-cache breakpoint on the system prompt, so a batch pays one
+cache write and N−1 reads; the per-row log shows `cached` tokens. Gemini has no
+equivalent here, so its `cached` column reads 0.
+
+### Why those destinations
+
+The spec for this script asked for `/content/posts/<slug>.json` and
+`/content/geo/<slug>.json`. Neither is how this site loads content:
+
+- **`posts-index.json` is not optional.** `src/lib/posts.ts` reads `allPosts`
+  from it, and `blog/[slug]` sets `dynamicParams = false` — a post file with no
+  index entry gets **no route generated** and 404s. The script writes both.
+- **There is no per-slug geo directory.** `src/lib/geo/index.ts` statically
+  imports `service-locations.json`; a `content/geo/*.json` file would be inert.
+  Records are merged into that file instead, which also keeps them under the
+  existing build-time validation.
+
+### Guarantees
+
+- **Valid JSON, always.** The response is constrained by `output_config.format`
+  (structured outputs) at the API layer — no regex extraction, no `JSON.parse`
+  retry loop. `src/lib/content-schemas.mjs` holds the schemas and re-checks
+  locally for the things JSON Schema can't express (word count, exact array
+  lengths, slug shape, `<h1>` leakage).
+- **Bad content never ships.** A row that fails validation is skipped with a
+  reason and the run exits non-zero. Generated geo records are validated *again*
+  at build time by `assertServiceLocation`, so a malformed record fails
+  `npm run build` rather than reaching production.
+- **Idempotent.** Existing slugs and service×city pairs are skipped unless
+  `--force`.
+- **No fabricated data.** The system prompt forbids invented statistics, client
+  names, testimonials and review counts. Nothing the script writes can produce
+  an `aggregateRating` — consistent with the policy in section 6.
+
+### Structured data
+
+Posts now go through `buildArticleGraph()` in `src/lib/schema.ts` (`WebPage` +
+`BreadcrumbList` + `Article`, plus `FAQPage` when the post has FAQs), replacing
+the inline `BlogPosting` object the blog page used to build. Every page's JSON-LD
+now derives from `site.ts` through the same builders. Post FAQs render through
+the same `FaqAccordion` as the geo pages, so the markup and the visible content
+cannot drift.
+
+### Model configuration
+
+`claude-opus-5`, streaming (`max_tokens: 32000` — a 1,300-word article plus
+thinking exceeds the non-streaming timeout threshold), `output_config.effort`
+as the cost lever, and a `cache_control` breakpoint on the system prompt so a
+batch of N rows pays one cache write and N−1 reads. No `temperature`/`top_p`
+(rejected on this model); thinking is left at its default (on).
+
+### Scheduling
+
+The script is a one-shot batch — no scheduler built in. Example crontab and
+GitHub Actions snippets are in the script header. Prefer opening a PR rather
+than committing generated content straight to the default branch.
+
+## 8. Imagery and motion
+
+### Image library
+
+37 images curated from the WordPress uploads (1.4 GB → **1.48 MB** as WebP),
+under `public/images/`:
+
+| Set | Source family | Used by |
+| --- | --- | --- |
+| `industries/<slug>.webp` | Transparent person composites — blue circles, dot fields, floating UI cards, same language as the homepage hero | Industry page split heroes |
+| `industries/<industry>-<sub>.webp` | Near-square photography, cropped 4:3 | Sub-industry heroes + specialisation cards |
+| `services/<slug>.webp` | Transparent device mockups — dashboards, SERPs, phone sites | Service page heroes |
+
+Composites keep their alpha and render `object-contain`; photographs render
+`object-cover`. Device mockups are bleed-cropped in the source, so on desktop
+they run toward the viewport edge (`lg:-mr-[6vw]`) — the crop then reads as
+intentional.
+
+### Template identities
+
+Each template now has its own layout so no two page types read the same:
+
+| Template | Hero | Body |
+| --- | --- | --- |
+| Home | Collage + drifting wash | Marquee logos, count-up stats |
+| Industry | Light split, composite + floating stat card | Photo cards per specialisation |
+| Sub-industry | Dark full-bleed photo band | Problem column vs. vertical fix timeline |
+| Service | Dark split, device mockup bleeding off-edge | Numbered engagement steps |
+| Geo | Stat band (unchanged) | Neighbourhood chips, FAQ accordion |
+| Case study | Split photo hero (**new** — detail pages didn't exist) | Client/channel panel + prose |
+
+### Motion
+
+One client controller — `src/components/motion/ScrollFx.tsx` — drives
+everything from data attributes, so pages stay server components:
+
+```tsx
+<div data-reveal>                          fade + rise, once
+<li data-reveal data-reveal-delay={i}>     stagger, 60ms per step
+<div data-reveal="left|right|scale">       directional variants
+<span data-count="38" data-count-suffix="%">  count up on scroll into view
+```
+
+Plus a CSS-only `<Marquee>` for the logo strip, `.drift` for ambient hero
+glows, and `.media-zoom` for hover.
+
+Two safeguards worth knowing about:
+
+- **No-JS safety.** The pre-reveal hidden state is scoped to `html.js`, set by
+  an inline script in `<head>`. If JS never runs, nothing is ever hidden — the
+  page renders normally rather than blank.
+- **`prefers-reduced-motion`** switches off every reveal, marquee, drift and
+  zoom, and the count-up renders its final value immediately. Verified: 17/17
+  reveal elements at `opacity: 1` under reduced motion.
+
+### Two layout bugs fixed along the way
+
+- **`overflow-x: clip` on `html`.** The `translateX(24px)` starting state of a
+  right-entering reveal created a 4px horizontal scrollbar at 1024px before the
+  element animated in. `clip` (not `hidden`) suppresses it without creating a
+  scroll container, which would have broken the sticky header.
+- **Container gutters.** `theme.container.padding` keys resolve against
+  `theme.container.screens`; overriding `screens` to just `2xl` silently
+  dropped the sm/lg/xl padding steps, so every breakpoint had been using the
+  20px default. Tailwind's container plugin is now disabled and `.container` is
+  defined by hand in `globals.css` — gutters step 20 → 28 → 40 → 48px and the
+  container caps at 1280px.
+
+## 9. On-page content and FAQs
+
+Every template carries substantially more copy than the first pass. Word counts
+of rendered visible text:
+
+| Page | Words |
+| --- | --- |
+| `/about-us` | ~1,740 |
+| `/lawyers` (industry) | ~1,045 |
+| `/services/seo` | ~1,035 |
+| `/services/seo/denver` (geo) | ~1,030 |
+| `/medical/dentists` (sub-industry) | ~835 |
+
+### New data fields
+
+| Field | On | Renders as |
+| --- | --- | --- |
+| `context` | industries, sub-industries | `ContextBlock` — prose section on how buyers in that market decide |
+| `perks` | industries | `PerksBand` — checked list in a tinted panel |
+| `whoItsFor` + `notFor` | services | `PerksBand`, with the "and who it isn't" caveat called out |
+| `faqs` | industries, sub-industries, services | `FaqSection` + `FAQPage` schema |
+
+`src/lib/about-content.ts` holds the About page copy. FAQ questions 1–5 there are
+the **exact questions from the live WordPress About page**; the answers were
+written for this rebuild.
+
+All of it was drafted under the same house rules as the generator prompt — no
+invented statistics, percentages, dollar figures, review counts or client names.
+Where a number would have helped, the copy explains what drives it instead.
+
+### Testimonials
+
+Now a proper carousel with **two verbatim quotes** — Bill Patterson (Denton
+Record-Chronicle) and Judi Lessard (Flathead Beacon Productions). Both are real,
+from the live site. `TestimonialCarousel` keeps every slide in the DOM (inert ones
+`hidden`) so quotes stay crawlable, has no autoplay, and supports arrow keys.
+Add entries only with a client's actual words.
+
+### One CSS fix this surfaced
+
+`[hidden] { display: none !important }` in `globals.css`. The `hidden` attribute
+gets its `display: none` from the UA stylesheet, which **any** author-level
+display utility beats — so a `<figure hidden className="grid">` stayed visible
+and the carousel showed both slides at once. Same trap would hit any `hidden`
+element with a `flex`/`grid` class.
+
+## 10. Still to do before launch
+
+1. **Contact form transport.** `src/app/api/contact/route.ts` validates and logs
+   submissions but does not deliver them. Wire up Resend / SendGrid / HubSpot at
+   the marked `TODO(launch)`.
+2. **Case study bodies.** Titles and slugs in `src/lib/case-studies.ts` are the
+   real ones from the export, but the bodies live in Elementor/ACF fields the XML
+   does not carry. Summaries there are neutral and contain **no invented
+   metrics** — migrate the real numbers from the live pages.
+3. **Terms & Conditions.** Placeholder copy; replace with the reviewed legal text.
+4. **Testimonials.** Only one verbatim quote (Bill Patterson) survived the export.
+   The section features it rather than padding the row with invented quotes.
+5. **Case study imagery is illustrative.** There is no photography of the actual
+   engagements, so each study is assigned a distinct stock image from the
+   industry library — the water park is represented by a generic consultation
+   photo, for instance. Swap these for real campaign assets when available.
+   A build-time guard in `lib/case-studies.ts` fails if two studies share an
+   image (that shipped once).
+5. **Social URLs** in `src/lib/site.ts` are assumed patterns — confirm them.
+6. **Post images.** Currently served from the legacy WordPress host. Move to a
+   CDN and update `NEXT_PUBLIC_MEDIA_BASE`.

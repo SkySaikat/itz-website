@@ -1,0 +1,284 @@
+{
+  "$comment": "MOCK DATA. 2 services x 3 cities = 6 generated pages. Every stat is illustrative \u2014 replace before launch. `faqs` are emitted as FAQPage structured data AND rendered in the on-page accordion; the two must stay identical or the markup violates Google's FAQ guidelines.",
+  "serviceLocations": [
+    {
+      "serviceSlug": "seo",
+      "citySlug": "denver",
+      "intro": "Denver buyers search by neighborhood, not by city. We build the location and service page architecture that gets you into the map pack in LoDo, Cherry Creek and RiNo \u2014 not just for \"near me\" searches downtown.",
+      "stats": [
+        {
+          "value": "35mi",
+          "label": "Metro service radius"
+        },
+        {
+          "value": "8",
+          "label": "Neighborhood clusters targeted"
+        },
+        {
+          "value": "90 days",
+          "label": "Typical time to first ranking movement"
+        }
+      ],
+      "localFactors": [
+        "Front Range suburbs run their own map packs \u2014 Aurora and Lakewood need dedicated pages, not a mention on your Denver page.",
+        "Seasonal demand swings hard around winter, so content and budget need a calendar rather than a flat monthly spend.",
+        "Denver has an unusually high density of agency-managed competitors, which raises the bar on technical fundamentals."
+      ],
+      "faqs": [
+        {
+          "question": "How long does local SEO take to work in Denver?",
+          "answer": "Most Denver accounts see first ranking movement inside 90 days, with meaningful lead volume between months four and six. Anyone promising page one in 30 days in a market this competitive is either buying low-intent terms or telling you what you want to hear."
+        },
+        {
+          "question": "Do I need a separate page for each Denver neighborhood?",
+          "answer": "Not for every one. We map which neighborhoods have real search volume for your service and build pages only for those. Thin, duplicated neighborhood pages are a liability, not an asset."
+        },
+        {
+          "question": "Will you also cover Aurora, Lakewood and Boulder?",
+          "answer": "Yes, as separate targets. Each has its own map pack, so we treat them as distinct campaigns with their own pages and Google Business Profile signals rather than folding them into Denver."
+        },
+        {
+          "question": "What does local SEO cost in Denver?",
+          "answer": "It depends on how many neighborhoods and service lines you want covered, and how far behind your current technical foundation is. The free audit gives you a scoped number before you commit to anything."
+        },
+        {
+          "question": "Do I have to sign a long-term contract?",
+          "answer": "No. We work month to month. You own your website, your analytics and your Google Business Profile throughout, and you keep all of it if you leave."
+        }
+      ]
+    },
+    {
+      "serviceSlug": "seo",
+      "citySlug": "austin",
+      "intro": "Austin adds new competitors every quarter. We build the technical foundation and local content depth that keeps you ranking as the market gets more crowded, from Downtown and SoCo out to Round Rock.",
+      "stats": [
+        {
+          "value": "40mi",
+          "label": "Metro service radius"
+        },
+        {
+          "value": "8",
+          "label": "Neighborhood clusters targeted"
+        },
+        {
+          "value": "90 days",
+          "label": "Typical time to first ranking movement"
+        }
+      ],
+      "localFactors": [
+        "Rapid population growth means search volume rises but so does the competitor count \u2014 rankings decay faster here than in flatter markets.",
+        "A large share of Austin searches come from residents who moved within the last two years and have no incumbent provider.",
+        "The I-35 corridor splits the metro into distinct search areas that behave almost like separate cities."
+      ],
+      "faqs": [
+        {
+          "question": "How competitive is local SEO in Austin?",
+          "answer": "More competitive than the population alone suggests. Austin attracts a high concentration of marketing-savvy businesses, so the technical baseline is higher than in comparable metros. That cuts both ways \u2014 the fundamentals matter more, and most competitors still get them wrong."
+        },
+        {
+          "question": "Should I target Round Rock and Cedar Park separately?",
+          "answer": "Yes, if you serve them. They sit far enough from central Austin that proximity ranking factors treat them as separate markets. We build them as their own targets rather than assuming your Austin ranking carries north."
+        },
+        {
+          "question": "How long until I see results?",
+          "answer": "First ranking movement usually lands inside 90 days. Because Austin adds competitors continuously, the ongoing work matters more here than in slower markets \u2014 SEO gains decay if you stop."
+        },
+        {
+          "question": "Do you work with businesses new to the Austin market?",
+          "answer": "Often. New entrants have no local authority signals at all, so the first three months focus on Google Business Profile, citations and review velocity before content work compounds on top."
+        },
+        {
+          "question": "What happens to my rankings if I stop?",
+          "answer": "They decay, gradually. Unlike paid ads, which stop the day you stop paying, organic rankings fade over months as competitors keep publishing. We are straight with clients about that rather than pretending SEO is permanent."
+        }
+      ]
+    },
+    {
+      "serviceSlug": "seo",
+      "citySlug": "phoenix",
+      "intro": "The Valley is too large for one campaign. We target Phoenix proper and the surrounding cities as separate markets, because proximity ranking factors mean a downtown ranking does nothing for demand in Scottsdale or Mesa.",
+      "stats": [
+        {
+          "value": "45mi",
+          "label": "Metro service radius"
+        },
+        {
+          "value": "8",
+          "label": "Neighborhood clusters targeted"
+        },
+        {
+          "value": "90 days",
+          "label": "Typical time to first ranking movement"
+        }
+      ],
+      "localFactors": [
+        "Greater Phoenix spans 500+ square miles, so distance-to-searcher is the single strongest ranking factor in the map pack.",
+        "Winter visitor population changes search volume and intent between November and April.",
+        "Scottsdale, Mesa, Tempe and Glendale each hold their own map pack and need dedicated targeting."
+      ],
+      "faqs": [
+        {
+          "question": "Why does my Phoenix ranking not help me in Scottsdale?",
+          "answer": "Because the local map pack weighs the distance between the searcher and your business heavily. A searcher in Scottsdale sees a different result set than one in downtown Phoenix, even for the identical query. Each city needs its own page and its own local signals."
+        },
+        {
+          "question": "How do you handle the seasonal winter visitor swing?",
+          "answer": "We front-load content and budget ahead of the November to April window and shift spend toward retention and resident-focused terms over the summer, rather than running the same flat campaign year-round."
+        },
+        {
+          "question": "Which Valley cities should I target first?",
+          "answer": "Whichever ones you can actually service profitably. The audit maps search volume against your drive time and margin, so you are not paying to rank in a city where the job barely breaks even after travel."
+        },
+        {
+          "question": "How long does local SEO take in Phoenix?",
+          "answer": "First movement inside 90 days is typical. Multi-city Valley coverage takes longer because each city builds authority separately \u2014 expect six to nine months for full metro coverage."
+        },
+        {
+          "question": "Do you require a long-term contract?",
+          "answer": "No. Month to month, and you own every account and asset we touch."
+        }
+      ]
+    },
+    {
+      "serviceSlug": "google-ads",
+      "citySlug": "denver",
+      "headline": "Google Ads Management in Denver, Colorado",
+      "intro": "Denver click costs are high enough that a badly structured account bleeds money fast. We rebuild around your margin and service area, then feed real booked jobs back into bidding so Google optimises for revenue instead of cheap clicks.",
+      "stats": [
+        {
+          "value": "35mi",
+          "label": "Radius targeting"
+        },
+        {
+          "value": "Weekly",
+          "label": "Search term review"
+        },
+        {
+          "value": "Day 1",
+          "label": "You own the ad account"
+        }
+      ],
+      "localFactors": [
+        "Broad metro radius targeting wastes budget on Front Range towns you would never drive to \u2014 we tighten it to your actual service area.",
+        "Denver has enough agency-run accounts that auction prices stay elevated; conversion rate, not budget, is where the margin is.",
+        "Local Service Ads carry disproportionate weight in this market and are worth the verification paperwork."
+      ],
+      "faqs": [
+        {
+          "question": "How much should I budget for Google Ads in Denver?",
+          "answer": "It depends entirely on your cost per click and close rate, both of which vary hugely by industry. The audit works backwards from what a booked job is worth to you and gives you a floor below which the campaign cannot work."
+        },
+        {
+          "question": "Do you set up Local Service Ads too?",
+          "answer": "Yes. We handle the licence, insurance and background check paperwork through to the Google Guaranteed badge, and manage lead disputes afterwards."
+        },
+        {
+          "question": "Who owns the Google Ads account?",
+          "answer": "You do, from day one. We work inside your account rather than a shared agency one. If you leave, the account, its history and all its learning stay with you."
+        },
+        {
+          "question": "How do you stop wasted spend?",
+          "answer": "Weekly search term reviews, an actively maintained negative keyword list, tightened radius targeting, and offline conversion imports so bidding learns from booked jobs rather than form fills."
+        },
+        {
+          "question": "How quickly will I see leads?",
+          "answer": "Paid search produces leads in the first week. The first month is mostly about getting conversion tracking correct \u2014 optimising against wrong numbers is worse than not optimising at all."
+        }
+      ]
+    },
+    {
+      "serviceSlug": "google-ads",
+      "citySlug": "austin",
+      "headline": "Google Ads Management in Austin, Texas",
+      "intro": "Austin auction prices climb as fast as the population. We structure campaigns around what a booked job is actually worth to you, so rising click costs do not quietly turn a profitable account into a break-even one.",
+      "stats": [
+        {
+          "value": "40mi",
+          "label": "Radius targeting"
+        },
+        {
+          "value": "Weekly",
+          "label": "Search term review"
+        },
+        {
+          "value": "Day 1",
+          "label": "You own the ad account"
+        }
+      ],
+      "localFactors": [
+        "Continuous competitor entry pushes CPCs up over time \u2014 accounts that were profitable 18 months ago often are not any more without restructuring.",
+        "The I-35 split means one metro-wide radius mixes two markets with different conversion rates.",
+        "A high share of new residents means brand-agnostic, high-intent search demand is unusually strong."
+      ],
+      "faqs": [
+        {
+          "question": "Why has my Austin cost per lead gone up?",
+          "answer": "Usually competitor entry rather than anything you changed. Austin adds advertisers continuously, which lifts auction prices. The fix is normally conversion rate and bidding signals, not a bigger budget."
+        },
+        {
+          "question": "Should I target the whole Austin metro?",
+          "answer": "Rarely. A single 40-mile radius mixes areas with very different conversion rates and drive times. We segment by area and set bids against what each one is actually worth to you."
+        },
+        {
+          "question": "Do you write the ad copy and build the landing pages?",
+          "answer": "Yes. One landing page per campaign, matched to the ad that sent the click. Sending every campaign to your homepage is the single most common reason a well-targeted account still fails."
+        },
+        {
+          "question": "What reporting do I get?",
+          "answer": "Monthly reporting on cost per booked job, not impressions. We also review recorded calls so bad leads become negative keywords and good leads become bidding signals."
+        },
+        {
+          "question": "Is there a minimum contract?",
+          "answer": "No. Month to month, and the ad account is yours throughout."
+        }
+      ]
+    },
+    {
+      "serviceSlug": "google-ads",
+      "citySlug": "phoenix",
+      "headline": "Google Ads Management in Phoenix, Arizona",
+      "intro": "In a metro this spread out, radius targeting is the whole game. We set bids by city and drive time so you are not paying Scottsdale prices for a job 45 minutes away that barely clears cost.",
+      "stats": [
+        {
+          "value": "45mi",
+          "label": "Radius targeting"
+        },
+        {
+          "value": "Weekly",
+          "label": "Search term review"
+        },
+        {
+          "value": "Day 1",
+          "label": "You own the ad account"
+        }
+      ],
+      "localFactors": [
+        "Valley-wide radius targeting is the most common and most expensive mistake in Phoenix accounts \u2014 travel time destroys margin on distant jobs.",
+        "Seasonal winter visitors change both search volume and lead quality between November and April.",
+        "Scottsdale commands materially higher click prices than west Valley cities for the same query."
+      ],
+      "faqs": [
+        {
+          "question": "How should I set radius targeting across the Valley?",
+          "answer": "By drive time and margin, not by a single circle around your address. We split the metro into bid-adjusted zones so a job in Scottsdale and a job 45 minutes west are not valued the same."
+        },
+        {
+          "question": "Do winter visitors change how the campaign should run?",
+          "answer": "Yes. Volume climbs from November through April and lead quality shifts. We adjust budget pacing and messaging rather than running one flat campaign all year."
+        },
+        {
+          "question": "Why are Scottsdale clicks so much more expensive?",
+          "answer": "Higher household income and more advertisers competing for the same audience. Whether that premium is worth paying depends on your average job value \u2014 the audit works that out before you spend."
+        },
+        {
+          "question": "Can you run ads alongside my SEO?",
+          "answer": "That is usually the right sequence. Paid covers the gap while organic builds, then spend gets reallocated rather than increased as rankings climb."
+        },
+        {
+          "question": "Do I own the account?",
+          "answer": "Yes. Your account, your data, your conversion history, from day one."
+        }
+      ]
+    }
+  ]
+}
