@@ -27,13 +27,15 @@ const MODEL = 'gemini-2.5-flash-image';
 
 /* Appended to every prompt so the whole set reads as one system. */
 const STYLE =
-  ' — flat vector editorial illustration, fully transparent background (alpha, no backdrop), ' +
-  'deep navy #00386C and bright blue #0974E4 as the primary colours with warm amber #FBBB5B ' +
-  'used sparingly for accents, soft translucent circles and fine dot-grid textures in the ' +
-  'negative space, clean minimal geometry, rounded shapes, subtle depth. Any people are ' +
-  'simplified and stylised with minimal facial detail, shown small within the composition. ' +
-  'No text, no lettering, no logos. Generous negative space, balanced composition, ' +
-  'professional and modern. Consistent line weight and colour palette across the set.';
+  ' — flat vector editorial illustration on a plain solid pure-white background (#FFFFFF), ' +
+  'the white fills the whole frame edge to edge. Absolutely no checkerboard pattern, no grey ' +
+  'squares, no transparency grid, no drop shadow behind the artwork. Deep navy #00386C and ' +
+  'bright blue #0974E4 as the primary colours with warm amber #FBBB5B used sparingly for ' +
+  'accents, soft pale-blue circles and fine dot-grid textures in the negative space, clean ' +
+  'minimal geometry, rounded shapes, subtle depth. Any people are simplified and stylised ' +
+  'with minimal facial detail, shown small within the composition. No text, no lettering, no ' +
+  'logos. Generous white space, balanced composition, professional and modern. Consistent ' +
+  'line weight and colour palette across the set.';
 
 /** @type {{file:string, aspect:string, prompt:string}[]} */
 const MANIFEST = [
@@ -330,9 +332,12 @@ async function generateOne(ai, entry, attempt = 1) {
 
   const png = Buffer.from(img.inlineData.data, 'base64');
   const width = WIDTHS[entry.aspect] ?? 1400;
+  // Flatten onto white so any stray alpha the model returns can't render as a
+  // grey checkerboard on the page. The art is designed to sit on white anyway.
   return sharp(png)
+    .flatten({ background: '#ffffff' })
     .resize({ width, withoutEnlargement: true })
-    .webp({ quality: 82, alphaQuality: 90, effort: 5 })
+    .webp({ quality: 82, effort: 5 })
     .toBuffer();
 }
 

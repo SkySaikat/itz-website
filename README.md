@@ -112,6 +112,27 @@ Helper classes in `globals.css`: `.eyebrow-script` (Caveat), `.eyebrow-caps`,
 | Shadows | Neutral grey | Blue-tinted, so they read as lift on `#F4F6FB` |
 | Motion | — | Honours `prefers-reduced-motion` |
 
+### 3a. Refresh pass (bolder visual language)
+
+Same structure, palette and fonts — a more assertive treatment on top of the
+existing system. All new component props are optional, so every prior call site
+still works.
+
+| Area | Change |
+| ---- | ------ |
+| Display type | `display-xl` up to ~76px; new `display-2xl` for the homepage H1; tighter tracking; new `body-xl` |
+| Backgrounds | `gradient-mesh` / `gradient-mesh-dark` soft colour pools behind heroes, Stats, CTA, Footer (`.mesh` / `.mesh-dark` in `globals.css`) |
+| Utilities | `.text-gradient` (navy→blue clip), `.glass` (frosted panel), `.accent-orb` (standardised drifting blur), `.hairline-divider` |
+| Buttons | New `xl` size; primary carries `shadow-glow` and a hover lift; ghost gets a faint rest fill |
+| Cards | `rounded-[1.75rem]`, deeper `shadow-card-lg`, a gradient hairline that fades in on hover |
+| Header | Persistent frosted glass, not only after scroll |
+| Section rhythm | ~10% more vertical space (`section` 5rem / `section-lg` 8.5rem); container caps at 1312–1376px |
+
+New shared components: `sections/FeatureRows` (alternating image/text rows),
+`sections/ProcessTimeline` + `ProcessSection` (numbered vertical timeline —
+replaces the inline `STEPS` array in the sub-industry page), `sections/SignalGrid`
+("how we know it's working" cards), `ui/PullQuote`.
+
 ---
 
 ## 4. Structure
@@ -417,6 +438,33 @@ Composites keep their alpha and render `object-contain`; photographs render
 they run toward the viewport edge (`lg:-mr-[6vw]`) — the crop then reads as
 intentional.
 
+### Generated illustrations
+
+The refresh added ~30 flat-vector illustrations (navy/blue/amber on a solid
+white background — they sit in white `ring-1` framed cards) for the new
+long-form sections:
+
+| Set | Used by |
+| --- | --- |
+| `home/{process,difference,reporting}.webp` | Homepage "Why teams switch to us" rows |
+| `about/{story,approach-*,process,industries}.webp` | About page story + approach rows |
+| `industries/<slug>-{strategy,approach,market}.webp` | Industry "How we run … campaigns" rows |
+| `services/<slug>-process.webp` | Service page expanded intro (5 primary services) |
+| `who-we-serve/hero.webp` | Who We Serve intro |
+
+```bash
+npm run generate:images -- --api-key <GEMINI_KEY>   # or GEMINI_API_KEY
+npm run generate:images -- --only industries --force # regenerate a subset
+npm run generate:images -- --list                   # print the manifest
+```
+
+`scripts/generate-images.mjs` calls `gemini-2.5-flash-image`, then flattens onto
+white and re-encodes to WebP with `sharp` (~15–40 KB each). The prompt asks for a
+solid white background explicitly — asking the model for a *transparent*
+background makes it paint the grey transparency-checkerboard pattern into the
+pixels. Idempotent: existing files are skipped unless `--force`. The key is read
+from the flag or the environment only, never written to disk.
+
 ### Template identities
 
 Each template now has its own layout so no two page types read the same:
@@ -489,9 +537,22 @@ of rendered visible text:
 | `whoItsFor` + `notFor` | services | `PerksBand`, with the "and who it isn't" caveat called out |
 | `faqs` | industries, sub-industries, services | `FaqSection` + `FAQPage` schema |
 
-`src/lib/about-content.ts` holds the About page copy. FAQ questions 1–5 there are
+The refresh added a second, deeper layer of copy, kept in dedicated
+augment files so the validated core structures stay small:
+
+| File | Fields | Renders as |
+| --- | --- | --- |
+| `src/lib/home-content.ts` | `differenceRows`, `howWeWork`, `faqs` | Homepage `FeatureRows` + `ProcessSection` + `FaqSection` |
+| `src/lib/industry-content.ts` | `industryExtras[slug]` — `approach`, `expandedContext`, `signals`, `channelNotes`; `subIndustryExtras[slug]` — `expandedContext`, `checklist` | Industry `FeatureRows` / `SignalGrid` / longer `ContextBlock`; sub-industry checklist band |
+| `src/lib/service-content.ts` | `serviceExtras[slug]` — `expandedSummary`, `process`, `commonMistakes`, `outcomes` | Service expanded intro, `ProcessSection`, mistakes grid, `SignalGrid` |
+| `src/lib/about-content.ts` | added `approach`, `process`, `workingWith`, `results`, `industriesIntro` | About `FeatureRows`, `ProcessSection`, "who you work with", `SignalGrid` |
+
+Every extra record is keyed by slug and rendered only when present, so a page
+with no augment record falls back to exactly its previous layout.
+
+`src/lib/about-content.ts` holds the About page copy. FAQ questions 1–6 there are
 the **exact questions from the live WordPress About page**; the answers were
-written for this rebuild.
+written for this rebuild (questions 7–8 were added for the refresh).
 
 All of it was drafted under the same house rules as the generator prompt — no
 invented statistics, percentages, dollar figures, review counts or client names.

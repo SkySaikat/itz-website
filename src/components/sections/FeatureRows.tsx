@@ -54,14 +54,14 @@ export function FeatureRows({
               className={cn('relative', i % 2 === 1 && 'lg:order-2')}
               data-reveal={i % 2 === 1 ? 'right' : 'left'}
             >
-              <div className="media-zoom group relative aspect-[4/3] overflow-hidden rounded-4xl bg-gradient-to-br from-blue-50 to-surface-muted ring-1 ring-navy-100">
+              <div className="media-zoom group relative aspect-[4/3] overflow-hidden rounded-4xl bg-white shadow-card ring-1 ring-navy-100">
                 <Image
                   src={row.image}
                   alt={row.imageAlt}
                   fill
                   loading="lazy"
                   sizes="(min-width: 1024px) 46vw, 100vw"
-                  className="object-contain p-4"
+                  className="object-contain"
                 />
               </div>
             </div>

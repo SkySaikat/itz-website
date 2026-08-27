@@ -101,14 +101,14 @@ export default async function ServicePage({ params }: { params: Promise<{ servic
             </div>
             {hasProcessImage ? (
               <div className="min-w-0 lg:col-span-5" data-reveal="right">
-                <div className="relative aspect-[4/3] overflow-hidden rounded-4xl bg-gradient-to-br from-blue-50 to-surface-muted ring-1 ring-navy-100">
+                <div className="relative aspect-[4/3] overflow-hidden rounded-4xl bg-white shadow-card ring-1 ring-navy-100">
                   <Image
                     src={`/images/services/${service.slug}-process.webp`}
                     alt={`How ${label} works`}
                     fill
                     loading="lazy"
                     sizes="(min-width: 1024px) 40vw, 100vw"
-                    className="object-contain p-4"
+                    className="object-contain"
                   />
                 </div>
               </div>
@@ -165,7 +165,7 @@ export default async function ServicePage({ params }: { params: Promise<{ servic
       {extra ? (
         <ProcessSection
           eyebrow="The engagement"
-          title={`How a ${label} engagement runs`}
+          title={`How the ${label} engagement runs`}
           intro="The sequence rarely changes, even though every account does. Fix the foundation, launch what is fast, then compound."
           steps={extra.process.map((s) => ({ phase: s.phase, title: '', body: s.body }))}
           tone="white"

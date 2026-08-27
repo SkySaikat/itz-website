@@ -209,8 +209,8 @@ export default async function IndustryPage({ params }: { params: Promise<{ indus
       {extra ? (
         <SignalGrid
           eyebrow="How we know it's working"
-          title={`What we watch on a ${lower} account`}
-          intro="Booked work is the goal, but it lags. These are the earlier signals that tell us the campaign is on track."
+          title="What we watch, month to month"
+          intro={`Booked work is the goal, but it lags. These are the earlier signals that tell us a ${lower} campaign is on track.`}
           signals={extra.signals}
           tone={industry.perks ? 'muted' : 'white'}
         />

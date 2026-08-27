@@ -34,6 +34,7 @@ export function Testimonials() {
       <SectionHeading
         eyebrow="What our clients are saying"
         title="Two decades of partnerships, not campaigns"
+        size="lg"
       />
 
       <TestimonialCarousel testimonials={testimonials} className="mt-14" />

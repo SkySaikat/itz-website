@@ -92,14 +92,14 @@ export default function AboutPage() {
               {site.yearsInBusiness} years of local campaigns, {site.rating.count}+ businesses
             </h2>
 
-            <div className="mt-8 overflow-hidden rounded-4xl bg-gradient-to-br from-blue-50 to-surface-muted ring-1 ring-navy-100">
+            <div className="mt-8 overflow-hidden rounded-4xl bg-white shadow-card ring-1 ring-navy-100">
               <div className="relative aspect-[4/3]">
                 <Image
                   src="/images/about/story.webp"
                   alt="A timeline of steady growth from a seedling to a city skyline"
                   fill
                   sizes="(min-width: 1024px) 40vw, 100vw"
-                  className="object-contain p-4"
+                  className="object-contain"
                 />
               </div>
             </div>

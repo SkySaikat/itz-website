@@ -19,6 +19,7 @@ export function IndustriesGrid() {
       <SectionHeading
         eyebrow="Who we serve"
         title="Five industries, one clear strategy each"
+        size="lg"
         intro="Legal, medical, real estate, education and automotive businesses all compete for local visibility differently — different keywords, different compliance rules, different buyer urgency. We build a distinct strategy for each rather than one generic template."
       />
 
@@ -28,7 +29,7 @@ export function IndustriesGrid() {
 
           return (
             <li key={industry.slug} data-reveal data-reveal-delay={i}>
-              <article className="group relative flex h-full flex-col rounded-3xl border border-navy-100 bg-white p-7 shadow-card transition-all duration-300 ease-out hover:-translate-y-1 hover:border-blue-200 hover:shadow-card-hover focus-within:-translate-y-1 focus-within:shadow-card-hover">
+              <article className="group relative flex h-full flex-col rounded-[1.75rem] border border-navy-100 bg-white p-7 shadow-card transition-all duration-300 ease-out hover:-translate-y-1.5 hover:border-blue-200 hover:shadow-card-lg focus-within:-translate-y-1.5 focus-within:shadow-card-lg">
                 <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-50 text-blue-600 ring-1 ring-blue-100 transition-colors group-hover:bg-blue-600 group-hover:text-white">
                   <Icon className="h-6 w-6" aria-hidden="true" />
                 </span>
