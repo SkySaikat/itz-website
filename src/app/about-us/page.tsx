@@ -1,15 +1,20 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
+import { CircleCheck } from 'lucide-react';
 
 import { ClientLogos } from '@/components/sections/ClientLogos';
 import { ContextBlock } from '@/components/sections/ContextBlock';
 import { CtaBanner } from '@/components/sections/CtaBanner';
 import { FaqSection } from '@/components/sections/FaqSection';
+import { FeatureRows } from '@/components/sections/FeatureRows';
 import { PerksBand } from '@/components/sections/PerksBand';
+import { ProcessSection } from '@/components/sections/ProcessTimeline';
+import { SignalGrid } from '@/components/sections/SignalGrid';
 import { Stats } from '@/components/sections/Stats';
 import { Testimonials } from '@/components/sections/Testimonials';
 import { PageHero } from '@/components/ui/PageHero';
+import { PullQuote } from '@/components/ui/PullQuote';
 import { Button } from '@/components/ui/Button';
 import { Section, SectionHeading } from '@/components/ui/Section';
 import { about } from '@/lib/about-content';
@@ -41,6 +46,30 @@ const values = [
   },
 ];
 
+const approachRows = [
+  {
+    title: about.approach[0].title,
+    body: [about.approach[0].body],
+    image: '/images/about/approach-strategy.webp',
+    imageAlt: 'A compass and a route mapped across a folded map',
+    kicker: 'How we work',
+  },
+  {
+    title: about.approach[1].title,
+    body: [about.approach[1].body],
+    image: '/images/about/approach-ownership.webp',
+    imageAlt: 'A set of keys and an open vault holding account, analytics and domain tiles',
+    kicker: 'How we work',
+  },
+  {
+    title: about.approach[2].title,
+    body: [about.approach[2].body],
+    image: '/images/about/approach-honesty.webp',
+    imageAlt: 'A signpost at a fork in the road, one path marked with a checkmark',
+    kicker: 'How we work',
+  },
+];
+
 export default function AboutPage() {
   return (
     <>
@@ -62,6 +91,18 @@ export default function AboutPage() {
             <h2 className="text-display-md text-navy-700">
               {site.yearsInBusiness} years of local campaigns, {site.rating.count}+ businesses
             </h2>
+
+            <div className="mt-8 overflow-hidden rounded-4xl bg-gradient-to-br from-blue-50 to-surface-muted ring-1 ring-navy-100">
+              <div className="relative aspect-[4/3]">
+                <Image
+                  src="/images/about/story.webp"
+                  alt="A timeline of steady growth from a seedling to a city skyline"
+                  fill
+                  sizes="(min-width: 1024px) 40vw, 100vw"
+                  className="object-contain p-4"
+                />
+              </div>
+            </div>
           </div>
 
           <div className="space-y-5 text-body-lg text-ink-600 min-w-0 lg:col-span-7" data-reveal="right">
@@ -83,6 +124,11 @@ export default function AboutPage() {
               across our five core industries typically see cost per lead fall as organic rankings
               climb, because free organic traffic starts doing the work that paid clicks used to.
             </p>
+
+            <PullQuote cite="Our first principle">
+              Pick the number that matters to your business, then work backward to the channels that
+              move it.
+            </PullQuote>
           </div>
         </div>
       </Section>
@@ -91,7 +137,13 @@ export default function AboutPage() {
           industries rather than just naming them. */}
       <section aria-label="Industries we serve" className="bg-white pb-4">
         <div className="container">
-          <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+          <div className="max-w-measure" data-reveal>
+            <p className="eyebrow-script mb-3">Who we serve</p>
+            <h2 className="text-display-sm text-navy-700">Five fields, learned properly</h2>
+            <p className="mt-4 text-body-lg text-ink-600">{about.industriesIntro}</p>
+          </div>
+
+          <ul className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
             {[
               { slug: 'lawyers', label: 'Legal', img: 'lawyers-criminal-defense' },
               { slug: 'medical', label: 'Medical', img: 'medical-dentists' },
@@ -138,6 +190,22 @@ export default function AboutPage() {
         tone="muted"
       />
 
+      <FeatureRows
+        eyebrow="How we work"
+        title="Three things we do differently"
+        intro="None of these are hard to promise. They are just uncommon enough to be worth writing down — and turning down work over."
+        rows={approachRows}
+        mesh
+      />
+
+      <ProcessSection
+        eyebrow="The engagement"
+        title="What the first six months look like"
+        intro="Every account is different, but the sequence rarely is. Fix what is broken, launch what is fast, compound what lasts."
+        steps={about.process}
+        tone="muted"
+      />
+
       <PerksBand
         eyebrow="Why us"
         title="Some of the perks of working with us"
@@ -161,7 +229,7 @@ export default function AboutPage() {
       <ContextBlock
         eyebrow="What we do"
         title={renderHighlight(about.whatWeDoHeadline, about.whatWeDoHighlight)}
-        paragraphs={[about.whatWeDoBody]}
+        paragraphs={[about.whatWeDoBody, about.whatWeDoBodyExtra]}
       />
 
       <div className="container -mt-8 pb-section lg:pb-section-lg" data-reveal>
@@ -171,6 +239,35 @@ export default function AboutPage() {
       </div>
 
       <Section tone="muted">
+        <div className="grid gap-10 lg:grid-cols-12 lg:gap-8 xl:gap-16">
+          <div className="min-w-0 lg:col-span-5">
+            <SectionHeading
+              eyebrow="Who you work with"
+              title="A strategist, not a switchboard"
+              intro="The person on your kickoff call is the person running your account. There is no media desk in another building translating your goals into a brief."
+            />
+          </div>
+          <div className="min-w-0 lg:col-span-7" data-reveal="right">
+            <ul className="space-y-1 rounded-4xl bg-white p-7 shadow-card sm:p-9">
+              {about.workingWith.map((item, i) => (
+                <li key={item} className="flex gap-4 py-3" data-reveal data-reveal-delay={i}>
+                  <CircleCheck className="mt-0.5 h-5 w-5 shrink-0 text-blue-600" aria-hidden="true" />
+                  <span className="text-[0.9375rem] leading-relaxed text-ink-700">{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </Section>
+
+      <SignalGrid
+        eyebrow="What changes"
+        title="How the first two quarters usually go"
+        intro="No invented numbers here — every campaign and market is different. These are the shifts clients tell us they notice first."
+        signals={about.results}
+      />
+
+      <Section>
         <SectionHeading
           eyebrow="How we work"
           title="Four commitments we will not trade away"
@@ -180,7 +277,7 @@ export default function AboutPage() {
         <ul className="mt-14 grid gap-6 md:grid-cols-2">
           {values.map((value, i) => (
             <li key={value.title} data-reveal data-reveal-delay={i}>
-              <article className="h-full rounded-3xl border border-navy-100 bg-white p-8 shadow-card">
+              <article className="h-full rounded-[1.75rem] border border-navy-100 bg-white p-8 shadow-card">
                 <span className="text-eyebrow uppercase text-blue-600">
                   {String(i + 1).padStart(2, '0')}
                 </span>
