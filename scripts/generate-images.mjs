@@ -189,6 +189,48 @@ const MANIFEST = [
       'for seasonal demand.',
   },
 
+  // Third industry illustration — the "strategy" row of the approach section.
+  {
+    file: 'industries/lawyers-strategy.webp',
+    aspect: '4:3',
+    prompt:
+      'Building a law-firm marketing strategy: a set of labelled practice-area page ' +
+      'cards arranged in a plan, a compliance shield with a checkmark, a route line ' +
+      'connecting them to a rising results chart.',
+  },
+  {
+    file: 'industries/medical-strategy.webp',
+    aspect: '4:3',
+    prompt:
+      'Building a medical-practice marketing strategy: a Google-business-style profile ' +
+      'card at the centre with service tags, review stars and a map pin, connected to a ' +
+      'short booking flow ending in a calendar slot.',
+  },
+  {
+    file: 'industries/real-estate-strategy.webp',
+    aspect: '4:3',
+    prompt:
+      'Building a real-estate marketing strategy: neighbourhood map tiles feeding a ' +
+      'lead funnel into an owned CRM contact list, with a follow-up sequence shown as ' +
+      'connected message dots over time.',
+  },
+  {
+    file: 'industries/education-strategy.webp',
+    aspect: '4:3',
+    prompt:
+      'Building a school marketing strategy: an annual calendar ring marked with ' +
+      'seasonal admissions windows, a funnel from enquiry to booked tour to enrolled ' +
+      'student, two small figures representing a parent and a student.',
+  },
+  {
+    file: 'industries/automotive-strategy.webp',
+    aspect: '4:3',
+    prompt:
+      'Building an auto-shop marketing strategy: a local map with a highlighted ' +
+      'three-result map pack, specialisation badges (EV, diesel, European), and a ' +
+      'seasonal demand curve with marked spikes.',
+  },
+
   // ── Services: <slug>-process ──────────────────────────────────────────────
   {
     file: 'services/seo-process.webp',

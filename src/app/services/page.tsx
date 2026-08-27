@@ -2,11 +2,35 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 
 import { CtaBanner } from '@/components/sections/CtaBanner';
+import { ProcessSection } from '@/components/sections/ProcessTimeline';
 import { LinkCard } from '@/components/ui/Card';
 import { PageHero } from '@/components/ui/PageHero';
 import { Button } from '@/components/ui/Button';
 import { Section, SectionHeading } from '@/components/ui/Section';
 import { services } from '@/lib/services';
+
+const sequence = [
+  {
+    phase: 'Start here',
+    title: 'SEO and the Google Business Profile',
+    body: 'The foundation for almost every local business. It compounds, it lowers cost per lead over time, and it keeps producing between ad flights. Slower to show results, so it goes in first.',
+  },
+  {
+    phase: 'Layer in',
+    title: 'Paid search — Google Ads or PPC management',
+    body: 'Covers the gap while SEO builds. Calls within weeks, budget you can turn up or down, and the search-term data feeds the organic work. The obvious second move for most accounts.',
+  },
+  {
+    phase: 'When it fits',
+    title: 'Paid social, programmatic and a rebuilt site',
+    body: 'Meta and other social ads for demand you build rather than demand that exists; programmatic for reach; a website rebuild when the current site is capping everything above it. Added once the audit shows the specific gap.',
+  },
+  {
+    phase: 'Always on',
+    title: 'Lead generation as the system around all of it',
+    body: 'Tracking, routing and follow-up tying the channels together. The biggest leaks are usually here — a slow callback, a form in an unwatched inbox — not in the ad spend.',
+  },
+];
 
 export const metadata: Metadata = {
   title: 'Digital Marketing Services',
@@ -55,7 +79,15 @@ export default function ServicesPage() {
         </ul>
       </Section>
 
-      <div className="pb-section lg:pb-section-lg">
+      <ProcessSection
+        eyebrow="How to sequence it"
+        title="Most clients do not need all of it at once"
+        intro="There is a usual order, and it is not an accident. Foundation first, fast lane second, everything else when the audit says so."
+        steps={sequence}
+        tone="muted"
+      />
+
+      <div className="py-section lg:py-section-lg">
         <CtaBanner
           title="Not sure which channel to start with?"
           highlight="which channel"

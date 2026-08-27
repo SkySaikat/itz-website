@@ -44,7 +44,7 @@ export function FeatureRows({
     <Section tone={tone} id={id} mesh={mesh}>
       {title ? <SectionHeading eyebrow={eyebrow} title={title} intro={intro} /> : null}
 
-      <div className={cn('space-y-16 lg:space-y-24', title && 'mt-16')}>
+      <div className={cn('space-y-16 lg:space-y-24', Boolean(title) && 'mt-16')}>
         {rows.map((row, i) => (
           <div
             key={row.title}

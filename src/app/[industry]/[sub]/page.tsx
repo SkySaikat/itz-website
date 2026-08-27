@@ -2,14 +2,16 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { AlertTriangle, ArrowRight, Check, ChevronRight } from 'lucide-react';
+import { AlertTriangle, ArrowRight, ChevronRight, CircleCheck } from 'lucide-react';
 
 import { ContextBlock } from '@/components/sections/ContextBlock';
 import { CtaBanner } from '@/components/sections/CtaBanner';
 import { FaqSection } from '@/components/sections/FaqSection';
+import { ProcessTimeline } from '@/components/sections/ProcessTimeline';
 import { Button } from '@/components/ui/Button';
 import { Section, SectionHeading } from '@/components/ui/Section';
 import { industries, industryBySlug } from '@/lib/industries';
+import { subIndustryExtras } from '@/lib/industry-content';
 import { homepageServices } from '@/lib/services';
 import { site } from '@/lib/site';
 
@@ -52,10 +54,10 @@ export async function generateMetadata({
 }
 
 const STEPS = [
-  { week: 'Week 1', title: 'Audit', body: (n: string) => `A full read of your current ${n} visibility: rankings, ad spend efficiency, tracking accuracy and the three competitors taking your calls.` },
-  { week: 'Weeks 2–3', title: 'Foundation', body: () => 'Tracking fixed first. There is no point optimising against numbers that are wrong, and most accounts we inherit have broken conversion tracking.' },
-  { week: 'Month 2+', title: 'Compound', body: () => 'SEO and content build the base while paid covers the gap. As organic rankings climb, paid spend gets reallocated rather than increased.' },
-  { week: 'Ongoing', title: 'Report on jobs', body: () => 'Monthly reporting on booked work, not impressions. If the number is not moving, we say so and change the plan.' },
+  { phase: 'Week 1', title: 'Audit', body: (n: string) => `A full read of your current ${n} visibility: rankings, ad spend efficiency, tracking accuracy and the three competitors taking your calls.` },
+  { phase: 'Weeks 2–3', title: 'Foundation', body: () => 'Tracking fixed first. There is no point optimising against numbers that are wrong, and most accounts we inherit have broken conversion tracking.' },
+  { phase: 'Month 2+', title: 'Compound', body: () => 'SEO and content build the base while paid covers the gap. As organic rankings climb, paid spend gets reallocated rather than increased.' },
+  { phase: 'Ongoing', title: 'Report on jobs', body: () => 'Monthly reporting on booked work, not impressions. If the number is not moving, we say so and change the plan.' },
 ];
 
 export default async function SubIndustryPage({
@@ -71,6 +73,8 @@ export default async function SubIndustryPage({
   const siblings = industry.children.filter((c) => c.slug !== sub.slug);
   const image = `/images/industries/${industry.slug}-${sub.slug}.webp`;
   const lower = sub.name.toLowerCase();
+  const subExtra = subIndustryExtras[sub.slug];
+  const steps = STEPS.map((s) => ({ phase: s.phase, title: s.title, body: s.body(lower) }));
 
   return (
     <>
@@ -152,39 +156,51 @@ export default async function SubIndustryPage({
           <div className="min-w-0 lg:col-span-7" data-reveal="right">
             <p className="eyebrow-caps">The fix</p>
             <h2 className="mt-3 text-display-sm text-navy-700">How the engagement runs</h2>
-
-            <ol className="relative mt-9 space-y-8 before:absolute before:bottom-4 before:left-[1.0625rem] before:top-4 before:w-px before:bg-gradient-to-b before:from-blue-200 before:via-blue-200 before:to-transparent">
-              {STEPS.map((step, idx) => (
-                <li key={step.title} className="relative flex gap-6" data-reveal data-reveal-delay={idx}>
-                  <span className="relative z-10 mt-0.5 inline-flex h-[2.125rem] w-[2.125rem] shrink-0 items-center justify-center rounded-full bg-gradient-cta text-white shadow-cta">
-                    <Check className="h-4 w-4" strokeWidth={3} aria-hidden="true" />
-                  </span>
-                  <div className="pb-1">
-                    <p className="text-eyebrow uppercase text-blue-600">{step.week}</p>
-                    <h3 className="mt-1 text-lg font-bold text-navy-700">{step.title}</h3>
-                    <p className="mt-2 max-w-prose text-[0.9375rem] leading-relaxed text-ink-600">
-                      {step.body(lower)}
-                    </p>
-                  </div>
-                </li>
-              ))}
-            </ol>
+            <ProcessTimeline steps={steps} className="mt-9" />
           </div>
         </div>
       </Section>
 
       {/* ── Niche context ────────────────────────────────────────────────── */}
-      {sub.context ? (
+      {sub.context || subExtra ? (
         <ContextBlock
           eyebrow="The niche"
           title={`What makes ${lower} different`}
-          paragraphs={[sub.context]}
+          paragraphs={[
+            ...(sub.context ? [sub.context] : []),
+            ...(subExtra?.expandedContext ?? []),
+          ]}
           tone="muted"
         />
       ) : null}
 
+      {/* ── What a well-run account has in place ─────────────────────────── */}
+      {subExtra ? (
+        <Section>
+          <div className="grid gap-10 lg:grid-cols-12 lg:gap-8 xl:gap-16">
+            <div className="min-w-0 lg:col-span-5">
+              <SectionHeading
+                eyebrow="The checklist"
+                title={`What a well-run ${lower} account has in place`}
+                intro="If you are already working with an agency, this is a useful list to hold them to. If you are not, it is what we build first."
+              />
+            </div>
+            <div className="min-w-0 lg:col-span-7" data-reveal="right">
+              <ul className="space-y-1 rounded-4xl bg-blue-50/70 p-7 sm:p-9">
+                {subExtra.checklist.map((item, i) => (
+                  <li key={item} className="flex gap-4 py-3" data-reveal data-reveal-delay={i}>
+                    <CircleCheck className="mt-0.5 h-5 w-5 shrink-0 text-blue-600" aria-hidden="true" />
+                    <span className="text-[0.9375rem] leading-relaxed text-ink-700">{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </Section>
+      ) : null}
+
       {/* ── Channels ────────────────────────────────────────────────────── */}
-      <Section tone={sub.context ? 'white' : 'muted'}>
+      <Section tone="muted">
         <SectionHeading
           eyebrow="Channels"
           title={`What we typically run for ${lower}`}
@@ -218,7 +234,7 @@ export default async function SubIndustryPage({
           faqs={sub.faqs}
           path={`/${industry.slug}/${sub.slug}`}
           title={`${sub.name}: common questions`}
-          tone="muted"
+          tone="white"
         />
       ) : null}
 

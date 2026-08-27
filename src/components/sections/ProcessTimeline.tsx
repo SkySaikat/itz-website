@@ -6,7 +6,8 @@ import { cn } from '@/lib/cn';
 export type ProcessStep = {
   /** e.g. "Week 1", "Phase 2", "Ongoing". */
   phase: string;
-  title: string;
+  /** Optional — when omitted the phase carries the step on its own. */
+  title?: string;
   body: string;
 };
 
@@ -30,13 +31,15 @@ export function ProcessTimeline({
       )}
     >
       {steps.map((step, idx) => (
-        <li key={step.title} className="relative flex gap-6" data-reveal data-reveal-delay={idx}>
+        <li key={`${step.phase}-${idx}`} className="relative flex gap-6" data-reveal data-reveal-delay={idx}>
           <span className="relative z-10 mt-0.5 inline-flex h-[2.125rem] w-[2.125rem] shrink-0 items-center justify-center rounded-full bg-gradient-cta text-white shadow-cta">
             <Check className="h-4 w-4" strokeWidth={3} aria-hidden="true" />
           </span>
           <div className="pb-1">
             <p className="text-eyebrow uppercase text-blue-600">{step.phase}</p>
-            <h3 className="mt-1 text-lg font-bold text-navy-700">{step.title}</h3>
+            {step.title ? (
+              <h3 className="mt-1 text-lg font-bold text-navy-700">{step.title}</h3>
+            ) : null}
             <p className="mt-2 max-w-prose text-[0.9375rem] leading-relaxed text-ink-600">
               {step.body}
             </p>
