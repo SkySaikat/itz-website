@@ -3,7 +3,7 @@ import type { ComponentPropsWithoutRef, ReactNode } from 'react';
 import { cn } from '@/lib/cn';
 
 type Variant = 'primary' | 'secondary' | 'ghost' | 'onDark' | 'outlineOnDark';
-type Size = 'md' | 'lg';
+type Size = 'md' | 'lg' | 'xl';
 
 /*
  * Measured contrast (AA needs 4.5:1 for a label at these sizes):
@@ -24,27 +24,28 @@ const base =
 
 const variants: Record<Variant, string> = {
   primary:
-    'bg-gradient-cta text-white shadow-cta ring-blue-500 ' +
-    'hover:shadow-cta-hover hover:brightness-110 active:brightness-95 active:shadow-cta',
+    'bg-gradient-cta text-white shadow-glow ring-blue-500 ' +
+    'hover:shadow-cta-hover hover:brightness-110 hover:-translate-y-0.5 active:translate-y-0 active:brightness-95 active:shadow-cta',
   secondary:
     'bg-white text-blue-600 shadow-card ring-blue-500 ring-offset-white ' +
-    'hover:bg-blue-50 hover:text-blue-700 hover:shadow-card-hover active:bg-blue-100',
+    'hover:bg-blue-50 hover:text-blue-700 hover:shadow-card-hover hover:-translate-y-0.5 active:translate-y-0 active:bg-blue-100',
   ghost:
-    'border-2 border-navy-200 bg-transparent text-navy-700 ring-blue-500 ' +
+    'border-2 border-navy-200 bg-navy-50/50 text-navy-700 ring-blue-500 ' +
     'hover:border-navy-700 hover:bg-navy-50 active:bg-navy-100',
   onDark:
-    'bg-amber-400 text-navy-800 shadow-lg ring-amber-300 ring-offset-navy-800 ' +
-    'hover:bg-amber-300 hover:shadow-xl active:bg-amber-500',
+    'bg-gradient-amber text-navy-800 shadow-lg ring-amber-300 ring-offset-navy-800 ' +
+    'hover:brightness-105 hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 active:brightness-95',
   // `bg-none` is load-bearing: without it the gradient background-image from a
   // sibling utility survives a background-color override.
   outlineOnDark:
-    'border-2 border-white/40 bg-none bg-transparent text-white ring-amber-300 ring-offset-navy-800 ' +
+    'border-2 border-white/40 bg-none bg-white/5 text-white ring-amber-300 ring-offset-navy-800 ' +
     'hover:border-white/70 hover:bg-white/10 active:bg-white/20',
 };
 
 const sizes: Record<Size, string> = {
   md: 'min-h-tap px-6 text-[0.9375rem] tracking-wide',
   lg: 'min-h-[3.5rem] px-8 text-base tracking-wide',
+  xl: 'min-h-[3.75rem] px-9 text-[1.0625rem] tracking-wide',
 };
 
 type BaseProps = {

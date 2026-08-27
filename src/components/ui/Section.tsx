@@ -14,15 +14,30 @@ export function Section({
   className,
   children,
   id,
+  /** Paint the soft colour-mesh behind the section content. */
+  mesh = false,
+  /** Soft top fade instead of a hard edge against the previous section. */
+  divider = false,
 }: {
   tone?: Tone;
   className?: string;
   children: ReactNode;
   id?: string;
+  mesh?: boolean;
+  divider?: boolean;
 }) {
   return (
-    <section id={id} className={cn('section-y', tones[tone], className)}>
-      <div className="container">{children}</div>
+    <section
+      id={id}
+      className={cn(
+        'section-y',
+        tones[tone],
+        mesh && (tone === 'dark' ? 'mesh mesh-dark' : 'mesh'),
+        divider && 'hairline-divider',
+        className,
+      )}
+    >
+      <div className="container relative">{children}</div>
     </section>
   );
 }
@@ -34,6 +49,7 @@ export function SectionHeading({
   intro,
   align = 'left',
   tone = 'light',
+  size = 'md',
   action,
 }: {
   eyebrow?: string;
@@ -42,6 +58,8 @@ export function SectionHeading({
   intro?: ReactNode;
   align?: 'left' | 'center';
   tone?: 'light' | 'dark';
+  /** `lg` bumps the H2 to `display-lg` for section openers that carry weight. */
+  size?: 'md' | 'lg';
   action?: ReactNode;
 }) {
   const centered = align === 'center';
@@ -67,7 +85,14 @@ export function SectionHeading({
           </p>
         ) : null}
 
-        <h2 className={cn('text-display-md', tone === 'dark' && 'text-white')}>{title}</h2>
+        <h2
+          className={cn(
+            size === 'lg' ? 'text-display-lg' : 'text-display-md',
+            tone === 'dark' && 'text-white',
+          )}
+        >
+          {title}
+        </h2>
 
         {intro ? (
           <p

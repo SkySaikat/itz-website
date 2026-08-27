@@ -119,19 +119,22 @@ module.exports = {
 
       fontSize: {
         // Fluid display sizes: no jump between the 390px phone and 1440px desktop.
-        'display-xl': ['clamp(2.5rem, 1.6rem + 4.2vw, 4.5rem)', { lineHeight: '1.05', letterSpacing: '-0.03em', fontWeight: '800' }],
-        'display-lg': ['clamp(2.125rem, 1.5rem + 2.8vw, 3.5rem)', { lineHeight: '1.08', letterSpacing: '-0.025em', fontWeight: '800' }],
-        'display-md': ['clamp(1.75rem, 1.3rem + 2vw, 2.75rem)', { lineHeight: '1.15', letterSpacing: '-0.02em', fontWeight: '700' }],
-        'display-sm': ['clamp(1.5rem, 1.25rem + 1.1vw, 2rem)', { lineHeight: '1.2', letterSpacing: '-0.015em', fontWeight: '700' }],
-        'body-lg': ['1.125rem', { lineHeight: '1.7' }],
-        eyebrow: ['0.8125rem', { lineHeight: '1.2', letterSpacing: '0.12em', fontWeight: '700' }],
+        // Bumped a step over the first pass — the refresh leads with type.
+        'display-2xl': ['clamp(2.75rem, 1.3rem + 6.4vw, 5.5rem)', { lineHeight: '1.0', letterSpacing: '-0.038em', fontWeight: '800' }],
+        'display-xl': ['clamp(2.625rem, 1.5rem + 5vw, 4.75rem)', { lineHeight: '1.04', letterSpacing: '-0.034em', fontWeight: '800' }],
+        'display-lg': ['clamp(2.125rem, 1.4rem + 3.3vw, 3.75rem)', { lineHeight: '1.07', letterSpacing: '-0.028em', fontWeight: '800' }],
+        'display-md': ['clamp(1.875rem, 1.35rem + 2.4vw, 3rem)', { lineHeight: '1.13', letterSpacing: '-0.022em', fontWeight: '800' }],
+        'display-sm': ['clamp(1.5rem, 1.25rem + 1.2vw, 2.125rem)', { lineHeight: '1.18', letterSpacing: '-0.017em', fontWeight: '700' }],
+        'body-lg': ['1.15rem', { lineHeight: '1.7' }],
+        'body-xl': ['clamp(1.15rem, 1.05rem + 0.5vw, 1.375rem)', { lineHeight: '1.6' }],
+        eyebrow: ['0.8125rem', { lineHeight: '1.2', letterSpacing: '0.14em', fontWeight: '700' }],
       },
 
       spacing: {
         // Section rhythm. `section` is the mobile band, `section-lg` the desktop
-        // one — roughly 1.6x the original site's padding for more breathing room.
-        section: '4.5rem',
-        'section-lg': '7.5rem',
+        // one. Nudged up in the refresh for a more editorial vertical rhythm.
+        section: '5rem',
+        'section-lg': '8.5rem',
         // Minimum accessible tap target (WCAG 2.2 AA "Target Size (Minimum)"
         // asks for 24px; 48px is the Material/Apple comfort target).
         tap: '3rem',
@@ -147,6 +150,7 @@ module.exports = {
 
       borderRadius: {
         '4xl': '2rem',
+        '5xl': '2.5rem',
         pill: '999px',
       },
 
@@ -154,9 +158,11 @@ module.exports = {
         // Blue-tinted shadows read as "lift" against the pale blue surfaces;
         // neutral grey shadows look muddy on #F4F6FB.
         card: '0 1px 2px rgba(9,44,90,0.04), 0 8px 24px -8px rgba(9,44,90,0.12)',
-        'card-hover': '0 2px 4px rgba(9,44,90,0.06), 0 20px 44px -12px rgba(9,44,90,0.22)',
+        'card-hover': '0 2px 4px rgba(9,44,90,0.06), 0 24px 56px -14px rgba(9,44,90,0.26)',
+        'card-lg': '0 2px 4px rgba(9,44,90,0.05), 0 32px 64px -18px rgba(9,44,90,0.24)',
         cta: '0 8px 20px -4px rgba(9,116,228,0.42)',
         'cta-hover': '0 12px 28px -6px rgba(9,116,228,0.55)',
+        glow: '0 10px 30px -6px rgba(9,116,228,0.45), 0 0 0 1px rgba(9,116,228,0.10)',
         ring: '0 0 0 1px rgba(9,44,90,0.08)',
       },
 
@@ -164,6 +170,17 @@ module.exports = {
         'gradient-cta': 'linear-gradient(135deg, #0974E4 0%, #075CBC 100%)',
         'gradient-navy': 'linear-gradient(165deg, #0B2D57 0%, #00386C 55%, #075CBC 100%)',
         'dot-grid': 'radial-gradient(currentColor 1.5px, transparent 1.5px)',
+        // Light mesh: three soft colour pools on white, for section and hero fills.
+        'gradient-mesh':
+          'radial-gradient(42rem 32rem at 12% -8%, rgba(9,116,228,0.13), transparent 60%),' +
+          'radial-gradient(38rem 30rem at 100% 0%, rgba(251,187,91,0.14), transparent 55%),' +
+          'radial-gradient(46rem 40rem at 60% 108%, rgba(9,116,228,0.10), transparent 60%)',
+        // Dark mesh: layered over the navy gradient on dark sections.
+        'gradient-mesh-dark':
+          'radial-gradient(40rem 32rem at 0% 0%, rgba(9,116,228,0.38), transparent 58%),' +
+          'radial-gradient(36rem 30rem at 100% 10%, rgba(251,187,91,0.16), transparent 55%),' +
+          'radial-gradient(48rem 40rem at 70% 120%, rgba(33,91,164,0.42), transparent 60%)',
+        'gradient-amber': 'linear-gradient(135deg, #FBBB5B 0%, #F5A02A 100%)',
       },
 
       // Distinct key from backgroundImage.dot-grid so the two utilities do not

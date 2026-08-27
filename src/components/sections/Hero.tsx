@@ -6,23 +6,30 @@ import { site } from '@/lib/site';
 
 export function Hero() {
   return (
-    <section className="relative overflow-hidden bg-white pb-16 pt-12 lg:pb-24 lg:pt-20">
-      {/* Soft blue wash behind the collage — replaces the flat white of the
-          original so the transparent PNG has something to sit on. */}
+    <section className="mesh relative overflow-hidden bg-white pb-16 pt-12 lg:pb-28 lg:pt-20">
+      {/* Ambient colour behind the collage — drifting so the hero has life. */}
       <div
         aria-hidden="true"
-        className="drift pointer-events-none absolute right-0 top-0 h-[38rem] w-[52rem] translate-x-1/4 -translate-y-1/4 rounded-full bg-blue-50/70 blur-3xl"
+        className="drift accent-orb right-0 top-0 h-[38rem] w-[52rem] translate-x-1/4 -translate-y-1/4 bg-blue-200/45"
+      />
+      <div
+        aria-hidden="true"
+        className="drift-slow accent-orb -left-40 bottom-0 h-[26rem] w-[26rem] bg-amber-200/35"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute left-1/2 top-24 hidden h-56 w-56 -translate-x-[36rem] bg-dot-grid bg-dots text-blue-300/45 xl:block"
       />
 
       <div className="container relative">
         <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-8">
-          <div className="min-w-0 lg:col-span-6 xl:col-span-5" data-reveal="left">
-            <p className="eyebrow-script mb-4">Small business marketing</p>
+          <div className="min-w-0 lg:col-span-6 xl:col-span-6" data-reveal="left">
+            <p className="eyebrow-script mb-4 text-lg">Small business marketing</p>
 
-            <h1 className="text-display-xl text-navy-700">
+            <h1 className="text-display-2xl text-navy-700">
               Premium Small Business{' '}
               <span className="relative whitespace-nowrap">
-                Marketing
+                <span className="text-gradient">Marketing</span>
                 <svg
                   aria-hidden="true"
                   viewBox="0 0 300 12"
@@ -41,24 +48,24 @@ export function Hero() {
               Agency
             </h1>
 
-            <p className="mt-7 max-w-prose text-body-lg text-ink-600">
+            <p className="mt-7 max-w-prose text-body-xl text-ink-600">
               Don&rsquo;t struggle to grow your customer base on your own. Two decades running SEO,
               paid ads and web design for law firms, medical practices, real estate teams, schools
-              and auto shops.
+              and auto shops — measured on booked work, not impressions.
             </p>
 
             {/* Two CTAs: the original had one. A secondary path stops the
                 "not ready to talk to sales" visitor from bouncing. */}
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <Button href="/contact" size="lg">
+              <Button href="/contact" size="xl">
                 Get a Free Quote Today
               </Button>
-              <Button href="/case-studies" variant="ghost" size="lg">
+              <Button href="/case-studies" variant="ghost" size="xl">
                 See Our Results
               </Button>
             </div>
 
-            <div className="mt-9 flex flex-wrap items-center gap-x-4 gap-y-2">
+            <div className="mt-9 inline-flex flex-wrap items-center gap-x-4 gap-y-2 rounded-pill glass px-5 py-3">
               <span className="flex gap-0.5" aria-hidden="true">
                 {Array.from({ length: 5 }).map((_, i) => (
                   <Star key={i} className="h-[1.125rem] w-[1.125rem] fill-amber-400 text-amber-400" />
@@ -71,16 +78,22 @@ export function Hero() {
             </div>
           </div>
 
-          <div className="min-w-0 lg:col-span-6 xl:col-span-7" data-reveal="right">
-            <Image
-              src="/images/hero-collage.webp"
-              alt="A lawyer, a real estate agent and a doctor reviewing campaign results on tablets"
-              width={1200}
-              height={1159}
-              priority
-              sizes="(min-width: 1280px) 640px, (min-width: 1024px) 50vw, 100vw"
-              className="h-auto w-full max-w-2xl lg:ml-auto"
-            />
+          <div className="min-w-0 lg:col-span-6 xl:col-span-6" data-reveal="right">
+            <div className="relative">
+              <Image
+                src="/images/hero-collage.webp"
+                alt="A lawyer, a real estate agent and a doctor reviewing campaign results on tablets"
+                width={1200}
+                height={1159}
+                priority
+                sizes="(min-width: 1280px) 680px, (min-width: 1024px) 52vw, 100vw"
+                className="relative z-10 h-auto w-full max-w-2xl lg:ml-auto"
+              />
+              <div
+                aria-hidden="true"
+                className="absolute inset-x-6 bottom-6 z-0 h-40 rounded-[3rem] bg-blue-500/10 blur-2xl"
+              />
+            </div>
           </div>
         </div>
       </div>

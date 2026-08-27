@@ -43,16 +43,25 @@ export function SplitHero({
   return (
     <section
       className={cn(
-        'relative overflow-hidden',
-        dark ? 'on-dark bg-gradient-navy' : 'bg-gradient-to-b from-blue-50/70 via-white to-white',
+        'mesh relative overflow-hidden',
+        dark
+          ? 'on-dark mesh-dark bg-gradient-navy'
+          : 'bg-gradient-to-b from-blue-50/70 via-white to-white',
       )}
     >
       {/* Ambient drifting field behind the image side. */}
       <div
         aria-hidden="true"
         className={cn(
-          'drift pointer-events-none absolute -right-24 top-0 h-[34rem] w-[34rem] rounded-full blur-3xl',
-          dark ? 'bg-blue-500/25' : 'bg-blue-200/45',
+          'drift accent-orb -right-24 top-0 h-[34rem] w-[34rem]',
+          dark ? 'bg-blue-500/25' : 'bg-blue-200/50',
+        )}
+      />
+      <div
+        aria-hidden="true"
+        className={cn(
+          'drift-slow accent-orb -left-32 bottom-0 h-72 w-72',
+          dark ? 'bg-amber-400/12' : 'bg-amber-200/35',
         )}
       />
       <div
@@ -63,7 +72,7 @@ export function SplitHero({
         )}
       />
 
-      <div className="container relative pb-16 pt-8 lg:pb-24 lg:pt-12">
+      <div className="container relative pb-16 pt-8 lg:pb-24 lg:pt-14">
         {crumbs.length > 0 ? (
           <nav aria-label="Breadcrumb" className="mb-8">
             <ol
@@ -101,10 +110,10 @@ export function SplitHero({
               <p className={cn('eyebrow-script mb-3', dark && 'text-amber-400')}>{eyebrow}</p>
             ) : null}
 
-            <h1 className={cn('text-display-lg', dark ? 'text-white' : 'text-navy-700')}>{title}</h1>
+            <h1 className={cn('text-display-xl', dark ? 'text-white' : 'text-navy-700')}>{title}</h1>
 
             {intro ? (
-              <p className={cn('mt-6 max-w-prose text-body-lg', dark ? 'text-navy-100' : 'text-ink-600')}>
+              <p className={cn('mt-6 max-w-prose text-body-xl', dark ? 'text-navy-100' : 'text-ink-600')}>
                 {intro}
               </p>
             ) : null}
@@ -140,7 +149,7 @@ export function SplitHero({
 
               {stat ? (
                 <div
-                  className="absolute -bottom-5 left-4 rounded-2xl border border-navy-100 bg-white/95 px-5 py-4 shadow-card-hover backdrop-blur-sm sm:left-8"
+                  className="glass absolute -bottom-5 left-4 rounded-2xl px-5 py-4 shadow-card-lg sm:left-8"
                   data-reveal
                   data-reveal-delay="3"
                 >
