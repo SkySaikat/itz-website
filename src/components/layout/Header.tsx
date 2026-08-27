@@ -98,10 +98,11 @@ export function Header() {
 
       <header
         className={cn(
-          'sticky top-0 z-50 w-full transition-shadow duration-300',
+          'sticky top-0 z-50 w-full transition-all duration-300 supports-[backdrop-filter]:bg-white/70',
+          'bg-white/95 backdrop-blur-lg backdrop-saturate-150',
           scrolled
-            ? 'border-b border-navy-100 bg-white/90 shadow-card backdrop-blur-md'
-            : 'border-b border-transparent bg-white',
+            ? 'border-b border-navy-100 shadow-card'
+            : 'border-b border-navy-100/40',
         )}
       >
         <div className="container flex h-[var(--header-height)] items-center justify-between gap-4">

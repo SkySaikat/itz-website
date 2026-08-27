@@ -14,8 +14,8 @@ export function Footer() {
   ];
 
   return (
-    <footer className="on-dark bg-gradient-navy text-navy-100">
-      <div className="container py-section lg:py-section-lg">
+    <footer className="on-dark mesh mesh-dark relative bg-gradient-navy text-navy-100">
+      <div className="container relative py-section lg:py-section-lg">
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-8">
           {/* Brand + CTA */}
           <div className="min-w-0 lg:col-span-5 lg:pr-10">

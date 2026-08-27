@@ -19,9 +19,10 @@ export function ClientLogos() {
   return (
     <section className="bg-surface-muted py-16 lg:py-20" aria-labelledby="clients-heading">
       <div className="container">
+        <p className="text-center eyebrow-caps">Trusted by teams at</p>
         <h2
           id="clients-heading"
-          className="text-center text-xl font-bold text-blue-600 sm:text-2xl"
+          className="mt-2 text-center text-display-sm text-navy-700"
         >
           Some of our notable clients &amp; partners
         </h2>
@@ -29,7 +30,8 @@ export function ClientLogos() {
         {/* A drifting marquee rather than a static grid — it reads as a
             living client roster and sidesteps the mobile squeeze the old
             fixed 4-up had. Pauses on hover; static under reduced motion. */}
-        <Marquee className="mt-12" speed={52}>
+        <div className="mt-12 rounded-4xl border border-navy-100 bg-white/70 py-6 shadow-card backdrop-blur-sm">
+        <Marquee speed={52}>
           <ul className="flex items-center">
             {clients.map((client) => (
               <li key={client.name} className="flex shrink-0 items-center justify-center px-8 sm:px-12">
@@ -45,7 +47,7 @@ export function ClientLogos() {
             ))}
           </ul>
         </Marquee>
-
+        </div>
       </div>
     </section>
   );

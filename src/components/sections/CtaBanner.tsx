@@ -17,22 +17,26 @@ export function CtaBanner({
 }) {
   return (
     <div className={cn('container', className)}>
-      <div className="on-dark relative overflow-hidden rounded-4xl bg-gradient-navy px-6 py-14 text-center sm:px-12 lg:py-20">
+      <div className="on-dark mesh mesh-dark relative overflow-hidden rounded-5xl bg-gradient-navy px-6 py-16 text-center shadow-card-lg sm:px-12 lg:py-24">
         <div
           aria-hidden="true"
           className="pointer-events-none absolute -right-10 -top-10 h-56 w-56 bg-dot-grid bg-dots text-blue-400/30"
         />
         <div
           aria-hidden="true"
-          className="drift-slow pointer-events-none absolute -bottom-16 -left-16 h-64 w-64 rounded-full bg-blue-500/20 blur-3xl"
+          className="drift-slow accent-orb -bottom-16 -left-16 h-64 w-64 bg-blue-500/25"
+        />
+        <div
+          aria-hidden="true"
+          className="drift accent-orb -right-20 bottom-0 h-56 w-56 bg-amber-400/12"
         />
 
         <div className="relative mx-auto max-w-3xl">
           <p className="eyebrow-script text-amber-400">{eyebrow}</p>
 
-          <h2 className="mt-3 text-display-md text-white">{renderTitle(title, highlight)}</h2>
+          <h2 className="mt-3 text-display-lg text-white">{renderTitle(title, highlight)}</h2>
 
-          {body ? <p className="mt-5 text-body-lg text-navy-100">{body}</p> : null}
+          {body ? <p className="mt-5 text-body-xl text-navy-100">{body}</p> : null}
 
           <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Button href="/contact" variant="onDark" size="lg">
