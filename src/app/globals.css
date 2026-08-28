@@ -284,6 +284,15 @@
 
   .marquee-group { display: flex; align-items: center; flex-shrink: 0; }
 
+  /* On phones the auto-scroll fights touch scrolling and the logos past the
+     edge are unreachable — make it a plain swipeable strip instead, showing a
+     single set of logos (the second group only exists for the seamless loop). */
+  @media (max-width: 639px) {
+    .marquee { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .marquee-track { animation: none; }
+    .marquee-track > .marquee-group + .marquee-group { display: none; }
+  }
+
   .drift { animation: drift 18s ease-in-out infinite alternate; }
   .drift-slow { animation: drift 26s ease-in-out infinite alternate-reverse; }
 
@@ -297,7 +306,11 @@
       transition: none !important;
     }
     .marquee-track, .drift, .drift-slow { animation: none !important; }
-    .marquee { mask-image: none; }
+    /* Auto-scroll off → let people swipe the strip, and drop the loop
+       duplicate so the logos don't appear twice. Keep the edge fade as a
+       "there's more" hint. */
+    .marquee { overflow-x: auto; }
+    .marquee-track > .marquee-group + .marquee-group { display: none; }
     .group:hover .media-zoom img { transform: none; }
   }
 }

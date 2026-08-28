@@ -27,14 +27,14 @@ export function ClientLogos() {
           Some of our notable clients &amp; partners
         </h2>
 
-        {/* A drifting marquee rather than a static grid — it reads as a
-            living client roster and sidesteps the mobile squeeze the old
-            fixed 4-up had. Pauses on hover; static under reduced motion. */}
-        <div className="mt-12 rounded-4xl border border-navy-100 bg-white/70 py-6 shadow-card backdrop-blur-sm">
+        {/* A drifting marquee on sm+; a plain swipeable strip on phones and
+            under reduced motion (both handled in globals.css). No
+            backdrop-blur here — it stutters the animation on mobile Safari. */}
+        <div className="mt-12 rounded-4xl border border-navy-100 bg-white py-6 shadow-card">
         <Marquee speed={52}>
           <ul className="flex items-center">
             {clients.map((client) => (
-              <li key={client.name} className="flex shrink-0 items-center justify-center px-8 sm:px-12">
+              <li key={client.name} className="flex shrink-0 items-center justify-center px-6 sm:px-12">
                 <Image
                   src={client.src}
                   alt={client.name}
