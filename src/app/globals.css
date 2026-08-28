@@ -314,3 +314,18 @@
     .group:hover .media-zoom img { transform: none; }
   }
 }
+
+/* Keyframes for the utilities above.
+   These MUST live here, not in tailwind.config.js `theme.keyframes`: Tailwind
+   only emits a `@keyframes` block when a matching key also exists in
+   `theme.animation`, so config-only keyframes (marquee, drift) were silently
+   dropped from the build and the animations never ran. */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@keyframes drift {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to { transform: translate3d(3%, -4%, 0) scale(1.08); }
+}

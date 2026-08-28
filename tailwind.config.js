@@ -187,6 +187,10 @@ module.exports = {
       // collide on the same class name.
       backgroundSize: { dots: '14px 14px' },
 
+      // NOTE: Tailwind only emits a `@keyframes` block for a key here when a
+      // matching key also exists in `animation` below. `marquee` and `drift`
+      // are driven by hand-written rules in globals.css, so their `@keyframes`
+      // live there too — putting them here would silently drop them.
       keyframes: {
         'fade-up': {
           from: { opacity: '0', transform: 'translateY(12px)' },
@@ -195,14 +199,6 @@ module.exports = {
         'slide-down': {
           from: { opacity: '0', transform: 'translateY(-8px)' },
           to: { opacity: '1', transform: 'translateY(0)' },
-        },
-        marquee: {
-          from: { transform: 'translateX(0)' },
-          to: { transform: 'translateX(-50%)' },
-        },
-        drift: {
-          from: { transform: 'translate3d(0,0,0) scale(1)' },
-          to: { transform: 'translate3d(3%, -4%, 0) scale(1.08)' },
         },
       },
 
