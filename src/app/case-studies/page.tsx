@@ -4,10 +4,11 @@ import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 
 import { CtaBanner } from '@/components/sections/CtaBanner';
+import { FaqSection } from '@/components/sections/FaqSection';
 import { Stats } from '@/components/sections/Stats';
 import { PageHero } from '@/components/ui/PageHero';
 import { Section } from '@/components/ui/Section';
-import { caseStudies } from '@/lib/case-studies';
+import { caseStudies, caseStudyFaqs } from '@/lib/case-studies';
 
 
 export const metadata: Metadata = {
@@ -82,6 +83,13 @@ export default function CaseStudiesPage() {
       </Section>
 
       <Stats />
+
+      <FaqSection
+        faqs={caseStudyFaqs}
+        path="/case-studies"
+        title="Common questions about these case studies"
+        tone="white"
+      />
 
       <div className="py-section lg:py-section-lg">
         <CtaBanner

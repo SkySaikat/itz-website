@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { ArrowRight, Car, GraduationCap, Home, Scale, Stethoscope } from 'lucide-react';
+import { ArrowRight, Car, GraduationCap, Home, Scale, Stethoscope, Wrench } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 
 import { ContextBlock } from '@/components/sections/ContextBlock';
@@ -31,7 +31,7 @@ export function generateStaticParams() {
   return industries.map((i) => ({ industry: i.slug }));
 }
 
-const icons: Record<Industry['icon'], LucideIcon> = { Scale, Stethoscope, Home, GraduationCap, Car };
+const icons: Record<Industry['icon'], LucideIcon> = { Scale, Stethoscope, Home, GraduationCap, Car, Wrench };
 
 /** Composites are transparent and need `contain`; photographs get `cover`. */
 const HERO_FIT: Record<string, 'contain' | 'cover'> = {
@@ -39,6 +39,7 @@ const HERO_FIT: Record<string, 'contain' | 'cover'> = {
   medical: 'contain',
   'real-estate': 'contain',
   automotive: 'contain',
+  'home-services': 'contain',
   education: 'cover',
 };
 

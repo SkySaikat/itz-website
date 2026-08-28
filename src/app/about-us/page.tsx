@@ -139,17 +139,18 @@ export default function AboutPage() {
         <div className="container">
           <div className="max-w-measure" data-reveal>
             <p className="eyebrow-script mb-3">Who we serve</p>
-            <h2 className="text-display-sm text-navy-700">Five fields, learned properly</h2>
+            <h2 className="text-display-sm text-navy-700">Six fields, learned properly</h2>
             <p className="mt-4 text-body-lg text-ink-600">{about.industriesIntro}</p>
           </div>
 
-          <ul className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+          <ul className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
             {[
               { slug: 'lawyers', label: 'Legal', img: 'lawyers-criminal-defense' },
               { slug: 'medical', label: 'Medical', img: 'medical-dentists' },
               { slug: 'real-estate', label: 'Real Estate', img: 'real-estate-realtor' },
               { slug: 'education', label: 'Education', img: 'education-universities' },
               { slug: 'automotive', label: 'Automotive', img: 'automotive-auto-repair' },
+              { slug: 'home-services', label: 'Home Services', img: 'home-services' },
             ].map((it, i) => (
               <li key={it.slug} data-reveal data-reveal-delay={i}>
                 <Link
@@ -162,7 +163,7 @@ export default function AboutPage() {
                       alt=""
                       fill
                       loading="lazy"
-                      sizes="(min-width: 1024px) 18vw, 45vw"
+                      sizes="(min-width: 1024px) 15vw, 45vw"
                       className="object-cover"
                       aria-hidden="true"
                     />

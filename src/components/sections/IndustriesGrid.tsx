@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ArrowRight, Car, GraduationCap, Home, Scale, Stethoscope } from 'lucide-react';
+import { ArrowRight, Car, GraduationCap, Home, Scale, Stethoscope, Wrench } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 
 import { Section, SectionHeading } from '@/components/ui/Section';
@@ -11,19 +11,20 @@ const icons: Record<Industry['icon'], LucideIcon> = {
   Home,
   GraduationCap,
   Car,
+  Wrench,
 };
 
-export function IndustriesGrid() {
+export function IndustriesGrid({ tone = 'muted' }: { tone?: 'white' | 'muted' }) {
   return (
-    <Section tone="muted" id="who-we-serve">
+    <Section tone={tone} id="who-we-serve">
       <SectionHeading
         eyebrow="Who we serve"
-        title="Five industries, one clear strategy each"
+        title="Six industries, one clear strategy each"
         size="lg"
-        intro="Legal, medical, real estate, education and automotive businesses all compete for local visibility differently — different keywords, different compliance rules, different buyer urgency. We build a distinct strategy for each rather than one generic template."
+        intro="Legal, medical, real estate, education, automotive and home services businesses all compete for local visibility differently — different keywords, different compliance rules, different buyer urgency. We build a distinct strategy for each rather than one generic template."
       />
 
-      <ul className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+      <ul className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {industries.map((industry, i) => {
           const Icon = icons[industry.icon];
 

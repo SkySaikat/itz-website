@@ -105,11 +105,11 @@ export function Header() {
             : 'border-b border-navy-100/40',
         )}
       >
-        <div className="container flex h-[var(--header-height)] items-center justify-between gap-4">
+        <div className="container flex h-[var(--header-height)] items-center justify-between gap-3 xl:gap-4">
           <Logo priority className="shrink-0" />
 
           {/* ---------------- Desktop nav ---------------- */}
-          <nav ref={navRef} aria-label="Main" className="hidden lg:flex lg:items-center lg:gap-1">
+          <nav ref={navRef} aria-label="Main" className="hidden lg:flex lg:items-center lg:gap-0 xl:gap-0.5">
             {mainNav.map((item) =>
               item.columns ? (
                 <div
@@ -128,7 +128,7 @@ export function Header() {
                     aria-haspopup="true"
                     onClick={() => setOpenMenu(openMenu === item.label ? null : item.label)}
                     className={cn(
-                      'inline-flex min-h-tap items-center gap-1.5 rounded-xl px-4 text-[0.9375rem] font-bold',
+                      'inline-flex min-h-tap items-center gap-1 whitespace-nowrap rounded-xl px-2 text-[0.9375rem] font-bold xl:px-3',
                       'transition-colors duration-200',
                       isActive(item) || openMenu === item.label
                         ? 'text-blue-600'
@@ -152,7 +152,7 @@ export function Header() {
                   key={item.label}
                   href={item.href}
                   className={cn(
-                    'inline-flex min-h-tap items-center rounded-xl px-4 text-[0.9375rem] font-bold transition-colors duration-200',
+                    'inline-flex min-h-tap items-center whitespace-nowrap rounded-xl px-2 text-[0.9375rem] font-bold transition-colors duration-200 xl:px-3',
                     isActive(item) ? 'text-blue-600' : 'text-navy-700 hover:text-blue-600',
                   )}
                 >
@@ -163,16 +163,19 @@ export function Header() {
           </nav>
 
           {/* ---------------- Desktop actions ---------------- */}
-          <div className="hidden shrink-0 items-center gap-3 lg:flex">
+          <div className="hidden shrink-0 items-center gap-2 lg:flex">
             <a
               href={site.phoneHref}
-              className="inline-flex min-h-tap items-center gap-2 rounded-xl px-3 text-[0.9375rem] font-bold text-navy-700 transition-colors hover:text-blue-600"
+              aria-label={`Call ${site.name} on ${site.phone}`}
+              className="inline-flex min-h-tap items-center gap-2 rounded-xl px-2 text-[0.9375rem] font-bold text-navy-700 transition-colors hover:text-blue-600"
             >
               <Phone className="h-4 w-4" aria-hidden="true" />
-              <span className="sr-only">Call us on </span>
-              {site.phone}
+              <span className="hidden 2xl:inline">{site.phone}</span>
             </a>
-            <Button href="/contact">Get a Free Quote</Button>
+            <Button href="/contact">
+              <span className="xl:hidden">Free Quote</span>
+              <span className="hidden xl:inline">Get a Free Quote</span>
+            </Button>
           </div>
 
           {/* ---------------- Mobile actions ---------------- */}

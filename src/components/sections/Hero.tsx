@@ -50,8 +50,8 @@ export function Hero() {
 
             <p className="mt-7 max-w-prose text-body-xl text-ink-600">
               Don&rsquo;t struggle to grow your customer base on your own. Two decades running SEO,
-              paid ads and web design for law firms, medical practices, real estate teams, schools
-              and auto shops — measured on booked work, not impressions.
+              paid ads and web design for law firms, medical practices, real estate teams, schools,
+              auto shops and home-services companies — measured on booked work, not impressions.
             </p>
 
             {/* Two CTAs: the original had one. A secondary path stops the

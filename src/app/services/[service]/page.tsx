@@ -26,6 +26,8 @@ const PROCESS_IMAGE = new Set([
   'meta-ads',
   'website-design',
   'lead-generation',
+  'review-management',
+  'creative',
 ]);
 
 export function generateStaticParams() {

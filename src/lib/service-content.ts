@@ -259,4 +259,52 @@ export const serviceExtras: Record<string, ServiceExtra> = {
       { label: 'Fewer leaks', body: 'The gaps between ad, page, CRM and callback closed, so the leads you already pay for stop falling through them.' },
     ],
   },
+
+  'review-management': {
+    expandedSummary: [
+      'A review profile does two jobs at once: it is a ranking signal for the map pack, and it is the single most-read thing on your listing before someone calls. Recent, specific, well-answered reviews move both — which is why a rating a few tenths higher than the competitor next door is worth real money in a local category.',
+      'The work is unglamorous and continuous. Ask every customer, at the moment they are most satisfied, in one tap. Watch every platform daily. Reply to everything — the calm, specific public response to a bad review is often read by more future customers than the review itself. Never gate, never incentivise, never fake it: those get profiles suspended.',
+    ],
+    process: [
+      { phase: 'Week 1', body: 'Audit the current profile across every platform your buyers use, benchmark against the three competitors in your map pack, and find where the review flow is breaking.' },
+      { phase: 'Weeks 2–3', body: 'Wire one-tap review requests into your CRM or field-service software, write the messages by customer type, and set the send timing.' },
+      { phase: 'Ongoing', body: 'Daily monitoring with same-day alerts, a drafted public response to every review within a day, and removal requests filed for anything that breaks platform policy.' },
+      { phase: 'Monthly', body: 'Report on rating trend, review velocity and response time, alongside the map-pack movement that follows.' },
+    ],
+    commonMistakes: [
+      { title: 'Review gating', body: 'Screening customers so only happy ones reach the public form violates Google policy and risks the whole profile. Ask everyone.' },
+      { title: 'Ignoring or arguing with negatives', body: 'An unanswered one-star, or a defensive reply, is read by every future prospect. A calm, specific response converts better than a flawless rating.' },
+      { title: 'Bursts, not cadence', body: 'A pile of reviews in one week followed by six months of silence reads as inauthentic and does nothing for ranking. Steady is what compounds.' },
+    ],
+    outcomes: [
+      { label: 'Rating trend', body: 'The average climbing as recent positive reviews outweigh older ones — the signal the map pack and every prospect both read.' },
+      { label: 'Review velocity', body: 'A steady number of new reviews every month rather than occasional bursts, which is what actually moves ranking.' },
+      { label: 'Response time', body: 'Every review answered within a day. Google weights it, and prospects notice whether you engage.' },
+      { label: 'Map-pack position', body: 'Movement in the local three-pack for your core services, which review strength directly feeds.' },
+    ],
+  },
+
+  creative: {
+    expandedSummary: [
+      'On paid social the audience is broad and the algorithm is good, so the ad itself does most of the work — the hook, the first two seconds, the format. That also means creative fatigues fast: the same three images across every audience is why a healthy account needs a pipeline of new variants every month, not one polished hero video.',
+      'Most of what we produce is editing, not shooting: cutting a testimonial down to the line that lands, turning one long job-site video into a month of vertical clips, and building the ad variants that a proper test needs. In our core metros we can arrange a shoot; everywhere else we direct a simple self-shoot and edit from there.',
+    ],
+    process: [
+      { phase: 'Week 1', body: 'Audit what is running, flag what has fatigued, and map the gaps against what each active campaign is asking for. Set light brand guidelines if none exist.' },
+      { phase: 'Weeks 2–3', body: 'Shoot brief or self-shoot guide, then the first slate: a testimonial reel, a service explainer, and an initial set of ad variants to test.' },
+      { phase: 'Monthly', body: 'A steady output of new social clips and ad variants — multiple hooks, formats and lengths — cut from ongoing footage and delivered on schedule.' },
+      { phase: 'Ongoing', body: 'Review which hooks and formats won, and feed that into the next round.' },
+    ],
+    commonMistakes: [
+      { title: 'One hero video, set and forget', body: 'A single expensive edit fatigues in weeks. Paid social rewards volume and variety, not production value.' },
+      { title: 'Reposting the same cut everywhere', body: 'A horizontal ad dropped into Reels or TikTok reads as an ad and gets skipped. Each platform needs a native aspect ratio and pacing.' },
+      { title: 'Polished but generic', body: 'Stock footage of smiling strangers underperforms a slightly rough clip of your actual team on an actual job, every time.' },
+    ],
+    outcomes: [
+      { label: 'Creative that keeps working', body: 'A tested library of hooks and formats, refreshed on a schedule so cost per result does not climb week over week.' },
+      { label: 'Lower cost per result', body: 'Native, well-hooked creative earns cheaper reach from the platforms and holds attention longer.' },
+      { label: 'A content library you own', body: 'Every clip, edit and template delivered to you in every ratio and length, reusable across organic and the site.' },
+      { label: 'Faster testing', body: 'Enough variants in rotation that the account can actually learn which message works, rather than guessing.' },
+    ],
+  },
 };

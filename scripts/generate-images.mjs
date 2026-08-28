@@ -39,6 +39,96 @@ const STYLE =
 
 /** @type {{file:string, aspect:string, prompt:string}[]} */
 const MANIFEST = [
+  // ── Home Services industry (round 2) ──────────────────────────────────────
+  {
+    file: 'industries/home-services.webp',
+    aspect: '4:3',
+    prompt:
+      'A home-services tradesperson composite: a simplified figure in work clothes holding a ' +
+      'clipboard, with floating UI cards around them showing a booking calendar, a five-star ' +
+      'review, a ringing phone and a house with a location pin. Warm, trustworthy.',
+  },
+  {
+    file: 'industries/home-services-hvac.webp',
+    aspect: '4:3',
+    prompt:
+      'HVAC marketing: a house with an air-conditioning unit and a thermostat dial, a small ' +
+      'weather badge showing heat and a snowflake, a phone with a local search result and a ' +
+      'same-day booking slot highlighted in amber.',
+  },
+  {
+    file: 'industries/home-services-plumbing.webp',
+    aspect: '4:3',
+    prompt:
+      'Plumbing marketing: a pipe-and-wrench emblem, a burst-pipe warning icon, a 24/7 clock, ' +
+      'a phone showing an emergency call being answered, a map pin over a house.',
+  },
+  {
+    file: 'industries/home-services-roofing.webp',
+    aspect: '4:3',
+    prompt:
+      'Roofing marketing: a house roof with a storm cloud and a hail badge above it, an ' +
+      'inspection checklist card, a quote-request form, a location pin and review stars.',
+  },
+  {
+    file: 'industries/home-services-strategy.webp',
+    aspect: '4:3',
+    prompt:
+      'Building a home-services marketing strategy: a local map with a highlighted three-result ' +
+      'map pack, a Google-business-style profile card with stars and hours, a seasonal demand ' +
+      'curve with marked spikes, service badges for HVAC, plumbing and roofing.',
+  },
+  {
+    file: 'industries/home-services-approach.webp',
+    aspect: '4:3',
+    prompt:
+      'Running campaigns for a home-services company: a call-recording waveform being reviewed, ' +
+      'a dispatch and booking calendar, a review-request message going out after a job, a ' +
+      'budget dial being turned up ahead of a heat wave.',
+  },
+  {
+    file: 'industries/home-services-market.webp',
+    aspect: '4:3',
+    prompt:
+      'How homeowners choose a contractor: a homeowner holding a phone showing a local map with ' +
+      'pins and a nearby contractor card with reviews, a clock signalling urgency, a house ' +
+      'with a small problem icon (a drip, a spark, a leak).',
+  },
+
+  // ── New services (round 2) ────────────────────────────────────────────────
+  {
+    file: 'services/review-management.webp',
+    aspect: '4:3',
+    prompt:
+      'A reputation dashboard mockup: a large average-rating number with five stars, a stream ' +
+      'of incoming review cards, a reply being drafted to one of them, a small trend line ' +
+      'rising, an outgoing review-request message.',
+  },
+  {
+    file: 'services/review-management-process.webp',
+    aspect: '4:3',
+    prompt:
+      'Review management as a loop: after a completed job, an automated request goes to the ' +
+      'customer, a new star review comes back, the team replies, and the rating ticks up — ' +
+      'shown as connected rounded nodes with a phone and a stars card.',
+  },
+  {
+    file: 'services/creative.webp',
+    aspect: '4:3',
+    prompt:
+      'A creative and video production dashboard mockup: a video timeline with clips, a play ' +
+      'button, two ad-creative variants side by side for an A/B test, a captions toggle, a ' +
+      'brand colour swatch row.',
+  },
+  {
+    file: 'services/creative-process.webp',
+    aspect: '4:3',
+    prompt:
+      'Creative production flow: raw footage on the left, an editing timeline in the middle, ' +
+      'and finished outputs on the right — a vertical social clip on a phone, a testimonial ' +
+      'thumbnail, and an ad banner — shown as connected rounded nodes.',
+  },
+
   // ── Homepage ───────────────────────────────────────────────────────────────
   {
     file: 'home/process.webp',

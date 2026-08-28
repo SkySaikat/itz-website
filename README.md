@@ -574,7 +574,27 @@ display utility beats — so a `<figure hidden className="grid">` stayed visible
 and the carousel showed both slides at once. Same trap would hit any `hidden`
 element with a `flex`/`grid` class.
 
-## 10. Still to do before launch
+## 10. Architecture round 2 (Home Services, Locations, Pricing, Case Studies)
+
+A second pass brought the IA in line with `ITZ_Website_Architecture_Internal_Linking.pptx`
+and a set of design mockups. Mockup *content* was adopted; the site's own design
+system was kept (the mockups' Archivo / `#1c5fd6` styling was not used).
+
+| Change | Where |
+| --- | --- |
+| **Home Services** — 6th industry (HVAC / Plumbing / Roofing) | `src/lib/industries.ts` (`icon: 'Wrench'`, new union member), `src/lib/industry-content.ts`; icon maps in `[industry]/page.tsx`, `IndustriesGrid.tsx`, `who-we-serve/page.tsx`; industry grids widened to 6-up |
+| **Review Management** + **Creative & Video** — 2 new services | `src/lib/services.ts`, `src/lib/service-content.ts`, hand-authored `public/images/icons/{review-management,creative}.svg`, nav "What We Do" is now a 5-column mega-menu |
+| **Pricing page** (`/pricing`) | `src/lib/pricing-content.ts` (owner's own ranges — not invented), `src/components/sections/PricingTiers.tsx`, `src/app/pricing/page.tsx` |
+| **Locations** (`/locations`, `/locations/[city]`) | `src/lib/locations.ts` (`hubCopy`, `servicesForCity`, `activeLocations`), two new route files. City hubs give the existing `/services/[service]/[city]` geo pages a way in from the nav. Dallas + Tampa added to `cities.json` with **verifiable facts only** (`reviews: null`) — they get a hub but no `<service> in <city>` pages until real localized content exists. |
+| **Case Studies** → template layout | `src/lib/case-studies.ts` gains optional `challenge` / `strategy` / `results` / `faqs` / `metrics`; `[slug]/page.tsx` renders Challenge / Strategy / Results + a shared FAQ (`caseStudyFaqs`). The metrics band renders **only** when a study has real `metrics` — none do yet, so the "results on request" callout still shows. |
+| **Homepage** | Who We Serve moved above What We Do; a "results that compound" prose block and a `BlogTeaser` (3 most-recent posts, `src/components/sections/BlogTeaser.tsx`) added. |
+| **Navigation** | `mainNav` is now Who We Serve · What We Do · Pricing · Locations · Resources · Company. Contact moved into the Company dropdown (the "Get a Free Quote" CTA already points there); this keeps the bar to one line down to 1024px. |
+| **Killed the smooth scroll** | `scroll-behavior: smooth` removed from `html` in `globals.css` — it made every route change visibly animate a scroll-to-top. Anchor jumps are now instant. |
+
+Round-2 images (11) were generated with the same `scripts/generate-images.mjs` white-bg
+prompt: `industries/home-services*` and `services/{review-management,creative}*`.
+
+## 11. Still to do before launch
 
 1. **Contact form transport.** `src/app/api/contact/route.ts` validates and logs
    submissions but does not deliver them. Wire up Resend / SendGrid / HubSpot at

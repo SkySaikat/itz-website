@@ -247,6 +247,50 @@ export const industryExtras: Record<string, IndustryExtra> = {
       website: 'Clear service and pricing-context pages, easy appointment booking, and specialisation pages that justify a higher ticket.',
     },
   },
+
+  'home-services': {
+    approach: [
+      {
+        title: 'Own the map pack, then the after-hours call',
+        body: 'The emergency jobs come from the local three-pack, so that is where the first work goes: complete trade and service categories, accurate hours including nights and weekends, real photos of your crews and trucks, and a steady flow of recent reviews. Then we make sure the after-hours ad schedule is live and the phone path actually books a truck — because the map-pack ranking is wasted if the third ring goes to voicemail.',
+      },
+      {
+        title: 'A campaign per trade, paced to the season',
+        body: 'HVAC, plumbing and roofing have different search terms, different competitors, different margins and completely different calendars. We run each as its own campaign with its own budget, and we pace that budget against the forecast — bid up before the heat wave or the freeze, hold a base through the shoulder season, surge within days of a storm. One blended campaign spends your winter budget on summer clicks.',
+      },
+      {
+        title: 'Separate the $99 call from the $12,000 job',
+        body: 'A drain clear and a full system replacement are different buyers on different timelines, and marketing them the same way wastes budget on both ends. Emergency and low-ticket work gets proximity-and-speed campaigns and instant booking; replacements, repipes and re-roofs get research-stage content, financing messaging, and a quote-request conversion with real follow-up. Reporting is split by job type so you can see which one is paying.',
+      },
+    ],
+    expandedContext: [
+      'The other constant is the trust deficit. Home-services buyers have heard the horror stories — the surprise upsell, the storm-chaser who vanished, the "diagnostic fee" that became a four-figure bill — so the companies that win lead with the things a bad operator cannot fake: named technicians with photos, published pricing ranges, written estimates, a real warranty, and a review history that is long and specific rather than a recent burst of five stars.',
+      'Financing is a quiet lever on the high-ticket work. A homeowner facing a $9,000 system replacement or a $15,000 re-roof is often choosing between "do it now on a payment plan" and "patch it and wait" — and the company that makes the monthly number visible early, on the page and in retargeting, captures the jobs the others lose to hesitation.',
+    ],
+    signals: [
+      {
+        label: 'Booked jobs by trade',
+        body: 'Not calls — trucks actually dispatched or estimates actually scheduled, tagged to the trade and the campaign. This is the number each per-trade campaign lives or dies on.',
+      },
+      {
+        label: 'Call answer rate and time to dispatch',
+        body: 'How many campaign calls are answered live, and how fast a truck is booked, tracked with recordings. For emergency work this is usually where jobs are won or lost, and it is fixable in weeks.',
+      },
+      {
+        label: 'Average ticket and replacement share',
+        body: 'Whether the mix is moving toward the higher-value work you want. A ringing phone with a flat, low average ticket means the targeting is pulling coupon shoppers.',
+      },
+      {
+        label: 'Seasonal capture',
+        body: 'Whether you were live, funded and bid up before this year’s heat wave, freeze or storm — versus scrambling to catch up a week after it started.',
+      },
+    ],
+    channelNotes: {
+      seo: 'Google Business Profile per location, a page per trade and per town you cover, and a review workflow the technician triggers at the end of the job.',
+      paid: 'Local Services Ads (verification and weekly lead disputes handled), plus search campaigns bid up ahead of the season and offer campaigns for the slow weeks.',
+      website: 'Trade and town pages with upfront pricing ranges, financing on the replacement work, and the shortest possible path to booking a service call.',
+    },
+  },
 };
 
 export const subIndustryExtras: Record<string, SubIndustryExtra> = {

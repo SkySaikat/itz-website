@@ -72,14 +72,22 @@ export const mainNav: NavItem[] = [
         links: [serviceLink('website-design'), serviceLink('website-services')],
       },
       {
-        label: 'Pipeline',
+        label: 'Growth',
         href: '/services/lead-generation',
-        links: [serviceLink('lead-generation')],
+        links: [serviceLink('lead-generation'), serviceLink('review-management')],
+      },
+      {
+        label: 'Creative',
+        href: '/services/creative',
+        links: [serviceLink('creative')],
       },
     ],
   },
+  { label: 'Pricing', href: '/pricing' },
+  { label: 'Locations', href: '/locations' },
+  { label: 'Resources', href: '/blog' },
   {
-    label: 'Our Company',
+    label: 'Company',
     href: '/about-us',
     columns: [
       {
@@ -88,12 +96,11 @@ export const mainNav: NavItem[] = [
         links: [
           { label: 'About Us', href: '/about-us', description: 'Two decades, 500+ local businesses' },
           { label: 'Case Studies', href: '/case-studies', description: 'What the work actually produced' },
-          { label: 'Resources', href: '/blog', description: 'Guides, benchmarks and pricing breakdowns' },
+          { label: 'Contact', href: '/contact', description: 'Get a free audit or quote' },
         ],
       },
     ],
   },
-  { label: 'Contact', href: '/contact' },
 ];
 
 export const footerNav: NavColumn[] = [
@@ -110,16 +117,18 @@ export const footerNav: NavColumn[] = [
       { label: 'Google Ads', href: '/services/google-ads' },
       { label: 'Meta Ads', href: '/services/meta-ads' },
       { label: 'Website Design', href: '/services/website-design' },
-      { label: 'Programmatic Ads', href: '/services/programmatic-ads' },
-      { label: 'Lead Generation', href: '/services/lead-generation' },
+      { label: 'Review Management', href: '/services/review-management' },
+      { label: 'Creative & Video', href: '/services/creative' },
     ],
   },
   {
     label: 'Company',
     href: '/about-us',
     links: [
-      { label: 'About Us', href: '/about-us' },
+      { label: 'Pricing', href: '/pricing' },
+      { label: 'Locations', href: '/locations' },
       { label: 'Case Studies', href: '/case-studies' },
+      { label: 'About Us', href: '/about-us' },
       { label: 'Blog', href: '/blog' },
       { label: 'Contact', href: '/contact' },
     ],

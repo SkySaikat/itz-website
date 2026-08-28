@@ -19,16 +19,14 @@
        element into a scroll container — which `hidden` would, breaking the
        sticky header. */
     overflow-x: clip;
-    scroll-behavior: smooth;
+    /* No `scroll-behavior: smooth` — it makes every route change visibly
+       animate a scroll-to-top. Anchor jumps are instant, which is fine. */
     /* Anchor links must clear the sticky header. */
     scroll-padding-top: calc(var(--header-height) + 1rem);
     -webkit-text-size-adjust: 100%;
   }
 
   @media (prefers-reduced-motion: reduce) {
-    html {
-      scroll-behavior: auto;
-    }
     *,
     *::before,
     *::after {

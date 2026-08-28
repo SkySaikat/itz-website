@@ -465,6 +465,96 @@ export const services: Service[] = [
       { title: 'Closed-loop reporting', body: 'CRM outcomes pushed back into the ad platforms so bidding optimises on revenue.' },
     ],
   },
+  {
+    slug: 'review-management',
+    whoItsFor: [
+      "Your rating is a few tenths below the competitor in the map pack and it is costing you clicks.",
+      "Reviews come in bursts when someone remembers to ask, then go quiet for months.",
+      "Negative reviews sit unanswered, or get a defensive reply that makes things worse.",
+    ],
+    notFor: "We will not write fake reviews, gate negative feedback so only happy customers can post publicly, or pay for a rating. Those tactics violate platform policies and get profiles suspended. If that is the service you are looking for, we are not it.",
+    faqs: [
+      {
+        "question": "How do you actually generate more reviews?",
+        "answer": "By building the request into the moment the customer is most satisfied — the end of a job, the follow-up call, the paid invoice — and making it one tap. We set up the automation, write the messages, pick the timing per customer type, and route people to the platform that matters most for your category. No incentives, no gating: just asking every customer, consistently, at the right time.",
+      },
+      {
+        "question": "What do you do about negative reviews?",
+        "answer": "Monitor every platform daily, alert you the moment one lands, and draft a calm, specific, public response within a day — acknowledging the issue, avoiding defensiveness, and moving the detail offline. We cannot remove a genuine review, but a good response is read by every future prospect and often does more for conversion than the rating itself. Where a review clearly violates platform policy, we prepare and file the removal request.",
+      },
+      {
+        "question": "Which review sites should we focus on?",
+        "answer": "Google Business Profile first, almost always — it feeds the map pack and it is what most people check. After that it depends on your industry: Healthgrades and Zocdoc for medical, Avvo for legal, industry directories for trades, Facebook for some local services. We audit where your prospects actually look and where your competitors are winning, then concentrate the effort rather than spreading it thin.",
+      },
+      {
+        "question": "How long before it moves the rating?",
+        "answer": "If you are doing real volume and the work is good, the average rating starts climbing within a couple of months as recent, positive reviews outweigh older ones. A profile with very few reviews moves faster in either direction. The compounding benefit — better map-pack position, higher click-through, more conversion — builds over quarters, not weeks.",
+      },
+    ],
+    name: 'Review Management',
+    navLabel: 'Reviews',
+    tagline: 'Turn your rating into your best salesperson',
+    summary:
+      'A steady flow of recent, genuine reviews moves your map-pack position and your conversion rate at the same time. We build the request into your workflow, monitor every platform, and respond to what comes in.',
+    icon: '/images/icons/review-management.svg',
+    bullets: [
+      'Automated review requests timed to the end of the job, by customer type',
+      'Daily monitoring across Google, Facebook and your industry platforms',
+      'Drafted public responses to every review, positive and negative, within a day',
+      'Policy-compliant removal requests for reviews that break platform rules',
+    ],
+    deliverables: [
+      { title: 'Request automation', body: 'One-tap review requests wired into your CRM or field-service software, sent at the moment satisfaction is highest.' },
+      { title: 'Monitoring & alerts', body: 'Every platform watched daily, with a same-day alert the moment a new review lands.' },
+      { title: 'Response drafting', body: 'A calm, specific public reply to every review — the thing future prospects actually read.' },
+      { title: 'Reporting', body: 'Rating trend, review velocity and response time, alongside the map-pack movement that follows.' },
+    ],
+  },
+  {
+    slug: 'creative',
+    whoItsFor: [
+      "Your ad accounts are healthy but the creative is stale and results are sliding.",
+      "You have raw footage — testimonials, job sites, walkthroughs — and no one to cut it.",
+      "You are running the same three images across every platform and every audience.",
+    ],
+    notFor: "If you have no footage and no budget to shoot any, this is limited. We can do a lot with stock, motion graphics and your existing photos, but the creative that performs in home services, medical and legal is almost always real people and real work. Plan a half-day shoot first.",
+    faqs: [
+      {
+        "question": "Do you shoot video or just edit?",
+        "answer": "Both, depending on the market. In our core metros we can arrange a shoot; everywhere else we direct you through a simple self-shoot — what to capture, on what, in what order — and edit from there. Most of our work is editing: cutting testimonials, turning one long job-site video into a month of social clips, and producing ad variants for testing.",
+      },
+      {
+        "question": "How many pieces of creative do we actually need?",
+        "answer": "For paid social, more than most businesses run. Creative fatigues in weeks, so a healthy account needs a few new variants every month — different hooks, formats and lengths — not one polished hero video. For organic and the website, less: a strong testimonial reel, a service explainer or two, and a library of short clips you can post from.",
+      },
+      {
+        "question": "Can you match our brand?",
+        "answer": "Yes. We work from your colours, fonts, logo and tone, and if those are not defined we will set light guidelines first so everything is consistent. The goal is creative that looks like you, not like a template — captions, lower-thirds, intro and outro all built once and reused.",
+      },
+      {
+        "question": "What does this cost?",
+        "answer": "It scales with volume and whether we are shooting. A single testimonial edit from your footage is a small fixed project; an ongoing monthly plan that feeds a steady stream of ad and social creative is priced per month against how many pieces you need. We scope it after seeing what footage you have and what the ad accounts are asking for.",
+      },
+    ],
+    name: 'Creative & Video',
+    navLabel: 'Creative',
+    tagline: 'Ad and video creative built to be tested, not admired',
+    summary:
+      'The creative is the lever on paid social, and it fatigues fast. We produce testimonial edits, social clips and ad variants — cut from your footage, matched to your brand, and ready to run across every channel.',
+    icon: '/images/icons/creative.svg',
+    bullets: [
+      'Testimonial and case-study video edits from your raw footage',
+      'Short vertical clips for Reels, TikTok and YouTube Shorts',
+      'A/B ad-creative variants — multiple hooks, formats and lengths per test',
+      'Captions, lower-thirds and brand templates built once and reused',
+    ],
+    deliverables: [
+      { title: 'Creative audit', body: 'What is running now, what has fatigued, and the gaps against what each ad platform is asking for.' },
+      { title: 'Production plan', body: 'A shoot brief or a self-shoot guide, plus a monthly output target tied to your active campaigns.' },
+      { title: 'Edit & deliver', body: 'Finished cuts in every aspect ratio and length the channels need, on a predictable schedule.' },
+      { title: 'Performance review', body: 'Which hooks and formats won, feeding the next round of variants.' },
+    ],
+  },
 ];
 
 export const serviceBySlug = new Map(services.map((s) => [s.slug, s]));

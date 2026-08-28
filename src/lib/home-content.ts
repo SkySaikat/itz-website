@@ -17,10 +17,10 @@ export const home = {
       kicker: 'How we are different',
     },
     {
-      title: 'Five industries, learned properly',
+      title: 'Six industries, learned properly',
       body: [
-        'We work in law, medicine and dentistry, real estate, education and automotive — and nothing else. That means we already know your compliance rules, your buying cycle and what a good lead looks like before the kickoff call.',
-        'A generalist agency learns your industry on your budget. We would rather run five verticals well than a hundred generic accounts.',
+        'We work in law, medicine and dentistry, real estate, education, automotive and home services — and nothing else. That means we already know your compliance rules, your buying cycle and what a good lead looks like before the kickoff call.',
+        'A generalist agency learns your industry on your budget. We would rather run six verticals well than a hundred generic accounts.',
       ],
       image: '/images/home/difference.webp',
       imageAlt: 'Five distinct doorways representing specialised industries versus one generic option',
@@ -83,7 +83,7 @@ export const home = {
         'For most clients SEO is the foundation because it compounds and lowers cost per lead over time, with paid search layered on top to cover the gap while it builds. But the honest answer comes out of the audit — if you need cases or patients booked this month and have no organic history, paid comes first. We tell you which, and why.',
     },
     {
-      question: 'Do you work outside your five industries?',
+      question: 'Do you work outside your six industries?',
       answer:
         'Sometimes. If your business runs on local search — a phone that has to get answered, high-value inquiries, a defined service area — the playbook usually transfers. What we will not do is take on a category we have never run and learn it on your budget. Tell us what you do and we will give you an honest answer.',
     },

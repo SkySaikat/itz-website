@@ -5,11 +5,12 @@ import { notFound } from 'next/navigation';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 
 import { CtaBanner } from '@/components/sections/CtaBanner';
+import { FaqSection } from '@/components/sections/FaqSection';
 import { Button } from '@/components/ui/Button';
 import { JsonLd } from '@/components/ui/JsonLd';
 import { Section, SectionHeading } from '@/components/ui/Section';
 import { SplitHero } from '@/components/ui/SplitHero';
-import { caseStudies } from '@/lib/case-studies';
+import { caseStudies, caseStudyFaqs } from '@/lib/case-studies';
 import { services } from '@/lib/services';
 import { site } from '@/lib/site';
 
@@ -53,6 +54,13 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
   if (!study) notFound();
 
   const others = caseStudies.filter((c) => c.slug !== study.slug).slice(0, 3);
+  const hasMetrics = Boolean(study.metrics && study.metrics.length > 0);
+
+  const sections = [
+    { label: 'The challenge', body: study.challenge },
+    { label: 'The strategy', body: study.strategy },
+    { label: 'The results', body: study.results },
+  ].filter((s): s is { label: string; body: string } => Boolean(s.body));
 
   const graph = {
     '@context': 'https://schema.org' as const,
@@ -92,10 +100,29 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
         </div>
       </SplitHero>
 
-      <Section>
+      {/* ── Metrics band — only when real, verified numbers exist ────────── */}
+      {hasMetrics ? (
+        <Section>
+          <ul className="grid gap-6 sm:grid-cols-3">
+            {study.metrics!.map((m) => (
+              <li
+                key={m.label}
+                className="rounded-[1.75rem] border border-navy-100 bg-white p-8 text-center shadow-card"
+                data-reveal
+              >
+                <p className="text-3xl font-extrabold tracking-tight text-blue-600">{m.value}</p>
+                <p className="mt-2 text-sm leading-snug text-ink-600">{m.label}</p>
+              </li>
+            ))}
+          </ul>
+        </Section>
+      ) : null}
+
+      {/* ── Client / channels panel + Challenge / Strategy / Results ─────── */}
+      <Section tone={hasMetrics ? 'muted' : 'white'}>
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-8 xl:gap-16">
           <div className="min-w-0 lg:col-span-4" data-reveal="left">
-            <dl className="space-y-6 rounded-3xl border border-navy-100 bg-surface-muted p-8">
+            <dl className="space-y-6 rounded-[1.75rem] border border-navy-100 bg-white p-8 shadow-card">
               <div>
                 <dt className="text-eyebrow uppercase text-ink-500">Client</dt>
                 <dd className="mt-1 text-lg font-bold text-navy-700">{study.client}</dd>
@@ -113,14 +140,14 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
                       <Link
                         key={channel}
                         href={`/services/${service.slug}`}
-                        className="inline-flex min-h-tap items-center rounded-pill bg-white px-4 text-sm font-semibold text-blue-600 shadow-ring transition-colors hover:bg-blue-50"
+                        className="inline-flex min-h-tap items-center rounded-pill bg-surface-muted px-4 text-sm font-semibold text-blue-600 shadow-ring transition-colors hover:bg-blue-50"
                       >
                         {channel}
                       </Link>
                     ) : (
                       <span
                         key={channel}
-                        className="inline-flex min-h-tap items-center rounded-pill bg-white px-4 text-sm font-semibold text-ink-600 shadow-ring"
+                        className="inline-flex min-h-tap items-center rounded-pill bg-surface-muted px-4 text-sm font-semibold text-ink-600 shadow-ring"
                       >
                         {channel}
                       </span>
@@ -132,33 +159,46 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
           </div>
 
           <div className="min-w-0 lg:col-span-8" data-reveal="right">
-            <h2 className="text-display-sm text-navy-700">The engagement</h2>
-            <div className="prose prose-brand mt-6">
-              <p>{study.summary}</p>
-              <p>
-                Work ran across {listChannels(study.channels)}. As with every engagement, the
-                account, analytics and creative assets stayed in {study.client}&rsquo;s name
-                throughout, and reporting was on booked outcomes rather than impressions.
-              </p>
-            </div>
+            {sections.length > 0 ? (
+              <div className="space-y-10">
+                {sections.map((s) => (
+                  <div key={s.label}>
+                    <p className="text-eyebrow uppercase text-blue-600">{s.label}</p>
+                    <p className="mt-3 text-body-lg leading-relaxed text-ink-600">{s.body}</p>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <>
+                <h2 className="text-display-sm text-navy-700">The engagement</h2>
+                <p className="mt-6 text-body-lg leading-relaxed text-ink-600">{study.summary}</p>
+              </>
+            )}
 
-            {/* Deliberately no metrics: the numbers for these campaigns were not
-                in the content export, and inventing them is not an option. */}
-            <div className="mt-10 rounded-3xl border border-amber-200 bg-amber-50/70 p-7">
-              <h3 className="font-bold text-navy-700">Detailed results available on request</h3>
-              <p className="mt-2 max-w-prose text-[0.9375rem] leading-relaxed text-ink-700">
-                Campaign-level figures for this engagement aren&rsquo;t published here. Ask us on a
-                call and we&rsquo;ll walk you through what was measured and what it produced.
-              </p>
-              <Button href="/contact" variant="secondary" className="mt-5">
-                Request the numbers
-              </Button>
-            </div>
+            {!hasMetrics ? (
+              <div className="mt-10 rounded-[1.75rem] border border-amber-200 bg-amber-50/70 p-7">
+                <h3 className="font-bold text-navy-700">Detailed results available on request</h3>
+                <p className="mt-2 max-w-prose text-[0.9375rem] leading-relaxed text-ink-700">
+                  Campaign-level figures for this engagement aren&rsquo;t published here. Ask us on a
+                  call and we&rsquo;ll walk you through what was measured and what it produced.
+                </p>
+                <Button href="/contact" variant="secondary" className="mt-5">
+                  Request the numbers
+                </Button>
+              </div>
+            ) : null}
           </div>
         </div>
       </Section>
 
-      <div className="pb-section lg:pb-section-lg" data-reveal="scale">
+      <FaqSection
+        faqs={[...(study.faqs ?? []), ...caseStudyFaqs]}
+        path={`/case-studies/${study.slug}`}
+        title="Common questions about this case study"
+        tone={hasMetrics ? 'white' : 'muted'}
+      />
+
+      <div className="py-section lg:py-section-lg" data-reveal="scale">
         <CtaBanner
           title="Want results like these in your market?"
           highlight="your market"
@@ -167,7 +207,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
       </div>
 
       {others.length > 0 ? (
-        <Section tone="muted">
+        <Section>
           <SectionHeading eyebrow="More work" title="Other case studies" />
           <ul className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {others.map((other, i) => (
@@ -207,9 +247,4 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
       <JsonLd data={graph} />
     </>
   );
-}
-
-function listChannels(channels: string[]) {
-  if (channels.length <= 1) return channels[0] ?? 'a single channel';
-  return `${channels.slice(0, -1).join(', ')} and ${channels[channels.length - 1]}`;
 }

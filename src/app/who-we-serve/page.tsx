@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Car, GraduationCap, Home, Scale, Stethoscope } from 'lucide-react';
+import { Car, GraduationCap, Home, Scale, Stethoscope, Wrench } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 
 import { CtaBanner } from '@/components/sections/CtaBanner';
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   alternates: { canonical: '/who-we-serve' },
 };
 
-const icons: Record<Industry['icon'], LucideIcon> = { Scale, Stethoscope, Home, GraduationCap, Car };
+const icons: Record<Industry['icon'], LucideIcon> = { Scale, Stethoscope, Home, GraduationCap, Car, Wrench };
 
 export default function WhoWeServePage() {
   return (
