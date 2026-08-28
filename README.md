@@ -596,9 +596,17 @@ prompt: `industries/home-services*` and `services/{review-management,creative}*`
 
 ## 11. Still to do before launch
 
-1. **Contact form transport.** `src/app/api/contact/route.ts` validates and logs
-   submissions but does not deliver them. Wire up Resend / SendGrid / HubSpot at
-   the marked `TODO(launch)`.
+1. **Contact form transport — wired, needs the Resend key.**
+   `src/app/api/contact/route.ts` now sends two emails per submission via Resend
+   (`src/lib/email.ts` — REST, no SDK; `src/lib/email-templates.ts` — the HTML):
+   an internal notification to `CONTACT_NOTIFY_TO` (`production@itzontarget.com`,
+   `reply_to` the enquirer) and a branded confirmation to the enquirer. Delivery
+   never blocks the response — a provider failure is logged and the form still
+   returns `{ ok: true }`. **To go live:** add the `itzdigital.co` domain in
+   Resend, add its DNS records, create an API key, and set `RESEND_API_KEY` (see
+   `.env.example`). The `from` is `info@itzdigital.co`. Email logo is
+   `public/logo/itz-digital-email-white.png` (rendered from the SVG); it loads
+   from `EMAIL_ASSET_BASE || site.url`.
 2. **Case study bodies.** Titles and slugs in `src/lib/case-studies.ts` are the
    real ones from the export, but the bodies live in Elementor/ACF fields the XML
    does not carry. Summaries there are neutral and contain **no invented

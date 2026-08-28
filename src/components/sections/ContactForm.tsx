@@ -27,10 +27,13 @@ export function ContactForm() {
     setError(null);
 
     try {
+      const payload = Object.fromEntries(new FormData(form));
+      payload.pagePath = window.location.pathname;
+
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(Object.fromEntries(new FormData(form))),
+        body: JSON.stringify(payload),
       });
 
       if (!response.ok) throw new Error(`Request failed with ${response.status}`);
