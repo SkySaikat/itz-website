@@ -30,7 +30,10 @@ export const emailConfig = {
 export type SendResult =
   | { ok: true; id: string }
   | { ok: false; skipped: true }
-  | { ok: false; skipped?: false; error: string };
+  | { ok: false; skipped?: false; error: string; detail?: string };
+
+/** True when a RESEND_API_KEY is present on this deployment. */
+export const isEmailConfigured = () => Boolean(process.env.RESEND_API_KEY);
 
 export async function sendEmail(opts: {
   to: string | string[];
@@ -71,7 +74,7 @@ export async function sendEmail(opts: {
     if (!res.ok) {
       const detail = await res.text().catch(() => '');
       console.error(`[email] send failed (${res.status}) for "${opts.subject}": ${detail}`);
-      return { ok: false, error: `provider responded ${res.status}` };
+      return { ok: false, error: `provider responded ${res.status}`, detail: detail.slice(0, 500) };
     }
 
     const data = (await res.json()) as { id?: string };

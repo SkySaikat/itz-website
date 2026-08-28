@@ -1,7 +1,44 @@
 import { NextResponse } from 'next/server';
 
-import { emailConfig, sendEmail } from '@/lib/email';
+import { emailConfig, isEmailConfigured, sendEmail } from '@/lib/email';
 import { confirmationEmail, notificationEmail, type ContactSubmission } from '@/lib/email-templates';
+
+/**
+ * GET /api/contact — diagnostic. No secrets returned.
+ *
+ *   /api/contact             → is the Resend key present on this deployment?
+ *   /api/contact?selftest=1  → actually send one test email to CONTACT_NOTIFY_TO
+ *                              and return the raw provider result (403/422 detail
+ *                              included). Only ever mails the fixed internal
+ *                              address, so it is not a spam vector.
+ *
+ * Safe to leave in; remove once email is confirmed working if you prefer.
+ */
+export async function GET(request: Request) {
+  const selftest = new URL(request.url).searchParams.get('selftest');
+  const base = {
+    resendConfigured: isEmailConfigured(),
+    from: emailConfig.from,
+    notifyTo: emailConfig.notifyTo,
+    assetBase: process.env.EMAIL_ASSET_BASE || '(default: site.url)',
+    node: process.version,
+  };
+
+  if (!selftest) return NextResponse.json(base);
+
+  if (!isEmailConfigured()) {
+    return NextResponse.json({ ...base, selftest: 'aborted — RESEND_API_KEY not set' }, { status: 200 });
+  }
+
+  const result = await sendEmail({
+    to: emailConfig.notifyTo,
+    subject: `ITZ Digital email self-test — ${new Date().toISOString()}`,
+    html: `<p>This is a self-test from <strong>/api/contact?selftest=1</strong>. If you can read this, Resend is wired correctly.</p>`,
+    text: 'Self-test from /api/contact?selftest=1. Resend is wired correctly.',
+  });
+
+  return NextResponse.json({ ...base, selftest: result });
+}
 
 /*
  * Contact endpoint.
@@ -87,7 +124,25 @@ export async function POST(request: Request) {
   logDelivery('notification', notifyResult);
   logDelivery('confirmation', confirmResult);
 
-  return NextResponse.json({ ok: true });
+  // Coarse status in the response — visible in the browser Network tab for
+  // debugging, no secrets. The form UI ignores everything except `ok`.
+  return NextResponse.json({
+    ok: true,
+    delivery: {
+      notification: settledStatus(notifyResult),
+      confirmation: settledStatus(confirmResult),
+    },
+  });
+}
+
+function settledStatus(
+  result: PromiseSettledResult<Awaited<ReturnType<typeof sendEmail>>>,
+): 'sent' | 'skipped' | 'failed' {
+  if (result.status === 'rejected') return 'failed';
+  const r = result.value;
+  if (r.ok) return 'sent';
+  if ('skipped' in r && r.skipped) return 'skipped';
+  return 'failed';
 }
 
 const str = (v: unknown) => (typeof v === 'string' ? v.trim() : '');
