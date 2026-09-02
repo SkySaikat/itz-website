@@ -12,14 +12,15 @@ const nextConfig = {
   // Original WordPress URLs that changed in the rebuild. Everything else keeps
   // its legacy path so existing rankings and backlinks survive the migration.
   async redirects() {
-    // WordPress served every post at the site root (/post-slug). The rebuild
-    // moved them under /blog. Build the 301 list from the same index the blog
-    // routes read so a slug can never exist in one place and not the other.
-    // Evaluated once at build time, not per request.
+    // Blog posts live at the site root (/post-slug), matching the original
+    // WordPress URLs. The site briefly launched with them under /blog, so send
+    // that form back to the root. Built from the same index the routes read,
+    // so the list can never drift from the slugs actually served. Evaluated
+    // once at build time, not per request.
     const posts = JSON.parse(readFileSync('./src/content/posts-index.json', 'utf8'));
     const postRedirects = posts.map((post) => ({
-      source: `/${post.slug}`,
-      destination: `/blog/${post.slug}`,
+      source: `/blog/${post.slug}`,
+      destination: `/${post.slug}`,
       permanent: true,
     }));
 

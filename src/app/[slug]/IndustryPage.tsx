@@ -23,13 +23,9 @@ import { site } from '@/lib/site';
 
 /*
  * Top-level industry pages keep their original WordPress paths — /lawyers,
- * /medical, /real-estate, /education, /automotive.
+ * /medical, /real-estate, /education, /automotive. They share the root
+ * dynamic segment with blog posts; `[slug]/page.tsx` decides which renders.
  */
-export const dynamicParams = false;
-
-export function generateStaticParams() {
-  return industries.map((i) => ({ industry: i.slug }));
-}
 
 const icons: Record<Industry['icon'], LucideIcon> = { Scale, Stethoscope, Home, GraduationCap, Car, Wrench };
 
@@ -43,12 +39,7 @@ const HERO_FIT: Record<string, 'contain' | 'cover'> = {
   education: 'cover',
 };
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ industry: string }>;
-}): Promise<Metadata> {
-  const { industry: slug } = await params;
+export function industryMetadata(slug: string): Metadata {
   const industry = industryBySlug.get(slug);
   if (!industry) return {};
 
@@ -65,8 +56,7 @@ export async function generateMetadata({
   };
 }
 
-export default async function IndustryPage({ params }: { params: Promise<{ industry: string }> }) {
-  const { industry: slug } = await params;
+export function IndustryPage({ slug }: { slug: string }) {
   const industry = industryBySlug.get(slug);
   if (!industry) notFound();
 

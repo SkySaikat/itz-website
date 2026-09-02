@@ -106,7 +106,7 @@ export default async function BlogPage({
             <div className="flex flex-col justify-center p-8 min-w-0 lg:col-span-6 lg:p-12">
               <p className="eyebrow-script text-blue-600">Latest</p>
               <h2 className="mt-2 text-display-sm text-navy-700">
-                <Link href={`/blog/${featured.slug}`} className="after:absolute after:inset-0 after:content-['']">
+                <Link href={`/${featured.slug}`} className="after:absolute after:inset-0 after:content-['']">
                   {featured.title}
                 </Link>
               </h2>

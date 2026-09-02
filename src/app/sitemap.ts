@@ -72,7 +72,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   }));
 
   const postPages: MetadataRoute.Sitemap = allPosts.map((post) => ({
-    url: url(`/blog/${post.slug}`),
+    url: url(`/${post.slug}`),
     lastModified: post.date ? new Date(post.date) : now,
     changeFrequency: 'yearly',
     priority: 0.6,
