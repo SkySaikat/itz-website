@@ -1,3 +1,5 @@
+import { readFileSync } from 'node:fs';
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -10,6 +12,27 @@ const nextConfig = {
   // Original WordPress URLs that changed in the rebuild. Everything else keeps
   // its legacy path so existing rankings and backlinks survive the migration.
   async redirects() {
+    // WordPress served every post at the site root (/post-slug). The rebuild
+    // moved them under /blog. Build the 301 list from the same index the blog
+    // routes read so a slug can never exist in one place and not the other.
+    // Evaluated once at build time, not per request.
+    const posts = JSON.parse(readFileSync('./src/content/posts-index.json', 'utf8'));
+    const postRedirects = posts.map((post) => ({
+      source: `/${post.slug}`,
+      destination: `/blog/${post.slug}`,
+      permanent: true,
+    }));
+
+    // WordPress archive URLs with no equivalent page in the rebuild. Send them
+    // to the blog index rather than letting them 404.
+    const archiveRedirects = [
+      { source: '/category/:path*', destination: '/blog', permanent: true },
+      { source: '/tag/:path*', destination: '/blog', permanent: true },
+      { source: '/author/:path*', destination: '/blog', permanent: true },
+      { source: '/feed', destination: '/blog', permanent: true },
+      { source: '/page/:n', destination: '/blog', permanent: true },
+    ];
+
     return [
       { source: '/home', destination: '/', permanent: true },
       { source: '/about', destination: '/about-us', permanent: true },
@@ -25,6 +48,8 @@ const nextConfig = {
       { source: '/real-estate-agent', destination: '/real-estate/realtor', permanent: true },
       { source: '/auto-repair', destination: '/automotive/auto-repair', permanent: true },
       { source: '/auto-detailing', destination: '/automotive/auto-detailing', permanent: true },
+      ...archiveRedirects,
+      ...postRedirects,
     ];
   },
 };
