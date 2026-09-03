@@ -3,7 +3,7 @@ export const site = {
   legalName: 'ITZ Digital',
   tagline: 'Get more customers without breaking the bank.',
   description:
-    'Small business marketing agency running SEO, Google & Meta Ads, and website design for law firms, medical practices, real estate teams, schools and auto shops.',
+    'Small business marketing agency running SEO, Google & Meta Ads, and website design for law firms, medical practices, real estate teams, schools, auto shops and home-services companies.',
   url: 'https://itzdigital.co',
   phone: '800.647.6917',
   phoneHref: 'tel:+18006476917',

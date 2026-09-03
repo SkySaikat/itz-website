@@ -19,16 +19,14 @@
        element into a scroll container — which `hidden` would, breaking the
        sticky header. */
     overflow-x: clip;
-    scroll-behavior: smooth;
+    /* No `scroll-behavior: smooth` — it makes every route change visibly
+       animate a scroll-to-top. Anchor jumps are instant, which is fine. */
     /* Anchor links must clear the sticky header. */
     scroll-padding-top: calc(var(--header-height) + 1rem);
     -webkit-text-size-adjust: 100%;
   }
 
   @media (prefers-reduced-motion: reduce) {
-    html {
-      scroll-behavior: auto;
-    }
     *,
     *::before,
     *::after {
@@ -88,7 +86,11 @@
   }
 
   @media (min-width: 1280px) {
-    .container { max-width: 80rem; padding-inline: 3rem; }
+    .container { max-width: 82rem; padding-inline: 3rem; }
+  }
+
+  @media (min-width: 1536px) {
+    .container { max-width: 86rem; }
   }
 
   /* Eyebrow labels. The original uses the Verveine script for these; Caveat
@@ -116,6 +118,83 @@
     background-repeat: no-repeat;
     background-size: 100% 100%;
     padding-bottom: 0.08em;
+  }
+
+  /* ── Refresh utilities ──────────────────────────────────────────────────
+     Contemporary treatments layered on the existing system: a navy→blue
+     text clip, a frosted panel, and the soft colour-mesh section fills. */
+
+  .text-gradient {
+    background-image: linear-gradient(
+      100deg,
+      theme('colors.navy.700') 0%,
+      theme('colors.blue.600') 55%,
+      theme('colors.blue.500') 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .on-dark .text-gradient {
+    background-image: linear-gradient(100deg, #ffffff 0%, theme('colors.blue.200') 100%);
+  }
+
+  .glass {
+    background-color: rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(14px) saturate(160%);
+    -webkit-backdrop-filter: blur(14px) saturate(160%);
+    border: 1px solid rgba(9, 44, 90, 0.08);
+  }
+
+  .on-dark .glass,
+  .glass-dark {
+    background-color: rgba(11, 34, 69, 0.42);
+    border-color: rgba(255, 255, 255, 0.14);
+  }
+
+  /* Paints the light colour-mesh behind a white/muted section. Keep content
+     in a relative wrapper above it. */
+  .mesh {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .mesh::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-image: theme('backgroundImage.gradient-mesh');
+    pointer-events: none;
+  }
+
+  .mesh-dark::before {
+    background-image: theme('backgroundImage.gradient-mesh-dark');
+  }
+
+  /* Soft top fade between two light sections, in place of a hard edge. */
+  .hairline-divider {
+    position: relative;
+  }
+
+  .hairline-divider::before {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    top: 0;
+    height: 6rem;
+    background: linear-gradient(to bottom, rgba(9, 44, 90, 0.05), transparent);
+    pointer-events: none;
+  }
+
+  /* Standardises the drifting blur circles that were scattered inline. */
+  .accent-orb {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(64px);
+    pointer-events: none;
+    z-index: 0;
   }
 }
 
@@ -205,6 +284,15 @@
 
   .marquee-group { display: flex; align-items: center; flex-shrink: 0; }
 
+  /* On phones the auto-scroll fights touch scrolling and the logos past the
+     edge are unreachable — make it a plain swipeable strip instead, showing a
+     single set of logos (the second group only exists for the seamless loop). */
+  @media (max-width: 639px) {
+    .marquee { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .marquee-track { animation: none; }
+    .marquee-track > .marquee-group + .marquee-group { display: none; }
+  }
+
   .drift { animation: drift 18s ease-in-out infinite alternate; }
   .drift-slow { animation: drift 26s ease-in-out infinite alternate-reverse; }
 
@@ -218,7 +306,26 @@
       transition: none !important;
     }
     .marquee-track, .drift, .drift-slow { animation: none !important; }
-    .marquee { mask-image: none; }
+    /* Auto-scroll off → let people swipe the strip, and drop the loop
+       duplicate so the logos don't appear twice. Keep the edge fade as a
+       "there's more" hint. */
+    .marquee { overflow-x: auto; }
+    .marquee-track > .marquee-group + .marquee-group { display: none; }
     .group:hover .media-zoom img { transform: none; }
   }
+}
+
+/* Keyframes for the utilities above.
+   These MUST live here, not in tailwind.config.js `theme.keyframes`: Tailwind
+   only emits a `@keyframes` block when a matching key also exists in
+   `theme.animation`, so config-only keyframes (marquee, drift) were silently
+   dropped from the build and the animations never ran. */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@keyframes drift {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to { transform: translate3d(3%, -4%, 0) scale(1.08); }
 }

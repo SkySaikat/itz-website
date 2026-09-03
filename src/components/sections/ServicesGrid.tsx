@@ -12,6 +12,7 @@ export function ServicesGrid() {
       <SectionHeading
         eyebrow="What we do"
         title="Our Small Business Marketing Services"
+        size="lg"
         intro="Our team handles the complex process of ad buying on your behalf, so you can focus on running the business. Most clients don't need every channel at once — SEO is usually the foundation, with paid ads and a rebuilt site layered in once you know where the gaps are."
         action={
           <Button href="/services" variant="secondary">
@@ -23,7 +24,7 @@ export function ServicesGrid() {
       <ul className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {homepageServices.map((service, i) => (
           <li key={service.slug} data-reveal data-reveal-delay={i}>
-            <article className="group relative flex h-full flex-col rounded-3xl border border-navy-100 bg-white p-8 shadow-card transition-all duration-300 ease-out hover:-translate-y-1 hover:border-blue-200 hover:shadow-card-hover focus-within:-translate-y-1 focus-within:shadow-card-hover">
+            <article className="group relative flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-navy-100 bg-white p-8 shadow-card transition-all duration-300 ease-out before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-blue-300/60 before:to-transparent before:opacity-0 before:transition-opacity hover:-translate-y-1.5 hover:border-blue-200 hover:shadow-card-lg hover:before:opacity-100 focus-within:-translate-y-1.5 focus-within:shadow-card-lg">
               <span className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-amber-50 ring-1 ring-amber-100">
                 <Image
                   src={service.icon}

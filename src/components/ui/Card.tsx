@@ -28,10 +28,11 @@ export function LinkCard({
   return (
     <div
       className={cn(
-        'group relative flex flex-col rounded-3xl border border-navy-100 bg-white p-7 shadow-card',
+        'group relative flex flex-col overflow-hidden rounded-[1.75rem] border border-navy-100 bg-white p-7 shadow-card',
         'transition-all duration-300 ease-out',
-        'hover:-translate-y-1 hover:border-blue-200 hover:shadow-card-hover',
-        'focus-within:-translate-y-1 focus-within:border-blue-300 focus-within:shadow-card-hover',
+        'before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-blue-300/60 before:to-transparent before:opacity-0 before:transition-opacity before:duration-300',
+        'hover:-translate-y-1.5 hover:border-blue-200 hover:shadow-card-lg hover:before:opacity-100',
+        'focus-within:-translate-y-1.5 focus-within:border-blue-300 focus-within:shadow-card-lg',
         className,
       )}
     >

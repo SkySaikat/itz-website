@@ -1,20 +1,34 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
-import { Check, MapPin } from 'lucide-react';
+import { AlertTriangle, Check, MapPin } from 'lucide-react';
 
 import { CtaBanner } from '@/components/sections/CtaBanner';
 import { FaqSection } from '@/components/sections/FaqSection';
 import { PerksBand } from '@/components/sections/PerksBand';
+import { ProcessSection } from '@/components/sections/ProcessTimeline';
+import { SignalGrid } from '@/components/sections/SignalGrid';
 import { LinkCard } from '@/components/ui/Card';
 import { SplitHero } from '@/components/ui/SplitHero';
 import { Button } from '@/components/ui/Button';
 import { Section, SectionHeading } from '@/components/ui/Section';
 import { citiesForService } from '@/lib/geo';
 import { serviceBySlug, services } from '@/lib/services';
+import { serviceExtras } from '@/lib/service-content';
 import { site } from '@/lib/site';
 
 export const dynamicParams = false;
+
+/** Services with a bespoke process illustration in public/images/services. */
+const PROCESS_IMAGE = new Set([
+  'seo',
+  'google-ads',
+  'meta-ads',
+  'website-design',
+  'lead-generation',
+  'review-management',
+  'creative',
+]);
 
 export function generateStaticParams() {
   return services.map((s) => ({ service: s.slug }));
@@ -49,6 +63,9 @@ export default async function ServicePage({ params }: { params: Promise<{ servic
   const children = (service.children ?? []).map((s) => serviceBySlug.get(s)!).filter(Boolean);
   const related = services.filter((s) => s.slug !== service.slug && !service.children?.includes(s.slug)).slice(0, 3);
   const cities = citiesForService(slug);
+  const extra = serviceExtras[service.slug];
+  const hasProcessImage = PROCESS_IMAGE.has(service.slug);
+  const label = service.navLabel ?? service.name;
 
   return (
     <>
@@ -64,7 +81,7 @@ export default async function ServicePage({ params }: { params: Promise<{ servic
       >
         <div className="flex flex-col gap-3 sm:flex-row">
           <Button href="/contact" variant="onDark" size="lg">
-            Get a Free {service.navLabel ?? service.name} Audit
+            Get a Free {label} Audit
           </Button>
           <Button href="#included" variant="outlineOnDark" size="lg">
             What&rsquo;s included
@@ -72,7 +89,37 @@ export default async function ServicePage({ params }: { params: Promise<{ servic
         </div>
       </SplitHero>
 
-      <Section id="included">
+      {/* ── Expanded intro ──────────────────────────────────────────────── */}
+      {extra ? (
+        <Section>
+          <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-16">
+            <div className={hasProcessImage ? 'min-w-0 lg:col-span-7' : 'min-w-0 lg:col-span-9'}>
+              <p className="eyebrow-script mb-3">In plain terms</p>
+              <div className="space-y-5 text-body-lg text-ink-600">
+                {extra.expandedSummary.map((p) => (
+                  <p key={p.slice(0, 32)}>{p}</p>
+                ))}
+              </div>
+            </div>
+            {hasProcessImage ? (
+              <div className="min-w-0 lg:col-span-5" data-reveal="right">
+                <div className="relative aspect-[4/3] overflow-hidden rounded-4xl bg-white shadow-card ring-1 ring-navy-100">
+                  <Image
+                    src={`/images/services/${service.slug}-process.webp`}
+                    alt={`How ${label} works`}
+                    fill
+                    loading="lazy"
+                    sizes="(min-width: 1024px) 40vw, 100vw"
+                    className="object-contain"
+                  />
+                </div>
+              </div>
+            ) : null}
+          </div>
+        </Section>
+      ) : null}
+
+      <Section id="included" tone={extra ? 'muted' : 'white'}>
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-8 xl:gap-16">
           <div className="min-w-0 lg:col-span-5" data-reveal="left">
             <span className="inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-amber-50 ring-1 ring-amber-100">
@@ -94,13 +141,13 @@ export default async function ServicePage({ params }: { params: Promise<{ servic
           </div>
 
           <div className="min-w-0 lg:col-span-7" data-reveal="right">
-            <h2 className="text-display-sm text-navy-700">How the engagement runs</h2>
+            <h2 className="text-display-sm text-navy-700">What you get</h2>
 
             <ol className="mt-8 space-y-6">
               {service.deliverables.map((item, i) => (
                 <li
                   key={item.title}
-                  className="relative rounded-3xl border border-navy-100 bg-white p-7 shadow-card transition-shadow duration-300 hover:shadow-card-hover"
+                  className="relative rounded-[1.75rem] border border-navy-100 bg-white p-7 shadow-card transition-shadow duration-300 hover:shadow-card-hover"
                   data-reveal
                   data-reveal-delay={i}
                 >
@@ -116,11 +163,22 @@ export default async function ServicePage({ params }: { params: Promise<{ servic
         </div>
       </Section>
 
+      {/* ── The engagement, step by step ────────────────────────────────── */}
+      {extra ? (
+        <ProcessSection
+          eyebrow="The engagement"
+          title={`How the ${label} engagement runs`}
+          intro="The sequence rarely changes, even though every account does. Fix the foundation, launch what is fast, then compound."
+          steps={extra.process.map((s) => ({ phase: s.phase, title: '', body: s.body }))}
+          tone="white"
+        />
+      ) : null}
+
       {/* ── Who it suits, and honestly who it doesn't ────────────────────── */}
       {service.whoItsFor ? (
         <PerksBand
           eyebrow="Fit"
-          title={`Who ${service.navLabel ?? service.name} is for`}
+          title={`Who ${label} is for`}
           perks={service.whoItsFor}
           tone="muted"
         >
@@ -133,8 +191,41 @@ export default async function ServicePage({ params }: { params: Promise<{ servic
         </PerksBand>
       ) : null}
 
+      {/* ── Common mistakes ─────────────────────────────────────────────── */}
+      {extra ? (
+        <Section>
+          <SectionHeading
+            eyebrow="What goes wrong"
+            title={`Where ${label} usually gets wasted`}
+            intro="The failure modes we see most often when this channel is run without discipline — worth checking your current setup against."
+          />
+          <ul className="mt-14 grid gap-6 md:grid-cols-3">
+            {extra.commonMistakes.map((m, i) => (
+              <li key={m.title} data-reveal data-reveal-delay={i}>
+                <article className="h-full rounded-[1.75rem] border border-amber-100 bg-amber-50/50 p-7">
+                  <AlertTriangle className="h-6 w-6 text-amber-600" aria-hidden="true" />
+                  <h3 className="mt-4 text-lg font-bold leading-snug text-navy-700">{m.title}</h3>
+                  <p className="mt-2 text-[0.9375rem] leading-relaxed text-ink-600">{m.body}</p>
+                </article>
+              </li>
+            ))}
+          </ul>
+        </Section>
+      ) : null}
+
+      {/* ── Leading indicators ──────────────────────────────────────────── */}
+      {extra ? (
+        <SignalGrid
+          eyebrow="How we measure it"
+          title={`What a working ${label} account looks like`}
+          intro="Booked jobs are the goal. These are the earlier reads that tell us the channel is on track to get there."
+          signals={extra.outcomes}
+          tone="muted"
+        />
+      ) : null}
+
       {children.length > 0 ? (
-        <Section tone={service.whoItsFor ? 'white' : 'muted'}>
+        <Section tone={extra ? 'white' : 'muted'}>
           <SectionHeading eyebrow="Go deeper" title={`Specialist ${service.name.toLowerCase()} services`} />
           <ul className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {children.map((child) => (
@@ -155,8 +246,8 @@ export default async function ServicePage({ params }: { params: Promise<{ servic
         <FaqSection
           faqs={service.faqs}
           path={`/services/${service.slug}`}
-          title={`${service.navLabel ?? service.name}: common questions`}
-          tone={children.length > 0 ? 'white' : 'muted'}
+          title={`${label}: common questions`}
+          tone={children.length > 0 ? 'muted' : 'white'}
         />
       ) : null}
 
@@ -169,7 +260,7 @@ export default async function ServicePage({ params }: { params: Promise<{ servic
       </div>
 
       {cities.length > 0 ? (
-        <Section tone={children.length > 0 ? 'white' : 'muted'}>
+        <Section>
           <SectionHeading
             eyebrow="Where we run it"
             title={`${service.name} by city`}

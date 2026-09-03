@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ArrowRight, Car, GraduationCap, Home, Scale, Stethoscope } from 'lucide-react';
+import { ArrowRight, Car, GraduationCap, Home, Scale, Stethoscope, Wrench } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 
 import { Section, SectionHeading } from '@/components/ui/Section';
@@ -11,24 +11,26 @@ const icons: Record<Industry['icon'], LucideIcon> = {
   Home,
   GraduationCap,
   Car,
+  Wrench,
 };
 
-export function IndustriesGrid() {
+export function IndustriesGrid({ tone = 'muted' }: { tone?: 'white' | 'muted' }) {
   return (
-    <Section tone="muted" id="who-we-serve">
+    <Section tone={tone} id="who-we-serve">
       <SectionHeading
         eyebrow="Who we serve"
-        title="Five industries, one clear strategy each"
-        intro="Legal, medical, real estate, education and automotive businesses all compete for local visibility differently — different keywords, different compliance rules, different buyer urgency. We build a distinct strategy for each rather than one generic template."
+        title="Six industries, one clear strategy each"
+        size="lg"
+        intro="Legal, medical, real estate, education, automotive and home services businesses all compete for local visibility differently — different keywords, different compliance rules, different buyer urgency. We build a distinct strategy for each rather than one generic template."
       />
 
-      <ul className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+      <ul className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {industries.map((industry, i) => {
           const Icon = icons[industry.icon];
 
           return (
             <li key={industry.slug} data-reveal data-reveal-delay={i}>
-              <article className="group relative flex h-full flex-col rounded-3xl border border-navy-100 bg-white p-7 shadow-card transition-all duration-300 ease-out hover:-translate-y-1 hover:border-blue-200 hover:shadow-card-hover focus-within:-translate-y-1 focus-within:shadow-card-hover">
+              <article className="group relative flex h-full flex-col rounded-[1.75rem] border border-navy-100 bg-white p-7 shadow-card transition-all duration-300 ease-out hover:-translate-y-1.5 hover:border-blue-200 hover:shadow-card-lg focus-within:-translate-y-1.5 focus-within:shadow-card-lg">
                 <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-50 text-blue-600 ring-1 ring-blue-100 transition-colors group-hover:bg-blue-600 group-hover:text-white">
                   <Icon className="h-6 w-6" aria-hidden="true" />
                 </span>

@@ -106,7 +106,13 @@ const organizationSchema = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${figtree.variable} ${caveat.variable}`}>
+    <html
+      lang="en"
+      className={`${figtree.variable} ${caveat.variable}`}
+      /* The inline script below adds `js` to <html> before hydration — an
+         intentional mismatch React 19 would otherwise warn about. */
+      suppressHydrationWarning
+    >
       <head>
         {/* Marks JS as available before first paint, so the pre-reveal hidden
             state only ever applies when something can un-hide it. */}

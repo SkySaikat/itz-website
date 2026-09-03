@@ -1,7 +1,7 @@
 import type { MetadataRoute } from 'next';
 
 import { caseStudies } from '@/lib/case-studies';
-import { serviceLocationParams } from '@/lib/geo';
+import { cities, serviceLocationParams } from '@/lib/geo';
 import { industries } from '@/lib/industries';
 import { allPosts } from '@/lib/posts';
 import { services } from '@/lib/services';
@@ -16,6 +16,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
       { url: url('/'), changeFrequency: 'weekly', priority: 1 },
       { url: url('/services'), changeFrequency: 'monthly', priority: 0.9 },
       { url: url('/who-we-serve'), changeFrequency: 'monthly', priority: 0.9 },
+      { url: url('/pricing'), changeFrequency: 'monthly', priority: 0.9 },
+      { url: url('/locations'), changeFrequency: 'monthly', priority: 0.8 },
       { url: url('/about-us'), changeFrequency: 'monthly', priority: 0.7 },
       { url: url('/case-studies'), changeFrequency: 'monthly', priority: 0.7 },
       { url: url('/blog'), changeFrequency: 'daily', priority: 0.8 },
@@ -62,8 +64,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }));
 
+  const locationPages: MetadataRoute.Sitemap = cities.map((city) => ({
+    url: url(`/locations/${city.slug}`),
+    lastModified: now,
+    changeFrequency: 'monthly',
+    priority: 0.7,
+  }));
+
   const postPages: MetadataRoute.Sitemap = allPosts.map((post) => ({
-    url: url(`/blog/${post.slug}`),
+    url: url(`/${post.slug}`),
     lastModified: post.date ? new Date(post.date) : now,
     changeFrequency: 'yearly',
     priority: 0.6,
@@ -74,6 +83,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...servicePages,
     ...geoPages,
     ...industryPages,
+    ...locationPages,
     ...caseStudyPages,
     ...postPages,
   ];

@@ -2,33 +2,32 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { ArrowRight, Car, GraduationCap, Home, Scale, Stethoscope } from 'lucide-react';
+import { ArrowRight, Car, GraduationCap, Home, Scale, Stethoscope, Wrench } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 
 import { ContextBlock } from '@/components/sections/ContextBlock';
 import { CtaBanner } from '@/components/sections/CtaBanner';
 import { FaqSection } from '@/components/sections/FaqSection';
+import { FeatureRows } from '@/components/sections/FeatureRows';
 import { PerksBand } from '@/components/sections/PerksBand';
+import { SignalGrid } from '@/components/sections/SignalGrid';
 import { Button } from '@/components/ui/Button';
 import { LinkCard } from '@/components/ui/Card';
 import { Section, SectionHeading } from '@/components/ui/Section';
 import { SplitHero } from '@/components/ui/SplitHero';
 import { industries, industryBySlug, type Industry } from '@/lib/industries';
+import { industryExtras } from '@/lib/industry-content';
 import { citiesForService } from '@/lib/geo';
 import { homepageServices } from '@/lib/services';
 import { site } from '@/lib/site';
 
 /*
  * Top-level industry pages keep their original WordPress paths — /lawyers,
- * /medical, /real-estate, /education, /automotive.
+ * /medical, /real-estate, /education, /automotive. They share the root
+ * dynamic segment with blog posts; `[slug]/page.tsx` decides which renders.
  */
-export const dynamicParams = false;
 
-export function generateStaticParams() {
-  return industries.map((i) => ({ industry: i.slug }));
-}
-
-const icons: Record<Industry['icon'], LucideIcon> = { Scale, Stethoscope, Home, GraduationCap, Car };
+const icons: Record<Industry['icon'], LucideIcon> = { Scale, Stethoscope, Home, GraduationCap, Car, Wrench };
 
 /** Composites are transparent and need `contain`; photographs get `cover`. */
 const HERO_FIT: Record<string, 'contain' | 'cover'> = {
@@ -36,15 +35,11 @@ const HERO_FIT: Record<string, 'contain' | 'cover'> = {
   medical: 'contain',
   'real-estate': 'contain',
   automotive: 'contain',
+  'home-services': 'contain',
   education: 'cover',
 };
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ industry: string }>;
-}): Promise<Metadata> {
-  const { industry: slug } = await params;
+export function industryMetadata(slug: string): Metadata {
   const industry = industryBySlug.get(slug);
   if (!industry) return {};
 
@@ -61,13 +56,29 @@ export async function generateMetadata({
   };
 }
 
-export default async function IndustryPage({ params }: { params: Promise<{ industry: string }> }) {
-  const { industry: slug } = await params;
+export function IndustryPage({ slug }: { slug: string }) {
   const industry = industryBySlug.get(slug);
   if (!industry) notFound();
 
   const Icon = icons[industry.icon];
   const others = industries.filter((i) => i.slug !== industry.slug);
+  const extra = industryExtras[industry.slug];
+  const lower = industry.name.toLowerCase();
+
+  const approachImages = [
+    `/images/industries/${industry.slug}-strategy.webp`,
+    `/images/industries/${industry.slug}-approach.webp`,
+    `/images/industries/${industry.slug}-market.webp`,
+  ];
+
+  const contextParagraphs = [
+    ...(industry.context ?? []),
+    ...(extra?.expandedContext ?? []),
+  ];
+
+  const channelNotes = extra
+    ? [extra.channelNotes.seo, extra.channelNotes.paid, extra.channelNotes.website]
+    : [];
 
   return (
     <>
@@ -95,14 +106,14 @@ export default async function IndustryPage({ params }: { params: Promise<{ indus
       <Section id="specialisations">
         <SectionHeading
           eyebrow="Specialisations"
-          title={`Where ${industry.name.toLowerCase()} campaigns actually differ`}
+          title={`Where ${lower} campaigns actually differ`}
           intro="Each of these has its own search behaviour, its own compliance constraints and its own definition of a good lead. We run them as separate strategies."
         />
 
         <ul className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {industry.children.map((child, i) => (
             <li key={child.slug} data-reveal data-reveal-delay={i}>
-              <article className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-navy-100 bg-white shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-blue-200 hover:shadow-card-hover focus-within:-translate-y-1 focus-within:shadow-card-hover">
+              <article className="group relative flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-navy-100 bg-white shadow-card transition-all duration-300 hover:-translate-y-1.5 hover:border-blue-200 hover:shadow-card-lg focus-within:-translate-y-1.5 focus-within:shadow-card-lg">
                 <div className="media-zoom relative aspect-[4/3] overflow-hidden bg-navy-50">
                   <Image
                     src={`/images/industries/${industry.slug}-${child.slug}.webp`}
@@ -147,12 +158,28 @@ export default async function IndustryPage({ params }: { params: Promise<{ indus
         </ul>
       </Section>
 
+      {/* ── How we run campaigns for this vertical ──────────────────────── */}
+      {extra ? (
+        <FeatureRows
+          eyebrow="Our approach"
+          title={`How we run ${lower} campaigns`}
+          intro={`The playbook that consistently works in ${lower} — and the parts most generalist agencies skip.`}
+          rows={extra.approach.map((a, i) => ({
+            title: a.title,
+            body: [a.body],
+            image: approachImages[i] ?? approachImages[0],
+            imageAlt: `${industry.name} marketing — ${a.title}`,
+          }))}
+          mesh
+        />
+      ) : null}
+
       {/* ── Deeper context prose ─────────────────────────────────────────── */}
-      {industry.context ? (
+      {contextParagraphs.length > 0 ? (
         <ContextBlock
           eyebrow="The market"
-          title={`How ${industry.name.toLowerCase()} buyers actually decide`}
-          paragraphs={industry.context}
+          title={`How ${lower} buyers actually decide`}
+          paragraphs={contextParagraphs}
           tone="muted"
         />
       ) : null}
@@ -161,7 +188,7 @@ export default async function IndustryPage({ params }: { params: Promise<{ indus
       {industry.perks ? (
         <PerksBand
           eyebrow="Why us"
-          title={`What you get from an agency that knows ${industry.name.toLowerCase()}`}
+          title={`What you get from an agency that knows ${lower}`}
           perks={industry.perks}
           cta={{ label: 'Get a Free Quote', href: '/contact' }}
         >
@@ -169,11 +196,22 @@ export default async function IndustryPage({ params }: { params: Promise<{ indus
         </PerksBand>
       ) : null}
 
+      {/* ── Leading indicators ──────────────────────────────────────────── */}
+      {extra ? (
+        <SignalGrid
+          eyebrow="How we know it's working"
+          title="What we watch, month to month"
+          intro={`Booked work is the goal, but it lags. These are the earlier signals that tell us a ${lower} campaign is on track.`}
+          signals={extra.signals}
+          tone={industry.perks ? 'muted' : 'white'}
+        />
+      ) : null}
+
       {/* ── Channels ────────────────────────────────────────────────────── */}
-      <Section tone={industry.perks ? 'muted' : 'white'}>
+      <Section tone={extra ? 'white' : industry.perks ? 'muted' : 'white'}>
         <SectionHeading
           eyebrow="What we run"
-          title={`Channels that work for ${industry.name.toLowerCase()} businesses`}
+          title={`Channels that work for ${lower} businesses`}
           action={
             <Button href="/services" variant="secondary">
               All services
@@ -187,7 +225,7 @@ export default async function IndustryPage({ params }: { params: Promise<{ indus
               <LinkCard
                 href={`/services/${service.slug}`}
                 title={service.name}
-                body={service.tagline}
+                body={channelNotes[i] ?? service.tagline}
                 className="h-full"
                 icon={
                   <span className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-white shadow-ring ring-1 ring-amber-100">
@@ -220,14 +258,14 @@ export default async function IndustryPage({ params }: { params: Promise<{ indus
           faqs={industry.faqs}
           path={`/${industry.slug}`}
           title={`${industry.name} marketing: common questions`}
-          intro={`What ${industry.name.toLowerCase()} owners ask us most often before starting.`}
-          tone="white"
+          intro={`What ${lower} owners ask us most often before starting.`}
+          tone="muted"
         />
       ) : null}
 
       <div className="py-section lg:py-section-lg" data-reveal="scale">
         <CtaBanner
-          title={`Ready to grow your ${industry.name.toLowerCase()} business?`}
+          title={`Ready to grow your ${lower} business?`}
           highlight="grow"
           body="Free audit of your current visibility, your competitors and the gap between them."
         />

@@ -84,6 +84,63 @@
       ],
       "marketNote": "The Valley sprawls across more than 500 square miles, so proximity ranking factors dominate. Ranking downtown does almost nothing for demand in Scottsdale or Mesa.",
       "reviews": null
+    },
+    {
+      "slug": "dallas",
+      "name": "Dallas",
+      "state": "Texas",
+      "stateCode": "TX",
+      "county": "Dallas County",
+      "timeZone": "America/Chicago",
+      "geo": { "lat": 32.7767, "lng": -96.797 },
+      "serviceRadiusMiles": 45,
+      "neighborhoods": [
+        "Uptown",
+        "Oak Cliff",
+        "Deep Ellum",
+        "Bishop Arts",
+        "Lakewood",
+        "Preston Hollow",
+        "Knox-Henderson",
+        "Downtown"
+      ],
+      "nearbyCities": [
+        { "slug": null, "name": "Fort Worth", "driveMinutes": 40 },
+        { "slug": null, "name": "Plano", "driveMinutes": 30 },
+        { "slug": null, "name": "Frisco", "driveMinutes": 35 },
+        { "slug": null, "name": "Arlington", "driveMinutes": 30 },
+        { "slug": null, "name": "Irving", "driveMinutes": 20 }
+      ],
+      "marketNote": "Dallas-Fort Worth is one of the largest and fastest-growing metros in the country, so local search competition is dense and a top-ten organic ranking often is not enough — only the map-pack three reliably drive calls. Demand also fragments across dozens of suburbs with their own map packs, from Plano and Frisco to Arlington and Irving.",
+      "reviews": null
+    },
+    {
+      "slug": "tampa",
+      "name": "Tampa",
+      "state": "Florida",
+      "stateCode": "FL",
+      "county": "Hillsborough County",
+      "timeZone": "America/New_York",
+      "geo": { "lat": 27.9506, "lng": -82.4572 },
+      "serviceRadiusMiles": 40,
+      "neighborhoods": [
+        "Downtown",
+        "Hyde Park",
+        "Seminole Heights",
+        "Westshore",
+        "Ybor City",
+        "Channelside",
+        "South Tampa",
+        "New Tampa"
+      ],
+      "nearbyCities": [
+        { "slug": null, "name": "St. Petersburg", "driveMinutes": 30 },
+        { "slug": null, "name": "Clearwater", "driveMinutes": 30 },
+        { "slug": null, "name": "Brandon", "driveMinutes": 20 },
+        { "slug": null, "name": "Wesley Chapel", "driveMinutes": 30 }
+      ],
+      "marketNote": "The Tampa Bay market splits across three cities — Tampa, St. Petersburg and Clearwater — separated by water, so a campaign that ranks in one does little for the others. Hurricane season also drives sharp, short-lived demand spikes for home-services and restoration categories.",
+      "reviews": null
     }
   ]
 }

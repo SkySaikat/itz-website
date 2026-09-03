@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "generate:content": "node scripts/generate-daily-content.mjs"
+    "generate:content": "node scripts/generate-daily-content.mjs",
+    "generate:images": "node scripts/generate-images.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.117.1",
@@ -29,6 +30,7 @@
     "eslint": "^9.39.5",
     "eslint-config-next": "^16.3.1",
     "postcss": "^8.5.26",
+    "sharp": "^0.35.4",
     "tailwindcss": "^3.4.17",
     "typescript": "^5.7.3"
   }

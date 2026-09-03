@@ -19,20 +19,22 @@ export function ClientLogos() {
   return (
     <section className="bg-surface-muted py-16 lg:py-20" aria-labelledby="clients-heading">
       <div className="container">
+        <p className="text-center eyebrow-caps">Trusted by teams at</p>
         <h2
           id="clients-heading"
-          className="text-center text-xl font-bold text-blue-600 sm:text-2xl"
+          className="mt-2 text-center text-display-sm text-navy-700"
         >
           Some of our notable clients &amp; partners
         </h2>
 
-        {/* A drifting marquee rather than a static grid — it reads as a
-            living client roster and sidesteps the mobile squeeze the old
-            fixed 4-up had. Pauses on hover; static under reduced motion. */}
-        <Marquee className="mt-12" speed={52}>
+        {/* A drifting marquee on sm+; a plain swipeable strip on phones and
+            under reduced motion (both handled in globals.css). No
+            backdrop-blur here — it stutters the animation on mobile Safari. */}
+        <div className="mt-12 rounded-4xl border border-navy-100 bg-white py-6 shadow-card">
+        <Marquee speed={52}>
           <ul className="flex items-center">
             {clients.map((client) => (
-              <li key={client.name} className="flex shrink-0 items-center justify-center px-8 sm:px-12">
+              <li key={client.name} className="flex shrink-0 items-center justify-center px-6 sm:px-12">
                 <Image
                   src={client.src}
                   alt={client.name}
@@ -45,7 +47,7 @@ export function ClientLogos() {
             ))}
           </ul>
         </Marquee>
-
+        </div>
       </div>
     </section>
   );

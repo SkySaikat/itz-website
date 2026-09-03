@@ -13,18 +13,18 @@ export function Mission() {
         <div className="relative max-w-3xl" data-reveal="left">
           <p className="eyebrow-script mb-3">Our mission</p>
 
-          <h2 className="text-display-md text-navy-700">
-            We exist to <span className="text-blue-600">empower businesses</span> as a strategic
+          <h2 className="text-display-lg text-navy-700">
+            We exist to <span className="text-gradient">empower businesses</span> as a strategic
             consulting partner.
           </h2>
 
-          <p className="mt-6 max-w-prose text-body-lg text-ink-600">
+          <p className="mt-6 max-w-prose text-body-xl text-ink-600">
             We achieve this by delivering clear, insightful guidance on digital marketing strategies
             and products that drive online presence and measurable growth — over two decades of it,
             across more than 500 local businesses.
           </p>
 
-          <Button href="/about-us" variant="secondary" className="mt-8">
+          <Button href="/about-us" variant="secondary" size="lg" className="mt-8">
             Learn More About Us
           </Button>
         </div>

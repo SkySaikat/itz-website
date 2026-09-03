@@ -18,14 +18,18 @@ export function PageHero({
   children?: ReactNode;
 }) {
   return (
-    <section className="on-dark relative overflow-hidden bg-gradient-navy pb-16 pt-10 lg:pb-24 lg:pt-14">
+    <section className="on-dark mesh mesh-dark relative overflow-hidden bg-gradient-navy pb-20 pt-10 lg:pb-28 lg:pt-14">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute -right-16 top-0 h-72 w-72 bg-dot-grid bg-dots text-blue-400/25"
       />
       <div
         aria-hidden="true"
-        className="drift pointer-events-none absolute -bottom-24 left-1/3 h-72 w-72 rounded-full bg-blue-500/20 blur-3xl"
+        className="drift accent-orb -bottom-24 left-1/3 h-72 w-72 bg-blue-500/25"
+      />
+      <div
+        aria-hidden="true"
+        className="drift-slow accent-orb -right-24 top-10 h-64 w-64 bg-amber-400/12"
       />
 
       <div className="container relative">
@@ -59,11 +63,15 @@ export function PageHero({
         ) : null}
 
         <div className="max-w-3xl" data-reveal="left">
-          {eyebrow ? <p className="eyebrow-script mb-3 text-amber-400">{eyebrow}</p> : null}
+          {eyebrow ? (
+            <p className="mb-4 inline-flex items-center gap-2 rounded-pill glass-dark px-4 py-1.5 font-script text-xl font-bold leading-none text-amber-300">
+              {eyebrow}
+            </p>
+          ) : null}
 
-          <h1 className="text-display-lg text-white">{title}</h1>
+          <h1 className="text-display-xl text-white">{title}</h1>
 
-          {intro ? <p className="mt-6 max-w-prose text-body-lg text-navy-100">{intro}</p> : null}
+          {intro ? <p className="mt-6 max-w-prose text-body-xl text-navy-100">{intro}</p> : null}
 
           {children ? <div className="mt-9">{children}</div> : null}
         </div>

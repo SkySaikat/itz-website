@@ -1,12 +1,14 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
-import { Car, GraduationCap, Home, Scale, Stethoscope } from 'lucide-react';
+import { Car, GraduationCap, Home, Scale, Stethoscope, Wrench } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 
 import { CtaBanner } from '@/components/sections/CtaBanner';
 import { PageHero } from '@/components/ui/PageHero';
 import { Section } from '@/components/ui/Section';
 import { industries, type Industry } from '@/lib/industries';
+import { about } from '@/lib/about-content';
 
 export const metadata: Metadata = {
   title: 'Who We Serve',
@@ -15,7 +17,7 @@ export const metadata: Metadata = {
   alternates: { canonical: '/who-we-serve' },
 };
 
-const icons: Record<Industry['icon'], LucideIcon> = { Scale, Stethoscope, Home, GraduationCap, Car };
+const icons: Record<Industry['icon'], LucideIcon> = { Scale, Stethoscope, Home, GraduationCap, Car, Wrench };
 
 export default function WhoWeServePage() {
   return (
@@ -27,11 +29,42 @@ export default function WhoWeServePage() {
         crumbs={[{ label: 'Who We Serve' }]}
       />
 
+      <Section>
+        <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-16">
+          <div className="min-w-0 lg:col-span-7">
+            <p className="eyebrow-script mb-3">Why we specialise</p>
+            <h2 className="text-display-sm text-navy-700">
+              Depth in a few industries beats breadth across many
+            </h2>
+            <div className="mt-5 space-y-4 text-body-lg text-ink-600">
+              <p>{about.industriesIntro}</p>
+              <p>
+                A generalist agency learns your rules, your buying cycle and your definition of a
+                good lead on your budget, in the first few months of the engagement. We have already
+                run enough campaigns in each of these five fields to skip that — which is most of
+                why the work moves faster and wastes less.
+              </p>
+            </div>
+          </div>
+          <div className="min-w-0 lg:col-span-5" data-reveal="right">
+            <div className="relative aspect-[4/3] overflow-hidden rounded-4xl bg-white shadow-card ring-1 ring-navy-100">
+              <Image
+                src="/images/who-we-serve/hero.webp"
+                alt="Five industry emblems converging into one growth strategy"
+                fill
+                sizes="(min-width: 1024px) 40vw, 100vw"
+                className="object-contain"
+              />
+            </div>
+          </div>
+        </div>
+      </Section>
+
       {industries.map((industry, index) => {
         const Icon = icons[industry.icon];
 
         return (
-          <Section key={industry.slug} tone={index % 2 === 0 ? 'white' : 'muted'}>
+          <Section key={industry.slug} tone={index % 2 === 0 ? 'muted' : 'white'}>
             <div className="grid gap-10 lg:grid-cols-12 lg:gap-8 xl:gap-16">
               <div className="min-w-0 lg:col-span-5" data-reveal="left">
                 <span className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-50 text-blue-600 ring-1 ring-blue-100">

@@ -17,7 +17,7 @@ export type Industry = {
   headline: string;
   summary: string;
   /** Lucide icon name, resolved in the component layer. */
-  icon: 'Scale' | 'Stethoscope' | 'Home' | 'GraduationCap' | 'Car';
+  icon: 'Scale' | 'Stethoscope' | 'Home' | 'GraduationCap' | 'Car' | 'Wrench';
   stat: { value: string; label: string };
   children: SubIndustry[];
   /** Two paragraphs of deeper context, rendered as its own section. */
@@ -813,6 +813,126 @@ export const industries: Industry[] = [
           'Dependence on insurer referral programmes',
           'Owners unaware they can choose their own shop',
           'Estimate requests that never become approved jobs',
+        ],
+      },
+    ],
+  },
+  {
+    slug: 'home-services',
+    context: [
+      "Almost every one of these jobs starts with something broken and a homeowner on a phone. They open the map pack, read the rating and the two most recent reviews, and call the first company that looks capable and can come today. If nobody answers, they call the next one on the list. Speed to a live answer decides more of these jobs than anything on the website.",
+      "Underneath sits a trust problem — people expect to be overcharged or upsold — so photos of real technicians, upfront pricing ranges, written estimates and a clear warranty do more work than a coupon. Demand is highly seasonal and weather-driven: air conditioning in the first heat wave, heating in the first freeze, roofing and water damage after a storm. Higher-ticket work — a system replacement, a re-roof, a repipe — is considered for days or weeks, which is where paid social, retargeting and financing messaging earn their place.",
+    ],
+    perks: [
+      "Map pack first: service categories, hours (including after-hours and weekends), photos and a steady flow of recent reviews, since that is where the emergency calls come from.",
+      "Call tracking with recordings, reviewed with your dispatch team, so you can hear how many booked jobs the phone is losing.",
+      "Campaigns split by trade, urgency and ticket size, so a $99 drain clear and a $12,000 system replacement are not bought the same way.",
+      "Seasonal budgets set ahead of the curve — bid up before the heat wave, not after — and service-radius targeting matched to how far your trucks actually drive.",
+    ],
+    faqs: [
+      {
+        "question": "How do we get into the top three on Google Maps for our area?",
+        "answer": "Proximity, relevance and prominence, roughly in that order, and proximity is fixed. What you can change: complete and accurate service categories and attributes, correct hours including nights and weekends if you run emergency service, a page on your site for each service and each town you cover, real photos of your team and trucks posted regularly, and a steady stream of new reviews. In a competitive metro this is a months-long effort, and a company based on one side of town will always struggle to rank on the far side.",
+      },
+      {
+        "question": "Most of our calls are price shoppers. Can marketing fix that?",
+        "answer": "Partly. Price shoppers come from ads that lead with a discount and from pages with no pricing information, which forces the phone call. Publishing service-call fees, diagnostic charges and typical ranges filters out some of them before they dial. The rest is a phone script: answer the price question, then pivot to the diagnosis and the appointment. We can send better-qualified traffic; we cannot turn a coupon shopper into a system-replacement customer.",
+      },
+      {
+        "question": "Should we advertise cheap tune-ups and drain clears to get in the door?",
+        "answer": "Only if your technicians reliably convert that visit into real work and you can absorb the truck time. Track average ticket and 12-month revenue from tune-up customers before you scale it. Many companies do better advertising a specific repair they are known for, their emergency response time, or financing on replacements — offers that bring in customers who are not primarily chasing the lowest price.",
+      },
+      {
+        "question": "We do HVAC, plumbing and electrical. Should that be one campaign or several?",
+        "answer": "Several. Each trade has its own search terms, its own seasonality, its own competitors and its own margin profile. One blended campaign spends your heating budget on plumbing clicks in July. We build a campaign per trade, each with its own pages, budget and seasonal pacing, reporting on booked jobs by trade so you can see which one is actually paying.",
+      },
+    ],
+    name: 'Home Services',
+    headline: 'Home services marketing for an urgent, proximity-driven decision',
+    summary:
+      'HVAC, plumbing and roofing jobs are won by the company that shows up in the map pack, answers the phone, and looks trustworthy in the reviews. Everything we run points at those three.',
+    icon: 'Wrench',
+    stat: { value: '<1hr', label: 'Window before an emergency-service caller has phoned a competitor' },
+    children: [
+      {
+        slug: 'hvac',
+        context: "HVAC demand is almost entirely weather-triggered: the phone rings off the hook in the first week of real heat and the first hard freeze, and goes quiet in the shoulder seasons. Emergency no-cool and no-heat calls are pure proximity, hours and reviews — and they arrive outside business hours as often as not. System replacements are a different sale entirely: a multi-thousand-dollar considered purchase where financing, efficiency ratings, brand and a trusted in-home consultation matter, and where paid social and retargeting have a real role.",
+        faqs: [
+          {
+            "question": "How do we capture the demand spike when the weather turns?",
+            "answer": "You have to already be live and bid competitively before the spike, because the firms that wait until the phone starts ringing are a week behind. We keep a base campaign running year-round to hold rankings and reviews, then a seasonal budget that scales up on the forecast — the first sustained hot or cold stretch. After-hours ad scheduling and an answering path that can actually book a truck are non-negotiable during those windows.",
+          },
+          {
+            "question": "Should replacements and repairs be marketed separately?",
+            "answer": "Yes. A no-cool emergency wants the closest company that can come now — proximity, hours, reviews, a fast answer. A replacement buyer is comparing efficiency, financing, brand and installer reputation over days. Separate pages, separate campaigns, separate conversions (a booked service call versus a requested in-home estimate), and separate follow-up. Blending them wastes emergency budget on tyre-kickers and buries replacement leads in a pile of drain-clear calls.",
+          },
+          {
+            "question": "Is it worth chasing maintenance-plan sign-ups through ads?",
+            "answer": "Maintenance plans are worth marketing, but usually to existing customers and warm leads rather than cold search traffic — the economics rarely work at cold-acquisition cost. Use email, invoice inserts and the technician at the end of a service call. Where paid does help is promoting the plan as a differentiator on your service pages and in retargeting, so it is part of why someone chooses you rather than a standalone acquisition play.",
+          },
+        ],
+        name: 'HVAC',
+        headline: 'HVAC marketing built around the weather and the replacement sale',
+        summary:
+          'No-cool and no-heat calls are won on proximity and speed to answer. System replacements are won on trust, financing and a good in-home consultation. We run them as two different campaigns.',
+        painPoints: [
+          'Demand spikes the campaign is not scaled up to catch',
+          'Emergency calls landing outside business hours',
+          'Replacement leads lost in a pile of low-ticket repair calls',
+        ],
+      },
+      {
+        slug: 'plumbing',
+        context: "Plumbing splits cleanly into emergencies and planned work. Emergencies — burst pipes, sewer backups, no hot water — are the highest-intent, least price-sensitive searches on the internet, and they are won purely on being close, being open, and answering the phone within a couple of rings. Planned work — repipes, water heater upgrades, fixture installs, remodels — is researched and quoted, and rewards content, financing options and reviews that mention the specific job. Commercial and property-management accounts are a separate, relationship-driven channel that produces steady volume regardless of season.",
+        faqs: [
+          {
+            "question": "How do we win more of the emergency calls?",
+            "answer": "Be in the map pack for your core service area, run Local Services Ads if you are eligible, keep your hours and emergency-service attributes accurate, and — above all — answer the phone live, day and night, with someone who can dispatch a truck. Most of the losses in emergency plumbing are not marketing losses; they are the third ring going to voicemail. We track answer rate and time-to-callback alongside the campaign metrics because that is where the money leaks.",
+          },
+          {
+            "question": "Are Local Services Ads worth it for plumbers?",
+            "answer": "In most markets, yes — they sit above the regular search ads, are billed per lead rather than per click, and carry the Google Guaranteed badge that emergency callers look for. The catch is the setup: license and insurance verification, background checks, and disciplined lead disputes for calls that were clearly not real jobs. We handle the verification and the weekly dispute process, which is where a lot of the value is either captured or lost.",
+          },
+          {
+            "question": "How do we sell repipes and water heaters instead of just $99 drain clears?",
+            "answer": "Give the high-ticket work its own pages and campaigns, aimed at homeowners researching a known problem — low water pressure, rusty water, an aging tank — rather than people with an active emergency. The content has to cover options, what drives the cost, financing, and realistic timelines, and the conversion is a quote request, not an instant booking. Expect a longer sales cycle and a much larger job.",
+          },
+        ],
+        name: 'Plumbing',
+        headline: 'Plumbing marketing that wins the emergency and the planned job',
+        summary:
+          'Emergency plumbing searches are the highest-intent traffic there is, and they are lost at the third unanswered ring. Planned work needs content and financing. We build for both, plus the commercial accounts that carry the slow months.',
+        painPoints: [
+          'Emergency calls going to voicemail after hours',
+          'Local Services Ads set up but not actively managed or disputed',
+          'High-value repipe and water-heater work not marketed separately',
+        ],
+      },
+      {
+        slug: 'roofing',
+        context: "Roofing is storm-driven and high-ticket. A hail or wind event can fill your schedule for a season and then leave it empty, so the marketing has to hold a steady baseline presence year-round and then surge within days of a storm, when demand is highest and shortest-lived. Insurance claims complicate every conversation — many homeowners do not know the process or their options. Repairs and full replacements are different buyers, storm-chaser competitors flood the market after every event, and trust signals (licensing, local reputation, warranty, real project photos) do enormous work because the horror stories are well known.",
+        faqs: [
+          {
+            "question": "How should we budget around storm season?",
+            "answer": "Hold a steady base spend all year so your rankings, reviews and Google Business Profile are already strong when a storm hits — you cannot build authority in the 72 hours after a hail event. Then keep a reserve you can deploy fast, because the window where displaced homeowners are actively searching is short and the storm-chasers move immediately. Use the quiet stretches to build referral relationships with realtors, property managers and insurance adjusters, which produce work regardless of the weather.",
+          },
+          {
+            "question": "Should we market to insurance-claim customers or cash-pay retail?",
+            "answer": "Most established roofers want both, but they convert differently. Claim customers need education — how the process works, what a supplement is, why you should not just take the first adjuster number — and that content builds trust and captures search demand. Cash-pay retail (older roofs, real-estate transactions, upgrades) responds to financing, warranty and curb-appeal messaging. Keep the two tracks separate in your pages and campaigns so neither message gets muddled.",
+          },
+          {
+            "question": "How do we compete with the storm-chasers who show up after every hail event?",
+            "answer": "Lean on everything they cannot fake: a local address and phone number, years in the community, a long and specific review history, manufacturer certifications, a real warranty backed by a company that will still be here in five years, and photos of actual local projects. Your search and social content should make the permanence explicit. Out-of-town operators win on speed and door-knocking; you win on being the company still standing behind the roof when they have moved to the next state.",
+          },
+        ],
+        name: 'Roofing',
+        headline: 'Roofing marketing for a storm-driven, high-trust purchase',
+        summary:
+          'Roofing demand surges and collapses with the weather, and every storm brings out-of-town chasers. The work is holding a strong local presence year-round, surging fast after an event, and making your permanence impossible to miss.',
+        painPoints: [
+          'Feast-or-famine demand tied to storm events',
+          'Storm-chaser competitors flooding the market after every hail event',
+          'Insurance-claim confusion stalling the homeowner decision',
         ],
       },
     ],
