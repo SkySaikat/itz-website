@@ -12,18 +12,12 @@ import { Section, SectionHeading } from '@/components/ui/Section';
 import { allPosts, formatDate, getPost, relatedPosts } from '@/lib/posts';
 import { buildArticleGraph } from '@/lib/schema';
 
-export const dynamicParams = false;
-
-export function generateStaticParams() {
-  return allPosts.map((p) => ({ slug: p.slug }));
-}
-
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}): Promise<Metadata> {
-  const { slug } = await params;
+/*
+ * Blog posts live at the site root (/post-slug), matching the original
+ * WordPress URLs. They share the root dynamic segment with the industry
+ * pages; `[slug]/page.tsx` decides which renders.
+ */
+export function postMetadata(slug: string): Metadata {
   const post = allPosts.find((p) => p.slug === slug);
   if (!post) return {};
 
@@ -32,19 +26,18 @@ export async function generateMetadata({
   return {
     title: post.seoTitle ?? post.title,
     description,
-    alternates: { canonical: `/blog/${post.slug}` },
+    alternates: { canonical: `/${post.slug}` },
     openGraph: {
       type: 'article',
       title: post.title,
       description,
-      url: `/blog/${post.slug}`,
+      url: `/${post.slug}`,
       publishedTime: post.date ?? undefined,
     },
   };
 }
 
-export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params;
+export function PostPage({ slug }: { slug: string }) {
   const post = getPost(slug);
   if (!post) notFound();
 

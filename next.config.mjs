@@ -12,14 +12,15 @@ const nextConfig = {
   // Original WordPress URLs that changed in the rebuild. Everything else keeps
   // its legacy path so existing rankings and backlinks survive the migration.
   async redirects() {
-    // WordPress served every post at the site root (/post-slug). The rebuild
-    // moved them under /blog. Build the 301 list from the same index the blog
-    // routes read so a slug can never exist in one place and not the other.
-    // Evaluated once at build time, not per request.
+    // Blog posts live at the site root (/post-slug), matching the original
+    // WordPress URLs. The site briefly launched with them under /blog, so send
+    // that form back to the root. Built from the same index the routes read,
+    // so the list can never drift from the slugs actually served. Evaluated
+    // once at build time, not per request.
     const posts = JSON.parse(readFileSync('./src/content/posts-index.json', 'utf8'));
     const postRedirects = posts.map((post) => ({
-      source: `/${post.slug}`,
-      destination: `/blog/${post.slug}`,
+      source: `/blog/${post.slug}`,
+      destination: `/${post.slug}`,
       permanent: true,
     }));
 
@@ -31,6 +32,27 @@ const nextConfig = {
       { source: '/author/:path*', destination: '/blog', permanent: true },
       { source: '/feed', destination: '/blog', permanent: true },
       { source: '/page/:n', destination: '/blog', permanent: true },
+      // The `resource` post type and its taxonomy only ever held drafts.
+      { source: '/resource', destination: '/blog', permanent: true },
+      { source: '/resources/:path*', destination: '/blog', permanent: true },
+      { source: '/wp-sitemap.xml', destination: '/sitemap.xml', permanent: true },
+    ];
+
+    // Pages that exist in the rebuild under a different path. Sourced from the
+    // old database's permalink table and the Search Console index, 2026-09-03.
+    const movedPages = [
+      // The `case_study` post type lived at /case-study/<slug>; the rebuild
+      // uses /case-studies/<slug> with the same six slugs. Its taxonomy terms
+      // (/case-studies/banner-campaign etc.) have no equivalent page.
+      { source: '/case-study', destination: '/case-studies', permanent: true },
+      { source: '/case-study/:slug', destination: '/case-studies/:slug', permanent: true },
+      { source: '/case-studies/banner-campaign', destination: '/case-studies', permanent: true },
+      { source: '/case-studies/multi%e2%80%90channel-campaign', destination: '/case-studies', permanent: true },
+      { source: '/case-studies/website-design', destination: '/case-studies', permanent: true },
+      { source: '/ai-seo-company', destination: '/services/ai-seo-company', permanent: true },
+      { source: '/lawyers/divorce-lawyer', destination: '/lawyers/family-law', permanent: true },
+      { source: '/property-management', destination: '/real-estate/property-management', permanent: true },
+      { source: '/faqs', destination: '/about-us', permanent: true },
     ];
 
     return [
@@ -48,6 +70,7 @@ const nextConfig = {
       { source: '/real-estate-agent', destination: '/real-estate/realtor', permanent: true },
       { source: '/auto-repair', destination: '/automotive/auto-repair', permanent: true },
       { source: '/auto-detailing', destination: '/automotive/auto-detailing', permanent: true },
+      ...movedPages,
       ...archiveRedirects,
       ...postRedirects,
     ];

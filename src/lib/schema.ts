@@ -235,7 +235,7 @@ export function buildGeoPageGraph(
  * builders.
  */
 export function buildArticleGraph(post: Post): JsonLdGraph {
-  const path = `/blog/${post.slug}`;
+  const path = `/${post.slug}`;
   const description = post.seoDescription ?? post.excerpt;
 
   const article: JsonLdNode = {

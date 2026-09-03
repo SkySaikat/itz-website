@@ -11,7 +11,7 @@ export function PostCard({ post }: { post: PostSummary }) {
       ) : null}
 
       <h2 className="mt-3 text-lg font-bold leading-snug text-navy-700">
-        <Link href={`/blog/${post.slug}`} className="after:absolute after:inset-0 after:content-['']">
+        <Link href={`/${post.slug}`} className="after:absolute after:inset-0 after:content-['']">
           {post.title}
         </Link>
       </h2>

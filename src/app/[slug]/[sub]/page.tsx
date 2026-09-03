@@ -19,7 +19,7 @@ export const dynamicParams = false;
 
 export function generateStaticParams() {
   return industries.flatMap((industry) =>
-    industry.children.map((child) => ({ industry: industry.slug, sub: child.slug })),
+    industry.children.map((child) => ({ slug: industry.slug, sub: child.slug })),
   );
 }
 
@@ -32,9 +32,9 @@ function resolve(industrySlug: string, subSlug: string) {
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ industry: string; sub: string }>;
+  params: Promise<{ slug: string; sub: string }>;
 }): Promise<Metadata> {
-  const { industry: i, sub: s } = await params;
+  const { slug: i, sub: s } = await params;
   const found = resolve(i, s);
   if (!found) return {};
 
@@ -63,9 +63,9 @@ const STEPS = [
 export default async function SubIndustryPage({
   params,
 }: {
-  params: Promise<{ industry: string; sub: string }>;
+  params: Promise<{ slug: string; sub: string }>;
 }) {
-  const { industry: i, sub: s } = await params;
+  const { slug: i, sub: s } = await params;
   const found = resolve(i, s);
   if (!found) notFound();
 
